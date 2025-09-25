@@ -1,17 +1,19 @@
 import { Main } from './components/Main';
-import { Faq } from './components/QAndA';
-import { Solutions } from './components/Solutions';
-import { Successes } from './components/Successes';
-import { Team } from './components/Team';
+import { FaqSection } from './components/FaqSection';
+import { Benefits } from './components/Benefits';
+import { World } from './components/World';
+import { PhotoSection } from './components/PhotoSection';
+import ArticlesSection from './components/ArticlesSection';
 
 export default function Home() {
   return (
     <main className='flex flex-col items-center '>
       <Main />
-      <Solutions />
-      <Successes />
-      <Team />
-      <Faq />
+      <Benefits />
+      <World />
+      <PhotoSection />
+      <ArticlesSection />
+      <FaqSection />
     </main>
   );
 }

@@ -1,33 +1,31 @@
 import Image from 'next/image';
+import ArrowRightIcon from '../../../public/icons/arrow-right.svg';
 
 export const Main = () => {
   return (
     <section className="bg-[url('/images/main-bg.png')] bg-cover bg-no-repeat ">
-      <div className='xl:px-[420px] pt-[200px] max-md:pt-[100px] max-md:px-8'>
+      <div className='xl:px-[420px] pt-[360px] max-md:pt-[100px] max-md:px-8'>
         <h1 className='text-[62px] max-md:text-[36px] font-bold text-[#1A1A1A] text-center leading-[62px] max-md:leading-[36px] mb-8 max-md:mb-6'>
-          Discover the key to grow your business
+          Translink Africa Logistics Network
         </h1>
         <p className='text-[18px] max-md:text-[16px] text-[#1A1A1A] text-center mb-12'>
           Lorem ipsum dolor sit amet consectetur adipiscing elidolor mattis sit phasellus mollis sit aliquam sit nullam
           neques.
         </p>
 
-        <div className='relative flex items-center md:px-4 w-full mb-[100px] max-md:mb-10'>
-          <Image
-            src='/icons/search.svg'
-            alt='search'
-            width={16}
-            height={16}
-            className='absolute left-8 max-md:left-4'
-          />
-          <input
-            type='text'
-            placeholder='Search by...'
-            className='w-full  h-[56px] pl-8 pr-2 py-2 bg-white rounded-[100px] border border-[#F1F3F7] focus:outline-none text-sm text-[#1A1A1A] placeholder-[#1A1A1A] ml-2'
-          />
-          <button className='absolute right-8 max-md:right-4 px-4 py-[9px] flex gap-2 items-center bg-orange-600 text-white rounded-[100px] text-[14px]'>
-            Company name
-            {/* <Image src='/icons/chevron-down.svg' alt='arrow-down' width={16} height={16} className='inline ml-2' /> */}
+        <div className='relative flex justify-center gap-6 md:px-4 w-full mb-[100px] max-md:mb-10'>
+          <button className=' border border-[#E1E4ED] hover:bg-gray-50 shadow-xs cursor-pointer flex items-center gap-2   text-[16px] bg-white px-8 py-3.5 rounded-[100px] transition-all ease-in  duration-300 '>
+            About us
+            {/* <div className='flex items-center justify-center w-5 h-5'>
+              <ArrowRightIcon className='stroke-white' />
+            </div> */}
+          </button>
+
+          <button className=' cursor-pointer flex items-center gap-2 shadow-xs text-white text-[16px] bg-orange-600 hover:bg-orange-700 px-8 py-3.5 rounded-[100px] transition-all ease-in  duration-300 '>
+            Become a member
+            <div className='flex items-center justify-center w-4 h-4'>
+              <ArrowRightIcon className='stroke-white' />
+            </div>
           </button>
         </div>
       </div>

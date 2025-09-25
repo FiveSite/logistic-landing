@@ -1,5 +1,13 @@
-const CardDetails = () => {
-  return <div>page</div>;
+import { NewsDetails } from '@/app/news/NewsDetails';
+import { getOneNews } from '@/services/api';
+
+const CardNewsDetailsPage = async ({ params }: { params: { id: string } }) => {
+  const { id } = params;
+  console.log('id', id);
+  const data = await getOneNews(id);
+  console.log(data);
+
+  return <div>{data && <NewsDetails news={data} />}</div>;
 };
 
-export default CardDetails;
+export default CardNewsDetailsPage;

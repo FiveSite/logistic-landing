@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
-import { Contacts } from '../components/Contacts';
+import { Contacts } from './Contacts';
 import { FaQ } from '../components/Faq';
-import { SupportForm } from '../components/SupportForm';
+import { SupportForm } from '../components/form/SupportForm';
 
 const tabs = ['Contacts', 'Support', 'F.A.Q.'];
 
@@ -27,7 +27,7 @@ const ContactsPage = () => {
   };
 
   return (
-    <div className='py-[100px] px-[160px]'>
+    <div className='py-[100px] px-[160px] pt-[160px]'>
       <div className='flex gap-[140px]'>
         {/* Navigation */}
         <aside className='min-w-[160px]'>
