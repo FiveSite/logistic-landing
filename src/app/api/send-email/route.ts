@@ -2,9 +2,30 @@ import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
 export async function POST(req: NextRequest) {
-  const { email, name } = await req.json();
+  const {
+    company,
+    phone,
+    website,
+    address,
+    country,
+    linkedin,
+    contactName,
+    contactPosition,
+    contactEmail,
+    contactNumber,
+    startBusinessDate,
+    markets,
+    activities,
+    services,
+    profile,
+    annualTurnover,
+    employees,
+    branchOffices,
+    branchLocations,
+    references,
+  } = await req.json();
 
-  if (!email || !name) {
+  if (!company || !phone || !website) {
     return NextResponse.json({ message: 'Missing fields' }, { status: 400 });
   }
 
@@ -20,13 +41,32 @@ export async function POST(req: NextRequest) {
     await transporter.sendMail({
       from: process.env.SMTP_EMAIL,
       to: process.env.SMTP_EMAIL,
-      subject: 'Нова заявка з форми',
-      html: `<p>Email: ${email}</p><p>Name: ${name}</p>`,
+      subject: 'New membership request',
+      html: `<p>Company: ${company}</p>
+      <p>Phone: ${phone}</p>
+      <p>Website: ${website}</p>
+      <p>Address: ${address}</p>
+      <p>Country: ${country}</p>
+      <p>Linkedin: ${linkedin}</p>
+      <p>Contact Name: ${contactName}</p>
+      <p>Contact Position: ${contactPosition}</p>
+      <p>Contact Email: ${contactEmail}</p>
+      <p>Contact Number: ${contactNumber}</p>
+      <p>Start Business Date: ${startBusinessDate}</p>
+      <p>Markets: ${markets}</p>
+      <p>Activities: ${activities}</p>
+      <p>Services: ${services}</p>
+      <p>Profile: ${profile}</p>
+      <p>Annual Turnover: ${annualTurnover}</p>
+      <p>Employees: ${employees}</p>
+      <p>Branch Offices: ${branchOffices}</p>
+      <p>Branch Locations: ${branchLocations}</p>
+      <p>References: ${references}</p>`,
     });
 
-    return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
+    return NextResponse.json({ message: 'Data sent successfully' }, { status: 200 });
   } catch (error) {
     console.error('Email error:', error);
-    return NextResponse.json({ message: 'Failed to send email' }, { status: 500 });
+    return NextResponse.json({ message: 'Failed to send data' }, { status: 500 });
   }
 }

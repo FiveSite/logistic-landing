@@ -53,3 +53,30 @@ export interface Country {
   participants: number;
   documentId: string;
 }
+
+export type MemberSignUpFormValues = {
+  company: string;
+  phone: string;
+  website: string;
+  address: string;
+  country: string;
+  linkedin: string;
+  contactName: string;
+  contactPosition: string;
+  contactEmail: string;
+  contactNumber: string;
+  startBusinessDate: string;
+  markets: string;
+  activities: string;
+  services: string;
+  profile: string;
+  annualTurnover: string;
+  employees: string;
+  branchOffices: string;
+  branchLocations: string;
+  references: string;
+};
+
+export type MemberData = MemberSignUpFormValues & {
+  isApproved: boolean;
+};

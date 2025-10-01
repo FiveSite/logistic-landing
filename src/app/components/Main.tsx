@@ -1,7 +1,24 @@
+'use client';
+
 import Image from 'next/image';
 import ArrowRightIcon from '../../../public/icons/arrow-right.svg';
+import { ResetPasswordForm } from './form/ResetPassword';
+import { ModalComponent } from './Modal';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export const Main = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const searchParams = useSearchParams();
+  const code = searchParams.get('code');
+
+  useEffect(() => {
+    if (code) {
+      setIsModalOpen(true);
+    }
+  }, [code]);
+
   return (
     <section className="bg-[url('/images/main-bg.png')] bg-cover bg-no-repeat ">
       <div className='xl:px-[420px] pt-[360px] max-md:pt-[100px] max-md:px-8'>
@@ -51,6 +68,17 @@ export const Main = () => {
           <div className='absolute max-lg:hidden left-0 right-0 bottom-0 top-0 h-[74px] bg-gradient-to-r from-[#F6F6F6] via-[#F6F6F6]/0 to-[#F6F6F6]'></div>
         </div>
       </div>
+
+      {isModalOpen && code && (
+        <ModalComponent
+          title='Reset Password'
+          description='Please kindly set your new password.'
+          isOpen={isModalOpen}
+          handleClose={() => setIsModalOpen(false)}
+        >
+          <ResetPasswordForm onChange={() => {}} code={code} onClose={() => setIsModalOpen(false)} />
+        </ModalComponent>
+      )}
     </section>
   );
 };

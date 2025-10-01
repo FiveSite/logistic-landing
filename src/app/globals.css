@@ -61,3 +61,10 @@ body {
   background-color: #f97316;
   width: 140px;
 }
+
+.disabled\:opacity-50 {
+  opacity: 0.5;
+}
+.disabled\:cursor-not-allowed {
+  cursor: not-allowed;
+}

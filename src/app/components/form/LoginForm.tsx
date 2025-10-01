@@ -2,15 +2,27 @@
 
 import { signIn } from '@/services/auth';
 import { Field, Form, Formik } from 'formik';
-import Image from 'next/image';
+import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 
 interface FormValues {
   email: string;
   password: string;
 }
-export const LoginForm = ({ onChange }: { onChange: () => void }) => {
+export const LoginForm = ({
+  onClose,
+  onChange,
+  onBecomeMember,
+}: {
+  onClose: () => void;
+  onChange: () => void;
+  onBecomeMember: () => void;
+}) => {
   const router = useRouter();
+  const validationSchema = Yup.object({
+    email: Yup.string().email('Enter a valid email address').required('Email is required'),
+    password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  });
   const handleSubmit = async (values: FormValues) => {
     console.log(values);
     try {
@@ -26,7 +38,7 @@ export const LoginForm = ({ onChange }: { onChange: () => void }) => {
         if (res.ok) {
           console.log('Token set in cookie');
           router.refresh();
-          onChange();
+          onClose();
         }
       }
 
@@ -38,80 +50,74 @@ export const LoginForm = ({ onChange }: { onChange: () => void }) => {
 
   return (
     <div className='pt-6'>
-      <Formik initialValues={{ email: '', password: '' }} onSubmit={(values) => handleSubmit(values)}>
-        {() => (
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={(values) => handleSubmit(values)}
+      >
+        {({ errors, touched, isSubmitting }) => (
           <Form className='flex flex-col gap-4 max-w-md mx-auto'>
             {/* Email */}
             <div>
-              <label htmlFor='email' className='block text-sm font-medium text-gray-700 mb-1'>
-                Email Address
+              <label htmlFor='email' className='block text-sm font-semibold mb-1'>
+                Email
               </label>
               <Field
                 id='email'
                 name='email'
                 type='email'
-                placeholder='Type your email'
-                className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500'
+                placeholder='Your email'
+                className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-orange-500'
               />
+              {touched.email && errors.email ? (
+                <div className='text-red-600 text-[12px] mt-1'>{errors.email}</div>
+              ) : null}
             </div>
 
             {/* Password */}
             <div>
-              <label htmlFor='password' className='block text-sm font-medium text-gray-700 mb-1'>
+              <label htmlFor='password' className='block text-sm font-semibold mb-1'>
                 Password
               </label>
               <Field
                 id='password'
                 name='password'
                 type='password'
-                placeholder='Type your password'
-                className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500'
+                placeholder='Your password'
+                className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-orange-500'
               />
               <p className='text-xs text-gray-500 mt-1'>
                 It must be a combination of minimum 8 letters, numbers, and symbols.
               </p>
+              {touched.password && errors.password ? (
+                <div className='text-red-600 text-[12px]'>{errors.password}</div>
+              ) : null}
             </div>
 
-            {/* Remember Me & Forgot Password */}
-            <div className='flex items-center justify-between text-sm text-gray-600'>
-              {/* <label className='flex items-center gap-2'>
-                <Field type='checkbox' name='remember' className='accent-orange-600' />
-                Remember me
-              </label> */}
-              <a href='#' className='text-orange-600 hover:underline'>
+            <div className='flex items-center justify-end text-sm '>
+              <p onClick={onChange} className=' hover:underline cursor-pointer'>
                 Forgot Password?
-              </a>
+              </p>
             </div>
 
-            {/* Submit Button */}
             <button
               type='submit'
-              className='w-full text-white py-2 px-4 rounded-[8px] bg-orange-600 hover:bg-orange-700 transition'
+              className='cursor-pointer mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition easy-in-out duration-300'
             >
-              Log In
+              Sign in
             </button>
 
-            {/* Divider */}
-            <div className='text-center text-sm text-gray-500'>or log in with</div>
+            <div className='h-[1px] w-full bg-[#E1E4ED]'></div>
 
-            {/* Social Buttons */}
-            <div className='flex gap-4 justify-center'>
-              <button className='flex items-center gap-2 border border-gray-300 rounded-md py-2 px-4 w-full justify-center'>
-                <Image src='/icons/google.svg' alt='Google' width={20} height={20} />
-                Google
-              </button>
-              <button className='flex items-center gap-2 border border-gray-300 rounded-md py-2 px-4 w-full justify-center'>
-                <Image src='/icons/apple.svg' alt='Apple' width={20} height={20} />
-                Apple
-              </button>
-            </div>
-
-            {/* <p className='text-center text-sm text-gray-600 mt-4'>
+            <p className='text-center text-sm text-orange-600 mt-2'>
               No account yet?{' '}
-              <button onClick={onChange} className='text-orange-600 font-medium hover:underline'>
-                Sign Up
+              <button
+                onClick={onBecomeMember}
+                className=' ml-1 text-orange-600 font-medium hover:underline cursor-pointer'
+              >
+                Become a member
               </button>
-            </p> */}
+            </p>
           </Form>
         )}
       </Formik>

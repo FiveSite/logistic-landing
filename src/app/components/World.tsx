@@ -147,64 +147,54 @@
 // };
 
 'use client';
-import { fetchCountries } from '@/services/api';
-import { Country } from '@/types';
+import { countryMap } from '@/constants';
+import { fetchMembersList } from '@/services/api';
+
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import WorldMap from 'react-svg-worldmap';
 
-// Дані країн з кількістю учасників
-// const countriesData = [
-//   { code: 'CZ', name: 'Czech Republic', participants: 2 },
-//   { code: 'DE', name: 'Germany', participants: 7 },
-//   { code: 'IT', name: 'Italy', participants: 3 },
-//   { code: 'PL', name: 'Poland', participants: 4 },
-//   { code: 'ES', name: 'Spain', participants: 5 },
-//   { code: 'GB', name: 'United Kingdom', participants: 1 },
-
-//   { code: 'US', name: 'United States', participants: 4 },
-
-//   { code: 'MX', name: 'Mexico', participants: 3 },
-
-//   { code: 'BR', name: 'Brazil', participants: 6 },
-//   { code: 'AR', name: 'Argentina', participants: 2 },
-
-//   { code: 'JP', name: 'Japan', participants: 5 },
-//   { code: 'CN', name: 'China', participants: 7 },
-//   { code: 'IN', name: 'India', participants: 5 },
-//   { code: 'SG', name: 'Singapore', participants: 2 },
-
-//   { code: 'ZA', name: 'South Africa', participants: 4 },
-//   { code: 'NG', name: 'Nigeria', participants: 3 },
-//   { code: 'EG', name: 'Egypt', participants: 2 },
-
-//   { code: 'AU', name: 'Australia', participants: 6 },
-//   { code: 'NZ', name: 'New Zealand', participants: 1 },
-// ];
-
 // Функція для підбору кольору
 const getColor = (count: number) => {
   if (count < 1) return '#DDEEDB'; // lightgreen
-  if (count <= 5) return '#F6C28B'; // gold
-  return '#E9A1A1'; // orangered
+  if (count <= 5) return '#F6C28B'; // orangered
+  return '#E9A1A1'; // red
+};
+
+const countCountries = (data: { country: string }[]) => {
+  const map = new Map<string, number>();
+
+  for (const item of data) {
+    map.set(item.country, (map.get(item.country) || 0) + 1);
+  }
+
+  return Array.from(map.entries()).map(([country, count]) => ({
+    country,
+    name: countryMap[country],
+    count,
+  }));
 };
 
 export const World = () => {
-  const [data, setData] = useState<Country[]>([]);
+  const [data, setData] = useState<{ country: string; name: string; count: number }[]>([]);
 
-  const mapData = data.map((c) => ({
-    country: c.code.toLowerCase(), // react-svg-worldmap очікує lower-case ISO-код
-    value: c.participants,
-  }));
-
-  const getData = async () => {
-    const data = await fetchCountries();
-    setData(data);
+  const getMembers = async () => {
+    try {
+      const { data } = await fetchMembersList();
+      setData(countCountries(data));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    getData();
+    getMembers();
   }, []);
+
+  const mapData = data.map((c) => ({
+    country: c.country.toLowerCase(), // react-svg-worldmap очікує lower-case ISO-код
+    value: c.count,
+  }));
 
   return (
     <section className='relative w-full px-4 md:px-10 bg-[#F6F6F6] overflow-hidden'>
@@ -226,19 +216,19 @@ export const World = () => {
               valueSuffix='participants'
               color='orangered'
               backgroundColor='#F6F6F6'
-              // styleFunction={(context) => {
-              //   const { countryValue } = context;
-              //   return {
-              //     fill: getColor(countryValue || 0),
-              //     stroke: '#333',
-              //     strokeWidth: 0.5,
-              //     cursor: 'pointer',
-              //     transition: 'all 0.3s ease-in-out',
-              //     '&:hover': {
-              //       fill: '#000',
-              //     },
-              //   };
-              // }}
+              styleFunction={(context) => {
+                const { countryValue } = context;
+                return {
+                  fill: getColor(countryValue || 0),
+                  stroke: '#333',
+                  strokeWidth: 0.5,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    fill: '#000',
+                  },
+                };
+              }}
             />
           </div>
         </div>
@@ -247,12 +237,12 @@ export const World = () => {
           <h3 className='font-semibold pb-6 border-b border-dotted border-gray-200 text-[26px]'>
             Already work with <span className='text-orange-600 text-[26px]font-semibold'>{data.length} countries</span>
           </h3>
-          <ul className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-sm pt-6 h-[140px] overflow-y-auto'>
+          <ul className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-sm pt-6 max-h-[140px] overflow-y-auto'>
             {data.length > 0 &&
               data.map((country) => (
-                <li key={country.code} className='flex items-center gap-2'>
+                <li key={country.country} className='flex items-center gap-2'>
                   <Image
-                    src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`}
+                    src={`https://flagcdn.com/w40/${country.country.toLowerCase()}.png`}
                     alt={country.name}
                     width={16}
                     height={16}

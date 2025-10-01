@@ -1,14 +1,7 @@
-'use client';
-
 import { Field, Formik, Form } from 'formik';
 import ArrowRightIcon from '../../../../public/icons/arrow-right.svg';
 
-import { useState } from 'react';
-
 export const SupportForm = () => {
-  const [description, setDescription] = useState('');
-  const [agree, setAgree] = useState(false);
-
   return (
     <div className='max-w-2xl p-8 bg-[#F6F6F6] rounded-[20px]'>
       <h2 className='text-2xl font-semibold text-gray-800 mb-8'>Contact our logistics team</h2>

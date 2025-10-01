@@ -1,0 +1,217 @@
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { CompanyDetailsForm, Country } from './CompanyDetailsForm';
+import { CompanyContactsForm } from './CompanyContactsForm';
+import { BusinessProfileForm } from './BusinessProfileForm';
+import { ReferencesForm } from './ReferencesForm';
+import { MemberSignUpContext } from './MemberSignUpContext';
+import { Form, Formik } from 'formik';
+import { FormikErrors, FormikTouched } from 'formik';
+
+import * as yup from 'yup';
+import { addMember, fetchCountriesList } from '@/services/api';
+import { MemberSignUpFormValues } from '@/types';
+
+export const initialValues: MemberSignUpFormValues = {
+  company: '',
+  phone: '',
+  website: '',
+  address: '',
+  country: '',
+  linkedin: '',
+  contactName: '',
+  contactPosition: '',
+  contactEmail: '',
+  contactNumber: '',
+  startBusinessDate: '',
+  markets: '',
+  activities: '',
+  services: '',
+  profile: '',
+  annualTurnover: '',
+  employees: '',
+  branchOffices: '',
+  branchLocations: '',
+  references: '',
+};
+
+// Step 1: Company info
+export const step1Schema = yup.object().shape({
+  company: yup.string().required('Company is required'),
+  phone: yup.string().required('Phone is required'),
+  website: yup.string().url('Invalid URL').required('Website is required'),
+  address: yup.string().required('Address is required'),
+  country: yup.string().required('Country is required'),
+  linkedin: yup.string().url('Invalid URL').required('Linkedin is required'),
+});
+
+// Step 2: Contact info
+export const step2Schema = yup.object().shape({
+  contactName: yup.string().required('Contact name is required'),
+  contactPosition: yup.string().required('Position is required'),
+  contactEmail: yup.string().email('Invalid email').required('Email is required'),
+  contactNumber: yup.string().required('Contact number is required'),
+});
+
+// Step 3: Business info
+export const step3Schema = yup.object().shape({
+  startBusinessDate: yup.string().required('Start date is required'),
+  markets: yup.string().required('Markets are required'),
+  activities: yup.string().required('Activities are required'),
+  services: yup.string().required('Services are required'),
+  profile: yup.string().required('Profile is required'),
+});
+
+// Step 4: Extra info
+export const step4Schema = yup.object().shape({
+  annualTurnover: yup.string().required('Turnover is required'),
+  employees: yup.string().required('Employees is required'),
+  branchOffices: yup.string().required('Branch offices is required'),
+  branchLocations: yup.string().required('Branch locations is required'),
+  references: yup.string().required('References are required'),
+});
+
+export const FormStepper = ({
+  handleClose,
+  onChange,
+  onSuccess,
+}: {
+  handleClose: () => void;
+  onChange: () => void;
+  onSuccess: () => void;
+}) => {
+  const [countryData, setCountryData] = useState<Country[] | []>([]);
+
+  const { activeStep, nextStepHandler } = useContext(MemberSignUpContext);
+
+  const schemas = [step1Schema, step2Schema, step3Schema, step4Schema];
+
+  const currentSchema = schemas[activeStep];
+
+  const formData = useMemo(() => {
+    switch (activeStep) {
+      case 0:
+        return <CompanyDetailsForm data={countryData} />;
+
+      case 1:
+        return <CompanyContactsForm />;
+
+      case 2:
+        return <BusinessProfileForm />;
+
+      case 3:
+        return <ReferencesForm />;
+
+      default:
+        return null;
+    }
+  }, [activeStep, countryData]);
+
+  const getCountriesList = async () => {
+    try {
+      const res = await fetchCountriesList();
+      const list = Array.isArray(res?.data) ? res.data : [];
+      const normalized = list.map((item: { country: string; cities?: string[]; iso2?: string; iso3?: string }) => ({
+        country: item.country,
+        cities: item.cities ?? [],
+        iso2: item.iso2 ?? item.country,
+        iso3: item.iso3 ?? '',
+      }));
+      setCountryData(normalized);
+    } catch (e) {
+      setCountryData([]);
+    }
+  };
+
+  const handleSubmitClickHandler = async (values: MemberSignUpFormValues) => {
+    if (activeStep < 3) {
+      nextStepHandler(activeStep + 1);
+    } else {
+      try {
+        const res = await addMember({
+          ...values,
+          isApproved: false,
+        });
+        console.log('res', res);
+        onSuccess();
+        handleClose();
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  };
+
+  const handleNextStep = async (
+    validateForm: () => Promise<FormikErrors<MemberSignUpFormValues>>,
+    setTouched: (fields: FormikTouched<MemberSignUpFormValues>, shouldValidate?: boolean) => void,
+    values: MemberSignUpFormValues
+  ) => {
+    const errors = await validateForm();
+    if (Object.keys(errors).length === 0) {
+      nextStepHandler(activeStep + 1);
+    } else {
+      setTouched(
+        Object.keys(errors).reduce((acc, key) => ({ ...acc, [key]: true }), {} as FormikTouched<MemberSignUpFormValues>)
+      );
+    }
+  };
+
+  useEffect(() => {
+    getCountriesList();
+  }, []);
+
+  return (
+    <>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={currentSchema}
+        onSubmit={(values) => handleSubmitClickHandler(values)}
+        validateOnChange={true}
+        validateOnBlur={true}
+        enableReinitialize={true}
+      >
+        {({ validateForm, setTouched, isValid, isSubmitting, errors, touched, values }) => (
+          <Form>
+            {formData}
+
+            <div className='flex justify-between items-center mt-6'>
+              <p className='text-sm text-orange-600 mr-1'>
+                Already have an account?{' '}
+                <span onClick={onChange} className='hover:underline cursor-pointer'>
+                  Sign in
+                </span>
+              </p>
+              <div className='flex gap-4'>
+                <button
+                  type='button'
+                  onClick={handleClose}
+                  className='cursor-pointer px-10 py-2.5 rounded-full border border-gray-300 hover:bg-gray-50 text-sm'
+                >
+                  Close
+                </button>
+
+                {activeStep < 3 ? (
+                  <button
+                    type='button'
+                    disabled={isSubmitting}
+                    onClick={() => handleNextStep(validateForm, setTouched, values)}
+                    className='cursor-pointer px-10 py-2.5 rounded-full bg-orange-600 text-white text-sm font-medium hover:bg-orange-700 '
+                  >
+                    Next step
+                  </button>
+                ) : (
+                  <button
+                    type='submit'
+                    disabled={isSubmitting}
+                    className='cursor-pointer px-10 py-2.5 rounded-full bg-orange-600 text-white text-sm font-medium hover:bg-orange-700 '
+                  >
+                    Submit
+                  </button>
+                )}
+              </div>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </>
+  );
+};
