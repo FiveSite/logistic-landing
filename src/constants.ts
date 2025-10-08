@@ -243,3 +243,26 @@ export const countryMap: Record<string, string> = {
   ZM: 'Zambia',
   ZW: 'Zimbabwe',
 };
+
+export const services = [
+  'Freight Forwarding',
+  'Warehousing',
+  'Customs Clearance',
+  'Last Mile Delivery',
+  'Cross-Docking',
+  'Cold Chain Logistics',
+  'Inventory Management',
+  'Packaging and Labeling',
+  'Distribution Services',
+  'International Shipping',
+  'Domestic Transportation',
+  'Third-Party Logistics (3PL)',
+  'Supply Chain Consulting',
+  'Reverse Logistics',
+  'E-commerce Fulfillment',
+  'Intermodal Transportation',
+  'Cargo Insurance',
+  'Order Tracking and Visibility',
+  'Drayage Services',
+  'Hazardous Materials Handling',
+];

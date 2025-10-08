@@ -1,3 +1,3 @@
 export const DirectoryDetailsPage = () => {
-  return <div>Directory Details Page</div>;
+  return <div className='bg-[#F6F6F6]'>DirectoryDetailsPage</div>;
 };

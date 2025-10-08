@@ -1,124 +1,205 @@
 'use client';
-import { useState } from 'react';
-import ArrowClose from '../../../public/icons/arrow-close.svg';
-import CloseIcon from '../../../public/icons/close-icon.svg';
+import { useEffect, useState } from 'react';
 import LocationIcon from '../../../public/icons/location.svg';
-import clsx from 'clsx';
+import VerifyIcon from '../../../public/icons/verify-icon.svg';
 import Image from 'next/image';
+import { fetchCountriesList, fetchMembersList } from '@/services/api';
+import { Country } from '../components/form/formStepper/CompanyDetailsForm';
 
-const companies = [
-  {
-    id: 1,
-    name: 'Example company name',
-    country: 'Example country',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipiscing elit mattis sit phasellus mollis sit aliquam sit nullam nl.',
-    imageUrl: '',
-  },
-  {
-    id: 2,
-    name: 'Example company name',
-    country: 'Example country',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipiscing elit mattis sit phasellus mollis sit aliquam sit nullam nl.',
-    imageUrl: '',
-  },
-];
-const filters = ['Company name', 'Location', 'Member ID', 'Port'];
-const filtersData = ['Advantages', 'Membership yrs', 'Membership', 'Certificates', 'Routes', 'JC Verified'];
+import { SelectComponent } from '../components/SelectComponent';
+import { countryMap, services } from '@/constants';
+import { useRouter } from 'next/navigation';
+import { PaginationComponent } from '../components/Pagination';
+
 export const DirectoryComponent = () => {
-  const [isOpenFilterList, setIsOpenFilterList] = useState(false);
-  const [filterValue, setFilterValue] = useState('Company name');
-  const [filterList, setFilterList] = useState(filtersData);
+  const router = useRouter();
 
-  const deleteFilterValue = (value: string) => {
-    const newFilterData = filterList.filter((item) => item !== value);
-    setFilterList(newFilterData);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [members, setMembers] = useState<any[]>([]);
+  console.log('members', members);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [page, setPage] = useState(1);
+  console.log('page', page);
+  const [countryData, setCountryData] = useState<Country[] | []>([]);
+  const [selectedCountry, setSelectedCountry] = useState({
+    value: '',
+    label: '',
+  });
+  console.log('selectedCountry', selectedCountry);
+  const [selectedCity, setSelectedCity] = useState({
+    value: '',
+    label: '',
+  });
+  const [selectedConpany, setSelectedCompany] = useState({
+    value: '',
+    label: '',
+  });
+  console.log('countryData', countryData);
+
+  const [selectedServices, setSelectedServices] = useState({
+    value: '',
+    label: '',
+  });
+
+  const options = countryData.map((item) => {
+    return {
+      value: item.iso2,
+      label: item.country,
+    };
+  });
+
+  const cities = countryData
+    .map((item) =>
+      item.country === selectedCountry.label ? item.cities.map((city) => ({ value: city, label: city })) : []
+    )
+    .flat();
+  console.log('cities', cities);
+
+  const companies = members.map((item: { company: string }) => {
+    return {
+      value: item.company,
+      label: item.company,
+    };
+  });
+
+  const servicesOptions = services.map((service: string) => ({ value: service, label: service }));
+
+  const getCountriesList = async () => {
+    try {
+      const res = await fetchCountriesList();
+      const list = Array.isArray(res?.data) ? res.data : [];
+      const normalized = list.map((item: { country: string; cities?: string[]; iso2?: string; iso3?: string }) => ({
+        country: item.country,
+        cities: item.cities ?? [],
+        iso2: item.iso2 ?? item.country,
+        iso3: item.iso3 ?? '',
+      }));
+      setCountryData(normalized);
+    } catch (e) {
+      console.log(e);
+      setCountryData([]);
+    }
   };
+
+  const handleCountryChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    value: { value: string; label: string } | null
+  ) => {
+    setSelectedCountry(value ?? { value: '', label: '' });
+  };
+
+  const handleCityChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    value: { value: string; label: string } | null
+  ) => {
+    setSelectedCity(value ?? { value: '', label: '' });
+  };
+
+  const handleCompanyChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    value: { value: string; label: string } | null
+  ) => {
+    setSelectedCompany(value ?? { value: '', label: '' });
+  };
+
+  const handleServicesChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    value: { value: string; label: string } | null
+  ) => {
+    setSelectedServices(value ?? { value: '', label: '' });
+  };
+
+  const handlePageClick = (_: React.MouseEvent | unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  useEffect(() => {
+    getCountriesList();
+  }, []);
+
+  useEffect(() => {
+    const getMembersList = async () => {
+      setIsLoading(true);
+      try {
+        const res = await fetchMembersList({
+          page,
+          countryValue: selectedCountry.value,
+          cityValue: selectedCity.value,
+          companyValue: selectedConpany.value,
+          servicesValue: selectedServices.value,
+        });
+        setMembers(res.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching members:', error);
+        setIsLoading(false);
+      }
+    };
+
+    getMembersList();
+  }, [page, selectedCity, selectedConpany, selectedCountry, selectedServices]);
 
   return (
     <div className='flex gap-6 px-[166px] py-[60px] pt-[160px]'>
       <div className='flex-1'>
-        <div className='flex gap-2 mb-6'>
-          {filters.map((tab, index) => (
-            <button
-              key={index}
-              onClick={() => setFilterValue(tab)}
-              className={`cursor-pointer px-4 py-1.5 rounded-[8px] text-[16px]  h-9 ${
-                tab === filterValue ? 'bg-gray-800 text-white' : 'bg-gray-200 '
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-
         <input
           type='text'
-          placeholder={`Search for company by ${filterValue}`}
-          className='w-full px-4 py-2 mb-10 rounded-md border border-gray-300'
+          placeholder='Search for company by...'
+          className='w-full px-4 py-2.5 mb-6 rounded-[100px] border shadow-[0px_1px_14px_rgba(25,33,61,0.08)] max-w-[800px] border-[#F1F3F7] bg-white text-[16px]'
         />
-        <div className='h-[1px] w-full bg-gray-200 mb-6'></div>
 
-        <div className='space-y-4'>
-          {companies.map((company) => (
-            <div key={company.id} className='flex items-center gap-4 p-4 pl-0 '>
-              <Image src='/images/Rectangle12.png' alt='image' width={198} height={230} className='h-[230px]' />
-              <div className='flex flex-col'>
-                <h3 className='text-[24px] font-semibold mb-6'>{company.name}</h3>
-                <div className='flex items-center text-[16px] mb-8'>
-                  <LocationIcon className='w-5 h-5' />
-                  {company.country}
+        <div className='flex gap-2 mb-6'>
+          <SelectComponent options={options} label='Country' value={selectedCountry} onChange={handleCountryChange} />
+          <SelectComponent options={cities} label='City' value={selectedCity} onChange={handleCityChange} />
+          <SelectComponent options={companies} label='Company' value={selectedConpany} onChange={handleCompanyChange} />
+          <SelectComponent
+            options={servicesOptions}
+            label='Services'
+            value={selectedServices}
+            onChange={handleServicesChange}
+          />
+        </div>
+
+        <div className='space-y-4 flex flex-col gap-2'>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {members.map((company: any) => (
+            <div
+              onClick={() => router.push(`/directory/${company.id}`)}
+              key={company.id}
+              className='flex  gap-6 bg-white rounded-[8px]'
+            >
+              <div className='flex items-center justify-center p-6 shrink-0'>
+                <Image src='/images/image-exp.png' alt='image' width={167} height={167} className='h-[167px]' />
+              </div>
+              <div className='flex flex-col p-6 pl-0'>
+                <div className='flex items-center gap-4 mb-6'>
+                  <h3 className='text-[24px] leading-[24px] font-semibold'>{company.company}</h3>
+                  {company.isVerified && <VerifyIcon className='w-8 h-8' />}
                 </div>
-                <p className='text-[16px]'>{company.description}</p>
+                <div className='flex items-center text-[16px] mb-6'>
+                  <LocationIcon className='w-5 h-5' />
+                  {countryMap[company.country]} - {company.address}
+                </div>
+                <p className='text-[16px]'>{company.profile}</p>
+                <div className='flex flex-wrap gap-2 mt-6'>
+                  {company.services.map((item: string, idx: number) => {
+                    return (
+                      <div
+                        key={idx}
+                        className='flex items-center text-[16px] border border-gray-200 px-2 py-0.5 rounded-[8px]'
+                      >
+                        {item}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           ))}
         </div>
-      </div>
-
-      <div className='w-64 shrink-0 rounded-[4px] border-l-gray-200 border-r-gray-200 h-fit shadow-[0_1.2px_2.3px_rgba(217,216,219,0.4)]'>
-        <div className='flex items-baseline gap-4 px-8 py-5'>
-          <ArrowClose
-            className={clsx(
-              isOpenFilterList ? 'rotate-180 ' : 'rotate-0',
-              'w-4 h-4 cursor-pointer transition-transform duration-300 ease-in-out'
-            )}
-            onClick={() => {
-              setIsOpenFilterList(!isOpenFilterList);
-            }}
-          />
-          <span className='font-semibold text-[18px]'>Filter</span>
-          <span className='text-[16px] bg-gray-200  px-2 py-0.5 rounded-full'>{filterList.length}</span>
-        </div>
-        <div className={clsx(isOpenFilterList ? 'block' : 'hidden')}>
-          {filterList.length > 0 && (
-            <>
-              <div className='flex flex-col gap-3 px-8 py-5' id='filterList'>
-                {filterList.map((filter, index) => (
-                  <div
-                    key={index}
-                    className='flex items-center px-3 py-1.5 bg-gray-100 rounded-[4px] text-[16px] gap-4'
-                  >
-                    <CloseIcon
-                      className='w-4 h-4 cursor-pointer'
-                      onClick={() => deleteFilterValue(filter)}
-                      alt='image'
-                    />
-
-                    <span>{filter}</span>
-                  </div>
-                ))}
-              </div>
-
-              <button
-                onClick={() => setFilterList([])}
-                className='mt-4 cursor-pointer flex items-center justify-center bg-gray-100 text-[16px] font-semibold px-8 py-5 hover:underline w-full transition-all duration-300 ease-in-out'
-              >
-                Reset filter
-              </button>
-            </>
-          )}
+        <div className='mt-8'>
+          <PaginationComponent handleChange={handlePageClick} page={page} />
         </div>
       </div>
     </div>

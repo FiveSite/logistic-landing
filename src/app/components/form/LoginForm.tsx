@@ -2,7 +2,6 @@
 
 import { signIn } from '@/services/auth';
 import { Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 
 interface FormValues {
@@ -19,10 +18,6 @@ export const LoginForm = ({
   onBecomeMember: () => void;
 }) => {
   const router = useRouter();
-  const validationSchema = Yup.object({
-    email: Yup.string().email('Enter a valid email address').required('Email is required'),
-    password: Yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
-  });
   const handleSubmit = async (values: FormValues) => {
     console.log(values);
     try {
@@ -50,12 +45,8 @@ export const LoginForm = ({
 
   return (
     <div className='pt-6'>
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        validationSchema={validationSchema}
-        onSubmit={(values) => handleSubmit(values)}
-      >
-        {({ errors, touched, isSubmitting }) => (
+      <Formik initialValues={{ email: '', password: '' }} onSubmit={(values) => handleSubmit(values)}>
+        {() => (
           <Form className='flex flex-col gap-4 max-w-md mx-auto'>
             {/* Email */}
             <div>
@@ -67,11 +58,8 @@ export const LoginForm = ({
                 name='email'
                 type='email'
                 placeholder='Your email'
-                className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-orange-500'
+                className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500'
               />
-              {touched.email && errors.email ? (
-                <div className='text-red-600 text-[12px] mt-1'>{errors.email}</div>
-              ) : null}
             </div>
 
             {/* Password */}
@@ -84,14 +72,11 @@ export const LoginForm = ({
                 name='password'
                 type='password'
                 placeholder='Your password'
-                className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-orange-500'
+                className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500'
               />
               <p className='text-xs text-gray-500 mt-1'>
                 It must be a combination of minimum 8 letters, numbers, and symbols.
               </p>
-              {touched.password && errors.password ? (
-                <div className='text-red-600 text-[12px]'>{errors.password}</div>
-              ) : null}
             </div>
 
             <div className='flex items-center justify-end text-sm '>
@@ -102,7 +87,7 @@ export const LoginForm = ({
 
             <button
               type='submit'
-              className='cursor-pointer mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition easy-in-out duration-300'
+              className='cursor-pointer mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition'
             >
               Sign in
             </button>

@@ -65,7 +65,7 @@ export const Benefits = () => {
           </div>
 
           <div className='flex flex-col gap-20 flex-1'>
-            <div className='cursor-pointer group bg-white shadow max-w-[475px] rounded-xl overflow-hidden flex flex-col text-center '>
+            {/* <div className='cursor-pointer group bg-white shadow max-w-[475px] rounded-xl overflow-hidden flex flex-col text-center '>
               <div className='relative'>
                 {' '}
                 <Image
@@ -92,7 +92,7 @@ export const Benefits = () => {
                 <h3 className='font-semibold text-lg'>{benefits[1]?.title}</h3>
                 <p className='text-sm'>{benefits[1]?.description}</p>
               </div>
-            </div>
+            </div> */}
 
             <div className='cursor-pointer group bg-white shadow max-w-[475px] rounded-xl overflow-hidden flex flex-col text-center '>
               <div className='relative'>

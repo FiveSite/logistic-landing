@@ -6,9 +6,24 @@ import { ResetPasswordForm } from './form/ResetPassword';
 import { ModalComponent } from './Modal';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { ResetSuccessDialog } from './dialog/ResetSuccessDialog';
+import { LoginForm } from './form/LoginForm';
+import { MemberDialog } from './dialog/MemberDialog';
+import { CongratulationDialog } from './dialog/CongratulationDialog';
+import { ForgotPassword } from './form/ForgotPassword';
+import { ForgotPasswordSuccessDialog } from './dialog/ForgotPasswordSuccessDialog';
 
-export const Main = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const Main = ({ user }: { user: any }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
+  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
+  const [isCongratsOpen, setIsCongratsOpen] = useState(false);
+  const [isForgotPasswordSuccessOpen, setIsForgotPasswordSuccessOpen] = useState(false);
+
+  console.log('user', user);
 
   const searchParams = useSearchParams();
   const code = searchParams.get('code');
@@ -23,7 +38,7 @@ export const Main = () => {
     <section className="bg-[url('/images/main-bg.png')] bg-cover bg-no-repeat ">
       <div className='xl:px-[420px] pt-[360px] max-md:pt-[100px] max-md:px-8'>
         <h1 className='text-[62px] max-md:text-[36px] font-bold text-[#1A1A1A] text-center leading-[62px] max-md:leading-[36px] mb-8 max-md:mb-6'>
-          Translink Africa Logistics Network
+          African Alliance Logistics Network
         </h1>
         <p className='text-[18px] max-md:text-[16px] text-[#1A1A1A] text-center mb-12'>
           Lorem ipsum dolor sit amet consectetur adipiscing elidolor mattis sit phasellus mollis sit aliquam sit nullam
@@ -38,12 +53,19 @@ export const Main = () => {
             </div> */}
           </button>
 
-          <button className=' cursor-pointer flex items-center gap-2 shadow-xs text-white text-[16px] bg-orange-600 hover:bg-orange-700 px-8 py-3.5 rounded-[100px] transition-all ease-in  duration-300 '>
-            Become a member
-            <div className='flex items-center justify-center w-4 h-4'>
-              <ArrowRightIcon className='stroke-white' />
-            </div>
-          </button>
+          {!user && (
+            <button
+              onClick={() => {
+                setIsMemberModalOpen(true);
+              }}
+              className=' cursor-pointer flex items-center gap-2 shadow-xs text-white text-[16px] bg-orange-600 hover:bg-orange-700 px-8 py-3.5 rounded-[100px] transition-all ease-in  duration-300 '
+            >
+              Become a member
+              <div className='flex items-center justify-center w-4 h-4'>
+                <ArrowRightIcon className='stroke-white' />
+              </div>
+            </button>
+          )}
         </div>
       </div>
 
@@ -76,9 +98,86 @@ export const Main = () => {
           isOpen={isModalOpen}
           handleClose={() => setIsModalOpen(false)}
         >
-          <ResetPasswordForm onChange={() => {}} code={code} onClose={() => setIsModalOpen(false)} />
+          <ResetPasswordForm
+            //onChange={() => {}}
+            code={code}
+            onClose={() => setIsModalOpen(false)}
+            onSuccess={() => {
+              setIsModalOpen(false);
+              setIsSuccessModalOpen(true);
+            }}
+          />
         </ModalComponent>
       )}
+      {isSuccessModalOpen && (
+        <ResetSuccessDialog isOpen={isSuccessModalOpen} handleClose={() => setIsSuccessModalOpen(false)} />
+      )}
+      {isLoginModalOpen && (
+        <ModalComponent
+          title='Welcome Back'
+          description='Please log in to continue'
+          isOpen={isLoginModalOpen}
+          handleClose={() => setIsLoginModalOpen(false)}
+        >
+          <LoginForm
+            onChange={() => {
+              setIsLoginModalOpen(false);
+              setIsForgotPasswordModalOpen(true);
+            }}
+            onClose={() => {
+              setIsLoginModalOpen(false);
+            }}
+            onBecomeMember={() => {
+              setIsLoginModalOpen(false);
+              setIsMemberModalOpen(true);
+            }}
+          />
+        </ModalComponent>
+      )}
+
+      {isMemberModalOpen && (
+        <MemberDialog
+          isOpen={isMemberModalOpen}
+          handleClose={() => setIsMemberModalOpen(false)}
+          onChange={() => {
+            setIsMemberModalOpen(false);
+            setIsLoginModalOpen(true);
+          }}
+          onSuccess={() => {
+            setIsMemberModalOpen(false);
+            setIsCongratsOpen(true);
+          }}
+        />
+      )}
+      {isForgotPasswordModalOpen && (
+        <ModalComponent
+          title='Forgot your password?'
+          description='Enter your email to get a reset link'
+          isOpen={isForgotPasswordModalOpen}
+          handleClose={() => setIsForgotPasswordModalOpen(false)}
+        >
+          <ForgotPassword
+            onChange={() => {
+              setIsForgotPasswordModalOpen(false);
+              setIsLoginModalOpen(true);
+            }}
+            onClose={() => {
+              setIsForgotPasswordModalOpen(false);
+            }}
+            onSuccess={() => {
+              setIsForgotPasswordModalOpen(false);
+              setIsForgotPasswordSuccessOpen(true);
+            }}
+          />
+        </ModalComponent>
+      )}
+      {isForgotPasswordSuccessOpen && (
+        <ForgotPasswordSuccessDialog
+          isOpen={isForgotPasswordSuccessOpen}
+          handleClose={() => setIsForgotPasswordSuccessOpen(false)}
+        />
+      )}
+      {isCongratsOpen && <CongratulationDialog isOpen={isCongratsOpen} handleClose={() => setIsCongratsOpen(false)} />}
     </section>
   );
 };

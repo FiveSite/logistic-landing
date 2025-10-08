@@ -68,15 +68,18 @@ export type MemberSignUpFormValues = {
   startBusinessDate: string;
   markets: string;
   activities: string;
-  services: string;
+  services: string[];
   profile: string;
   annualTurnover: string;
   employees: string;
   branchOffices: string;
   branchLocations: string;
   references: string;
+  companyLogo: string | null;
 };
 
 export type MemberData = MemberSignUpFormValues & {
   isApproved: boolean;
+  memberId: string;
+  companyLogo: string | null;
 };

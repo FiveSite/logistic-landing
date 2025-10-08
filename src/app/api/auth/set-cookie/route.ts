@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
@@ -9,9 +10,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Token is required' }, { status: 400 });
   }
 
-  const response = NextResponse.json({ message: 'Token set in cookie' });
+  const cookieStore = await cookies();
 
-  response.cookies.set({
+  cookieStore.set({
     name: 'token',
     value: token,
     httpOnly: true,
@@ -21,5 +22,5 @@ export async function POST(req: Request) {
     sameSite: 'lax',
   });
 
-  return response;
+  return NextResponse.json({ message: 'Token set in cookie' });
 }

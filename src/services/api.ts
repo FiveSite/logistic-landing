@@ -1,4 +1,5 @@
 import { News, Event, Team, Benefit, Country, MemberData, MemberSignUpFormValues } from '@/types';
+import { axiosInstance } from '@/utils/axios';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const countries = 'https://countriesnow.space/api/v0.1/countries';
@@ -18,14 +19,49 @@ export const addMember = async (data: MemberData) => {
   }
 };
 
-export const fetchMembersList = async () => {
+export const fetchMembersList = async ({
+  page,
+  countryValue,
+  cityValue,
+  companyValue,
+  servicesValue,
+}: {
+  page: number;
+  countryValue?: string;
+  cityValue?: string;
+  companyValue?: string;
+  servicesValue?: string;
+}) => {
   try {
-    const res = await fetch(`${API_URL}/api/members?filters[isApproved][$eq]=true&populate=*`);
-    const data = await res.json();
-    return data;
+    const params: Record<string, string> = {
+      'pagination[page]': page.toString(),
+      'pagination[pageSize]': '2',
+      populate: '*',
+      'filters[isApproved][$eq]': 'true',
+    };
+
+    if (companyValue) {
+      params['filters[company][$eq]'] = companyValue;
+    }
+
+    if (countryValue) {
+      params['filters[country][$eq]'] = countryValue;
+    }
+
+    if (cityValue) {
+      params['filters[address][$contains]'] = cityValue;
+    }
+
+    if (servicesValue) {
+      params['filters[services][$contains]'] = servicesValue;
+    }
+
+    const res = await axiosInstance.get('/api/members', { params });
+
+    return res.data;
   } catch (error) {
-    console.error('Error fetching countries:', error);
-    return [];
+    console.error('Error fetching members:', error);
+    return { data: [], meta: { pagination: {} } };
   }
 };
 

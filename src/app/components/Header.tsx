@@ -8,8 +8,8 @@ import { NewsButton } from './NewsButton';
 import { NavLink } from './NavLink';
 
 export const Header = async () => {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get('token')?.value;
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token')?.value;
 
   const user = await getUserFromToken(token ?? '');
   console.log('user', user);
@@ -38,7 +38,7 @@ export const Header = async () => {
           <NavLink href='/contacts' text='Contacts & Support' />
         </nav>
 
-        {user ? <UserMenu name={user.username} /> : <AuthButtons />}
+        {user ? <UserMenu name={user.contactName} /> : <AuthButtons />}
       </div>
     </div>
   );

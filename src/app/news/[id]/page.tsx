@@ -7,7 +7,7 @@ const CardNewsDetailsPage = async ({ params }: { params: { id: string } }) => {
   const data = await getOneNews(id);
   console.log(data);
 
-  return <div>{data && <NewsDetails news={data} />}</div>;
+  return <div className='bg-[#F6F6F6]'>{data && <NewsDetails news={data} />}</div>;
 };
 
 export default CardNewsDetailsPage;

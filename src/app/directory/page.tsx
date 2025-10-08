@@ -4,8 +4,8 @@ import { getUserFromToken } from '@/services/auth';
 import { DirectoryComponent } from './DirectoryComponent';
 
 const CompanyDirectoryPage = async () => {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get('token')?.value;
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token')?.value;
 
   if (!token) {
     redirect('/');
@@ -21,7 +21,7 @@ const CompanyDirectoryPage = async () => {
   }
 
   return (
-    <div>
+    <div className='bg-[#F6F6F6]'>
       <DirectoryComponent />
     </div>
   );

@@ -20,7 +20,7 @@ export function AuthButtons() {
     <div className='max-lg:hidden w-fit flex justify-between gap-4'>
       <button
         onClick={() => setIsMemberModalOpen(true)}
-        className='cursor-pointer flex items-center gap-4 px-4.5 py-2 rounded-[100px] text-white bg-orange-600 hover:bg-orange-700 whitespace-nowrap'
+        className='cursor-pointer flex items-center gap-2 px-4.5 py-2 rounded-[100px] text-white bg-orange-600 hover:bg-orange-700 whitespace-nowrap'
       >
         Become a Member
         <div className='flex items-center justify-center w-4 h-4'>

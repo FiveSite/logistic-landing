@@ -25,13 +25,14 @@ export const initialValues: MemberSignUpFormValues = {
   startBusinessDate: '',
   markets: '',
   activities: '',
-  services: '',
+  services: [],
   profile: '',
   annualTurnover: '',
   employees: '',
   branchOffices: '',
   branchLocations: '',
   references: '',
+  companyLogo: '',
 };
 
 // Step 1: Company info
@@ -57,7 +58,7 @@ export const step3Schema = yup.object().shape({
   startBusinessDate: yup.string().required('Start date is required'),
   markets: yup.string().required('Markets are required'),
   activities: yup.string().required('Activities are required'),
-  services: yup.string().required('Services are required'),
+  services: yup.array().min(1, 'At least one service is required').required('Services are required'),
   profile: yup.string().required('Profile is required'),
 });
 
@@ -123,6 +124,7 @@ export const FormStepper = ({
   };
 
   const handleSubmitClickHandler = async (values: MemberSignUpFormValues) => {
+    console.log('values', values);
     if (activeStep < 3) {
       nextStepHandler(activeStep + 1);
     } else {
@@ -130,10 +132,14 @@ export const FormStepper = ({
         const res = await addMember({
           ...values,
           isApproved: false,
+          memberId: String(Math.floor(100000 + Math.random() * 900000)),
         });
         console.log('res', res);
-        onSuccess();
-        handleClose();
+
+        if (res.data) {
+          onSuccess();
+          handleClose();
+        }
       } catch (error) {
         console.error('Error:', error);
       }

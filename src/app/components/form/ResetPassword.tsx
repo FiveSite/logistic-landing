@@ -17,11 +17,13 @@ const validationSchema = Yup.object().shape({
 });
 export const ResetPasswordForm = ({
   onClose,
-  onChange,
+  //onChange,
+  onSuccess,
   code,
 }: {
   onClose: () => void;
-  onChange: () => void;
+  //onChange: () => void;
+  onSuccess: () => void;
   code: string;
 }) => {
   const router = useRouter();
@@ -51,6 +53,7 @@ export const ResetPasswordForm = ({
 
       if (data) {
         router.push('/');
+        onSuccess();
       }
       console.log('data', data);
       console.log('Success reset password!');
