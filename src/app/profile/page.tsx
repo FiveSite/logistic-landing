@@ -10,7 +10,7 @@ export const CompanyProfilePage = async () => {
   console.log('user', user);
   return (
     <div className='bg-[#F6F6F6]'>
-      <CompanyProfileComponent user={user} />
+      <CompanyProfileComponent user={user} isEditMode />
     </div>
   );
 };

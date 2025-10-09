@@ -2,9 +2,25 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import ArrowIcon from '../../../public/icons/chevron-down.svg';
+import LogoutIcon from '../../../public/icons/logout-icon.svg';
+import { Popover } from '@mui/material';
+import { useState } from 'react';
 
-export function UserMenu({ name }: { name: string }) {
-  //const [open, setOpen] = useState(false);
+export function UserMenu({ name, avatar }: { name: string; avatar?: string }) {
+  const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -12,18 +28,58 @@ export function UserMenu({ name }: { name: string }) {
       method: 'POST',
     });
 
-    router.refresh(); // оновити сторінку
+    router.push('/');
+    router.refresh();
   };
 
   return (
-    <div className='flex gap-4 items-center'>
+    <div className='flex gap-3 items-center'>
       <div
         onClick={() => router.push('/profile')}
         className='cursor-pointer text-2xl font-bold rounded-full w-10 h-10 flex items-center justify-center bg-gray-100'
       >
-        <Image src='/images/avatar.png' alt='user' width={40} height={40} />
+        {avatar ? (
+          <Image src={`${process.env.NEXT_PUBLIC_API_URL}${avatar}`} alt='user' width={40} height={40} />
+        ) : (
+          <Image src='/images/avatar.png' alt='user' width={40} height={40} />
+        )}
       </div>
-      <p>{name}</p>
+      <div aria-describedby={id} className='flex items-center gap-1 cursor-pointer' onClick={handleClick}>
+        {name}
+        <div className='flex items-center justify-center w-5 h-5'>
+          <ArrowIcon className='' />
+        </div>
+      </div>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        PaperProps={{
+          sx: {
+            borderRadius: '12px',
+          },
+        }}
+      >
+        <div className=' flex flex-col '>
+          <div onClick={() => router.push('/profile')} className='cursor-pointer py-2 px-4 hover:bg-gray-100'>
+            Profile
+          </div>
+          <div
+            className='cursor-pointer py-2 px-4 hover:bg-gray-100 flex items-center gap-2 text-[#D21717]'
+            onClick={handleLogout}
+          >
+            Logout
+            <div className='flex items-center justify-center w-5 h-5'>
+              <LogoutIcon className='' />
+            </div>
+          </div>
+        </div>
+      </Popover>
     </div>
   );
 }

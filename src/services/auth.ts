@@ -37,7 +37,7 @@ export const updateMember = async (id: string, data: Record<string, string>) => 
   }
 };
 
-export async function uploadImage(file: File): Promise<string> {
+export async function uploadImage(file: File) {
   const formData = new FormData();
   formData.append('files', file); // <-- важливо: "files"
 
@@ -66,5 +66,5 @@ export async function uploadImage(file: File): Promise<string> {
   // 3. Повертаємо повний URL (з доменом Strapi)
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}${fileData.url}`;
 
-  return fullUrl;
+  return { fullUrl, id: uploadedFile.id };
 }

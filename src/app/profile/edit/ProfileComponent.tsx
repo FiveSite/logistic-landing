@@ -4,6 +4,7 @@ import { updateMember, uploadImage } from '@/services/auth';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Image from 'next/image';
 import { ChangeEvent, FocusEvent, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const navItems = [
   { name: 'Company details', active: true },
@@ -12,25 +13,31 @@ const navItems = [
 ];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ProfileComponent = ({ user }: any) => {
-  console.log('user in profile component', user);
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState(0);
 
-  // Логотип компанії
-  const [selectedImage, setSelectedImage] = useState<string | null>(user?.companyLogo.url || null);
-  console.log('selectedImage', selectedImage);
-  console.log('url', `${process.env.NEXT_PUBLIC_API_URL}${user?.companyLogo.url}`);
-
-  //const [isUploadingLogo, setIsUploadingLogo] = useState(false);
+  //logo company
+  const initialCompanyLogo: string | null =
+    typeof user?.companyLogo === 'string' ? user.companyLogo : user?.companyLogo?.url ?? null;
+  const [selectedImage, setSelectedImage] = useState<string | null>(initialCompanyLogo);
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
   const [uploadLogoError, setUploadLogoError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Аватар
-  const [selectedAvatar, setSelectedAvatar] = useState<string | null>(user?.avatar || null);
-  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
-  const [uploadAvatarError, setUploadAvatarError] = useState<string | null>(null);
-  const avatarInputRef = useRef<HTMLInputElement>(null);
+  const companyDetailsRef = useRef<HTMLDivElement>(null);
+  const keyContactsRef = useRef<HTMLDivElement>(null);
+  const settingsRef = useRef<HTMLDivElement>(null);
 
-  console.log('selectedImage', selectedImage);
+  const handleScrollToSection = (index: number) => {
+    setActiveTab(index);
+
+    const refs = [companyDetailsRef, keyContactsRef, settingsRef];
+
+    const targetRef = refs[index];
+    if (targetRef.current) {
+      targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   const initialValues = {
     company: user?.company || '',
@@ -51,7 +58,6 @@ export const ProfileComponent = ({ user }: any) => {
     annualTurnover: user?.annualTurnover || '',
     employees: user?.employees || '',
     companyLogo: user?.companyLogo || '',
-    avatarLogo: user?.avatarLogo || '',
   };
   const onUploadCompanyLogo = () => {
     if (inputRef.current) {
@@ -67,6 +73,7 @@ export const ProfileComponent = ({ user }: any) => {
     try {
       await updateMember(user.id, { [name]: value });
       console.log(`Field ${name} updated with value:`, value);
+      router.refresh();
     } catch (err) {
       console.error(`Failed to update field ${name}:`, err);
     }
@@ -77,54 +84,24 @@ export const ProfileComponent = ({ user }: any) => {
     if (!file) return;
 
     setUploadLogoError(null);
-    //setIsUploadingLogo(true);
+    setIsUploadingLogo(true);
 
     try {
-      // Показуємо локальне прев'ю
-      console.log('file', URL.createObjectURL(file));
       setSelectedImage(URL.createObjectURL(file));
 
-      // Завантажуємо зображення на сервер
-      const uploadedUrl = await uploadImage(file);
-      console.log('Uploaded URL:', uploadedUrl);
+      const { fullUrl, id } = await uploadImage(file);
+      console.log('Uploaded URL:', fullUrl);
+      console.log('Uploaded ID:', id);
 
-      // Оновлюємо користувача новим URL логотипу
-      await updateMember(user.id, { companyLogo: '28' });
+      await updateMember(user.id, { companyLogo: id });
 
-      // Оновлюємо стан локально
-      setSelectedImage(uploadedUrl.split('/').slice(1).join('/')); // Зберігаємо відносний шлях
+      setSelectedImage(fullUrl);
     } catch (error) {
       console.error('Failed to upload company logo:', error);
       setUploadLogoError('Failed to upload company logo');
     } finally {
-      //setIsUploadingLogo(false);
-    }
-  };
-
-  // --- Обробка аватара ---
-  const onUploadAvatar = () => {
-    if (avatarInputRef.current) {
-      avatarInputRef.current.click();
-    }
-  };
-
-  const handleUploadAvatar = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    setUploadAvatarError(null);
-    setIsUploadingAvatar(true);
-
-    try {
-      setSelectedAvatar(URL.createObjectURL(file));
-      const uploadedUrl = await uploadImage(file);
-      await updateMember(user.id, { avatar: uploadedUrl });
-      setSelectedAvatar(uploadedUrl);
-    } catch (error) {
-      console.error('Failed to upload avatar:', error);
-      setUploadAvatarError('Failed to upload avatar');
-    } finally {
-      setIsUploadingAvatar(false);
+      router.refresh();
+      setIsUploadingLogo(false);
     }
   };
 
@@ -134,16 +111,16 @@ export const ProfileComponent = ({ user }: any) => {
         <h2 className='text-[30px] font-semibold mb-7'>Profile</h2>
         <nav>
           <ul className='space-y-4'>
-            {navItems.map((item) => (
+            {navItems.map((item, index) => (
               <li key={item.name}>
-                <a
-                  href='#'
-                  className={`block py-1 text-[20px] transition-colors ${
-                    item.active ? 'text-gray-900 font-bold' : 'text-gray-600 hover:text-gray-900'
+                <button
+                  onClick={() => handleScrollToSection(index)}
+                  className={`block py-1 text-[20px] transition-colors cursor-pointer ${
+                    activeTab === index ? 'text-gray-900 font-bold' : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
                   {item.name}
-                </a>
+                </button>
               </li>
             ))}
           </ul>
@@ -154,17 +131,20 @@ export const ProfileComponent = ({ user }: any) => {
           {({ values }) => (
             <Form>
               {/* Company Details Section */}
-              <section className='grid grid-cols-[120px_1fr] mb-8 gap-8 pb-10 bg-white rounded-[8px] p-10'>
+              <section
+                ref={companyDetailsRef}
+                className='grid grid-cols-[120px_auto_1fr] mb-8 gap-6 pb-10 bg-white rounded-[8px] p-10'
+              >
                 {/* Upload Area */}
                 <div className='flex flex-col items-center'>
                   {selectedImage ? (
                     <Image
                       src={
-                        selectedImage?.startsWith('blob:') || selectedImage?.startsWith('http')
+                        typeof selectedImage === 'string' &&
+                        (selectedImage.startsWith('blob:') || selectedImage.startsWith('http'))
                           ? selectedImage
-                          : `${process.env.NEXT_PUBLIC_API_URL}${selectedImage}`
+                          : `${process.env.NEXT_PUBLIC_API_URL}${selectedImage ?? ''}`
                       }
-                      // src={`${process.env.NEXT_PUBLIC_API_URL}${selectedImage}`}
                       alt='Company Logo'
                       width={116}
                       height={90}
@@ -182,12 +162,12 @@ export const ProfileComponent = ({ user }: any) => {
                   <input ref={inputRef} type='file' className='hidden' onChange={(e) => handleUploadCompanyLogo(e)} />
                   <p
                     onClick={onUploadCompanyLogo}
-                    className='cursor-pointer p-1 text-[16px] text-orange-600 text-center mt-3 font-medium'
+                    className='cursor-pointer font-semibold p-1 text-[16px] text-orange-600 text-center mt-3 hover:text-orange-700 transition-all duration-300'
                   >
                     Upload logo
                   </p>
                 </div>
-                {/* <UploadBlock type='logo' label='Upload logo' /> */}
+                <div className='w-[1px] bg-neutral-100'></div>
 
                 {/* Form Area */}
                 <div>
@@ -222,6 +202,7 @@ export const ProfileComponent = ({ user }: any) => {
                       <ErrorMessage name='phone' component='div' className='text-red-500 text-xs mt-1' />
                     </div>
                   </div>
+
                   <div className='mt-4'>
                     <label className='block text-sm font-medium mb-2'>
                       Website <span className='text-red-500'>*</span>
@@ -251,15 +232,7 @@ export const ProfileComponent = ({ user }: any) => {
                 </div>
               </section>
 
-              <section className='grid grid-cols-[120px_1fr] gap-8 pb-8 bg-white rounded-[8px] p-10'>
-                {/* Upload Area */}
-                <div className='flex flex-col items-center'>
-                  <Image src='/images/avatar.png' alt='Vercel Logo' width={80} height={80} />
-                  <input type='file' className='hidden' />
-                  <p className='p-1 text-[16px] text-orange-600 text-center mt-3 font-medium'>Upload logo</p>
-                </div>
-                {/* <UploadBlock type='logo' label='Upload logo' /> */}
-
+              <section ref={keyContactsRef} className='grid grid-cols-1 gap-8 pb-8 bg-white rounded-[8px] p-10'>
                 {/* Form Area */}
                 <div>
                   <h3 className='text-[24px] font-semibold mb-2 text-orange-600'>Key contact</h3>
@@ -324,7 +297,7 @@ export const ProfileComponent = ({ user }: any) => {
             </Form>
           )}
         </Formik>
-        <div className='bg-white rounded-[8px] p-6 flex justify-between items-center mt-6'>
+        <section ref={settingsRef} className='bg-white rounded-[8px] p-6 flex justify-between items-center mt-6'>
           <div>
             <p className='text-[20px] font-semibold mb-2'>Password</p>
             <p className='text-[16px]'>You can change your password at any time.</p>
@@ -332,7 +305,7 @@ export const ProfileComponent = ({ user }: any) => {
           <p className='text-[16px] p-1 font-semibold text-orange-600 hover:text-orange-700 cursor-pointer'>
             Change password
           </p>
-        </div>
+        </section>
 
         <div className='bg-white rounded-[8px] p-6 flex justify-between items-center mt-6'>
           <div>

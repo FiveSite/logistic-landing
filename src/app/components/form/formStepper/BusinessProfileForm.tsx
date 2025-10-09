@@ -1,20 +1,5 @@
-import { MenuItem, Select } from '@mui/material';
 import { Field, ErrorMessage } from 'formik';
-import React from 'react';
 import { FormikMultiSelect } from './MultiSelectComponent';
-
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
 
 export const BusinessProfileForm = () => {
   return (
@@ -65,19 +50,7 @@ export const BusinessProfileForm = () => {
         <FormikMultiSelect name='services' label='' />
         <ErrorMessage name='services' component='div' className='text-red-500 text-xs mt-1' />
       </div>
-      {/* <div className='mt-4'>
-        <label className='block text-sm font-medium mb-2'>
-          Services <span className='text-red-500'>*</span>
-        </label>
-        <Select multiple name='services' id='services' size='small' sx={{ width: '100%' }}>
-          {names.map((name) => (
-            <MenuItem key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-        <ErrorMessage name='services' component='div' className='text-red-500 text-xs mt-1' />
-      </div> */}
+
       <div className='mt-4'>
         <label className='block text-sm font-medium mb-2'>
           Brief Company Profile <span className='text-red-500'>*</span>

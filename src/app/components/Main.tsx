@@ -5,7 +5,7 @@ import ArrowRightIcon from '../../../public/icons/arrow-right.svg';
 import { ResetPasswordForm } from './form/ResetPassword';
 import { ModalComponent } from './Modal';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ResetSuccessDialog } from './dialog/ResetSuccessDialog';
 import { LoginForm } from './form/LoginForm';
 import { MemberDialog } from './dialog/MemberDialog';
@@ -23,7 +23,7 @@ export const Main = ({ user }: { user: any }) => {
   const [isCongratsOpen, setIsCongratsOpen] = useState(false);
   const [isForgotPasswordSuccessOpen, setIsForgotPasswordSuccessOpen] = useState(false);
 
-  console.log('user', user);
+  const router = useRouter();
 
   const searchParams = useSearchParams();
   const code = searchParams.get('code');
@@ -36,17 +36,19 @@ export const Main = ({ user }: { user: any }) => {
 
   return (
     <section className="bg-[url('/images/main-bg.png')] bg-cover bg-no-repeat ">
-      <div className='xl:px-[420px] pt-[360px] max-md:pt-[100px] max-md:px-8'>
+      <div className='xl:px-[300px] pt-[360px] max-md:pt-[100px] max-md:px-8'>
         <h1 className='text-[62px] max-md:text-[36px] font-bold text-[#1A1A1A] text-center leading-[62px] max-md:leading-[36px] mb-8 max-md:mb-6'>
-          African Alliance Logistics Network
+          Global Reach. African Trust. Boundless Possibilities.
         </h1>
         <p className='text-[18px] max-md:text-[16px] text-[#1A1A1A] text-center mb-12'>
-          Lorem ipsum dolor sit amet consectetur adipiscing elidolor mattis sit phasellus mollis sit aliquam sit nullam
-          neques.
+          Building trust, driving partnerships, and enhancing Africa’s supply chain to the globe.
         </p>
 
         <div className='relative flex justify-center gap-6 md:px-4 w-full mb-[100px] max-md:mb-10'>
-          <button className=' border border-[#E1E4ED] hover:bg-gray-50 shadow-xs cursor-pointer flex items-center gap-2   text-[16px] bg-white px-8 py-3.5 rounded-[100px] transition-all ease-in  duration-300 '>
+          <button
+            onClick={() => router.push('/about')}
+            className='h-10 border border-[#E1E4ED] hover:bg-gray-50 shadow-xs cursor-pointer flex items-center gap-2 font-semibold  text-[16px] bg-white px-8 py-3 rounded-[100px] transition-all ease-in  duration-300 '
+          >
             About us
             {/* <div className='flex items-center justify-center w-5 h-5'>
               <ArrowRightIcon className='stroke-white' />
@@ -58,7 +60,7 @@ export const Main = ({ user }: { user: any }) => {
               onClick={() => {
                 setIsMemberModalOpen(true);
               }}
-              className=' cursor-pointer flex items-center gap-2 shadow-xs text-white text-[16px] bg-orange-600 hover:bg-orange-700 px-8 py-3.5 rounded-[100px] transition-all ease-in  duration-300 '
+              className='h-10 cursor-pointer flex items-center gap-2 shadow-xs text-white text-[16px] bg-orange-600 hover:bg-orange-700 px-8 py-3 rounded-[100px] transition-all ease-in  duration-300 '
             >
               Become a member
               <div className='flex items-center justify-center w-4 h-4'>

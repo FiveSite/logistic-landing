@@ -148,7 +148,7 @@
 
 'use client';
 import { countryMap } from '@/constants';
-import { fetchMembersList } from '@/services/api';
+import { fetchMembersList, fetchMembersList2 } from '@/services/api';
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -156,9 +156,9 @@ import WorldMap from 'react-svg-worldmap';
 
 // Функція для підбору кольору
 const getColor = (count: number) => {
-  if (count < 1) return '#DDEEDB'; // lightgreen
-  if (count <= 5) return '#F6C28B'; // orangered
-  return '#E9A1A1'; // red
+  if (count < 1) return '#ffffff'; // lightgreen
+  if (count <= 5) return '#FED7AA'; // orangered
+  return '#F97316'; // red
 };
 
 const countCountries = (data: { country: string }[]) => {
@@ -180,7 +180,7 @@ export const World = () => {
 
   const getMembers = async () => {
     try {
-      const { data } = await fetchMembersList();
+      const { data } = await fetchMembersList2();
       setData(countCountries(data));
     } catch (error) {
       console.log(error);

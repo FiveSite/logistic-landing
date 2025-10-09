@@ -25,12 +25,14 @@ export const fetchMembersList = async ({
   cityValue,
   companyValue,
   servicesValue,
+  searchValue,
 }: {
   page: number;
   countryValue?: string;
   cityValue?: string;
   companyValue?: string;
   servicesValue?: string;
+  searchValue?: string;
 }) => {
   try {
     const params: Record<string, string> = {
@@ -55,9 +57,37 @@ export const fetchMembersList = async ({
     if (servicesValue) {
       params['filters[services][$contains]'] = servicesValue;
     }
+    if (searchValue) {
+      params['filters[$or][0][company][$contains]'] = searchValue;
+      params['filters[$or][1][country][$contains]'] = searchValue;
+      params['filters[$or][2][address][$contains]'] = searchValue;
+      params['filters[$or][3][services][$contains]'] = searchValue;
+      params['filters[$or][4][profile][$contains]'] = searchValue;
+      params['filters[$or][7][memberId][$contains]'] = searchValue;
+    }
 
     const res = await axiosInstance.get('/api/members', { params });
 
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching members:', error);
+    return { data: [], meta: { pagination: {} } };
+  }
+};
+
+export const fetchMember = async (id: string) => {
+  try {
+    const res = await axiosInstance.get(`/api/members/${id}?populate=*`);
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching member:', error);
+    return null;
+  }
+};
+
+export const fetchMembersList2 = async () => {
+  try {
+    const res = await axiosInstance.get('/api/members');
     return res.data;
   } catch (error) {
     console.error('Error fetching members:', error);

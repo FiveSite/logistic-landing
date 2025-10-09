@@ -3,9 +3,11 @@ import Stack from '@mui/material/Stack';
 export const PaginationComponent = ({
   handleChange,
   page,
+  pageCount,
 }: {
   handleChange: (event: React.ChangeEvent<unknown>, value: number) => void;
   page: number;
+  pageCount: number;
 }) => {
   return (
     <div>
@@ -13,7 +15,7 @@ export const PaginationComponent = ({
         {/* <Pagination count={10} shape='rounded' /> */}
         <Pagination
           page={page}
-          count={10}
+          count={pageCount}
           variant='outlined'
           shape='rounded'
           showFirstButton

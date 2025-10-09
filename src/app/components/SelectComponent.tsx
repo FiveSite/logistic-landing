@@ -6,6 +6,7 @@ export const SelectComponent = ({
   label,
   onChange,
   value,
+  isDisabled,
 }: {
   options: {
     value: string;
@@ -16,15 +17,18 @@ export const SelectComponent = ({
     event: React.SyntheticEvent,
     value: { value: string; label: string } | null,
     reason: string
+
     //details?: any
   ) => void;
   value: {
     value: string;
     label: string;
   };
+  isDisabled?: boolean;
 }) => {
   return (
     <Autocomplete
+      disabled={isDisabled}
       id='country-select-demo'
       sx={{ width: 200, height: '50px' }}
       options={options}
@@ -76,13 +80,13 @@ export const SelectComponent = ({
               bgcolor: '#fff',
               height: '50px',
               '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#F1F3F7',
+                borderColor: 'none',
               },
               '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                 borderColor: '#FF4D00',
               },
               '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#FF4D00',
+                borderColor: isDisabled ? 'transparent' : '#FF4D00',
               },
             },
           }}
