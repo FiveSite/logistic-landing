@@ -1,6 +1,15 @@
+import { getUserFromToken } from '@/services/auth';
 import ArrowRightIcon from '../../../public/icons/arrow-right.svg';
+import { cookies } from 'next/headers';
+import Link from 'next/link';
 
-export const PhotoSection = () => {
+export const PhotoSection = async () => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token')?.value;
+
+  const user = await getUserFromToken(token ?? '');
+  console.log('user', user);
+
   return (
     <section className='bg-[#F6F6F6] px-10 w-full pt-[120px]'>
       <div
@@ -21,12 +30,24 @@ export const PhotoSection = () => {
             Fast, reliable, and transparent delivery solutions tailored to your needs. From warehouse to destination, we
             make every mile count.
           </p>
-          <button className='text-white text-[16px] font-semibold bg-orange-600 hover:bg-orange-700 w-fit rounded-[100px] cursor-pointer flex items-center gap-2 px-10 py-3'>
-            Join us
-            <div className='flex items-center justify-center w-4 h-4'>
-              <ArrowRightIcon className='stroke-white' />
-            </div>
-          </button>
+          {user ? (
+            <Link
+              href='/about#contact-us'
+              className='text-white text-[16px] font-semibold bg-orange-600 hover:bg-orange-700 w-fit rounded-[100px] cursor-pointer flex items-center gap-2 px-10 py-3'
+            >
+              Contact us
+              <div className='flex items-center justify-center w-4 h-4'>
+                <ArrowRightIcon className='stroke-white' />
+              </div>
+            </Link>
+          ) : (
+            <button className='text-white text-[16px] font-semibold bg-orange-600 hover:bg-orange-700 w-fit rounded-[100px] cursor-pointer flex items-center gap-2 px-10 py-3'>
+              Join us
+              <div className='flex items-center justify-center w-4 h-4'>
+                <ArrowRightIcon className='stroke-white' />
+              </div>
+            </button>
+          )}
         </div>
       </div>
     </section>

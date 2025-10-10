@@ -2,9 +2,9 @@ import Modal from '@mui/material/Modal';
 
 interface ModalProps {
   title: string;
-  description: string;
+  description?: string;
   isOpen: boolean;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   handleClose?: () => void;
 }
 export const ModalComponent = ({ title, description, isOpen, children, handleClose }: ModalProps) => {

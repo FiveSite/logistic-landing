@@ -71,7 +71,10 @@ const AboutPage = () => {
           {/* <section className='px-4 py-16 max-w-6xl mx-auto space-y-12'> */}
 
           <div className='px-[60px] pt-[100px] pb-[100px] mx-auto'>
-            <div className='bg-[#F7F7F7] rounded-[24px] h-full  overflow-hidden flex flex-col md:flex-row items-center mb-8'>
+            <div
+              id='financial-protection'
+              className='bg-[#F7F7F7] rounded-[24px] h-full  overflow-hidden flex flex-col md:flex-row items-center mb-8'
+            >
               {/* Image */}
               <div className='w-[475px] relative h-[500px] '>
                 <Image
@@ -111,7 +114,10 @@ const AboutPage = () => {
             </div>
             {/* 2 */}
 
-            <div className='bg-[#F7F7F7] rounded-[24px]  overflow-hidden flex flex-col md:flex-row items-center justify-end mb-8'>
+            <div
+              id='membership-standards'
+              className='bg-[#F7F7F7] rounded-[24px]  overflow-hidden flex flex-col md:flex-row items-center justify-end mb-8'
+            >
               {/* Content */}
               <div className='md:w-1/2 w-full p-6 md:p-10 text-left space-y-4'>
                 <h3 className='text-[34px] leading-[1] mb-8 font-semibold'>Strict Membership Standards</h3>
@@ -138,7 +144,10 @@ const AboutPage = () => {
             </div>
 
             {/* 3 */}
-            <div className='bg-[#F7F7F7] rounded-[24px]  overflow-hidden flex flex-col md:flex-row items-center'>
+            <div
+              id='risk-management'
+              className='bg-[#F7F7F7] rounded-[24px]  overflow-hidden flex flex-col md:flex-row items-center'
+            >
               {/* Image */}
               <div className='w-[475px] relative h-[370px] '>
                 <Image
@@ -168,7 +177,7 @@ const AboutPage = () => {
             </div>
           </div>
 
-          <div className='px-[60px] flex gap-20  pb-[60px] justify-center'>
+          <div id='contact-us' className='px-[60px] flex gap-20  pb-[60px] justify-center'>
             <SupportForm />
             <div className='space-y-6 text-sm text-gray-800 max-w-md py-8'>
               <div className='border-b pb-4 border-gray-200'>

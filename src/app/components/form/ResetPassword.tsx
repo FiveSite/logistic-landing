@@ -3,6 +3,7 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 interface FormValues {
   newPassword: string;
@@ -27,14 +28,19 @@ export const ResetPasswordForm = ({
   code: string;
 }) => {
   const router = useRouter();
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   //const searchParams = useSearchParams();
   //const code = searchParams.get('code');
 
   const handleSubmit = async (values: FormValues) => {
     if (!code) {
-      console.log('Invalid or missing code');
+      setMessage({ type: 'error', text: 'Invalid or missing reset code' });
       return;
     }
+
+    setIsSubmitting(true);
+    setMessage(null);
 
     try {
       const res = await fetch('http://localhost:1337/api/auth/reset-password', {
@@ -51,14 +57,21 @@ export const ResetPasswordForm = ({
 
       const data = await res.json();
 
-      if (data) {
-        router.push('/');
-        onSuccess();
+      if (res.ok && data) {
+        setMessage({ type: 'success', text: 'Password reset successfully!' });
+        setTimeout(() => {
+          router.push('/');
+          onSuccess();
+        }, 1500);
+      } else {
+        setMessage({ type: 'error', text: data.message || 'Failed to reset password' });
       }
       console.log('data', data);
-      console.log('Success reset password!');
     } catch (error) {
       console.log('err', error);
+      setMessage({ type: 'error', text: 'Network error. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -71,6 +84,15 @@ export const ResetPasswordForm = ({
       >
         {() => (
           <Form className='flex flex-col gap-4 max-w-md mx-auto'>
+            {message && (
+              <div className={`p-3 rounded-md text-sm ${
+                message.type === 'success' 
+                  ? 'bg-green-100 text-green-700 border border-green-200' 
+                  : 'bg-red-100 text-red-700 border border-red-200'
+              }`}>
+                {message.text}
+              </div>
+            )}
             {/* New password */}
             <div>
               <label htmlFor='newPassword' className='block text-sm font-semibold mb-1'>
@@ -103,9 +125,10 @@ export const ResetPasswordForm = ({
 
             <button
               type='submit'
-              className='cursor-pointer mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition'
+              disabled={isSubmitting}
+              className='cursor-pointer mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition disabled:opacity-50 disabled:cursor-not-allowed'
             >
-              Save
+              {isSubmitting ? 'Saving...' : 'Save'}
             </button>
 
             <div className='h-[1px] w-full bg-[#E1E4ED]'></div>

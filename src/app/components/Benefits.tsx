@@ -2,15 +2,11 @@
 import { fetchBenefits } from '@/services/api';
 import { Benefit } from '@/types';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export const Benefits = () => {
   const [benefits, setBenefits] = useState<Benefit[]>([]);
-
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [contentHeight, setContentHeight] = useState(0);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   const getData = async () => {
     const data = await fetchBenefits();
@@ -59,9 +55,8 @@ export const Benefits = () => {
                   <div className='absolute bottom-0 left-0 w-full h-6 bg-gradient-to-t from-white to-transparent group-hover:opacity-0 transition-opacity duration-300 pointer-events-none' />
                 </div>
 
-                {/* Кнопка */}
                 <Link
-                  href='/about'
+                  href='/about#membership-standards'
                   className='mt-4 ml-auto w-max opacity-0 group-hover:opacity-100 group-hover:mb-8 transition-all duration-600 delay-200 text-white text-[16px] bg-orange-600 hover:bg-orange-700 px-7 py-3 rounded-[100px]'
                 >
                   Read more
@@ -96,7 +91,7 @@ export const Benefits = () => {
 
                 {/* Кнопка */}
                 <Link
-                  href='/about'
+                  href='/about#risk-management'
                   className='mt-4 ml-auto w-max opacity-0 group-hover:opacity-100 group-hover:mb-8 transition-all duration-600 delay-200 text-white text-[16px] bg-orange-600 hover:bg-orange-700 px-7 py-3 rounded-[100px]'
                 >
                   Read more
@@ -129,7 +124,7 @@ export const Benefits = () => {
 
                 {/* Кнопка */}
                 <Link
-                  href='/about'
+                  href='/about#financial-protection'
                   className='mt-4 ml-auto w-max opacity-0 group-hover:opacity-100 group-hover:mb-8 transition-all duration-600 delay-200 text-white text-[16px] bg-orange-600 hover:bg-orange-700 px-7 py-3 rounded-[100px]'
                 >
                   Read more

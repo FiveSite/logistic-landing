@@ -10,6 +10,8 @@ import CameraIcon from '../../../public/icons/camera-icon.svg';
 import { countryMap } from '@/constants';
 import { useEffect, useRef, useState } from 'react';
 import { updateMember, uploadImage } from '@/services/auth';
+import { useRouter } from 'next/navigation';
+import { GoogleMapEmbed } from '../components/MapComponent';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: any; isEditMode?: boolean }) => {
@@ -23,6 +25,8 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
   const inputRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
+  const router = useRouter();
+
   const handleUploadBanerLogo = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -35,6 +39,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
       await updateMember(user.id, { banerLogo: id });
 
       setSelectedImage(fullUrl);
+      router.refresh();
     } catch (error) {
       console.error('Failed to upload banerLogo logo:', error);
     }
@@ -62,7 +67,9 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
               alt='Banner'
             />
 
-            <div className='absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300' />
+            {isEditMode && (
+              <div className='absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300' />
+            )}
 
             {isEditMode && (
               <button
@@ -130,7 +137,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
             {isEditMode && (
               <Link
                 href={'/profile/edit'}
-                className='cursor-pointer border flex gap-2 items-center border-orange-600 text-orange-600 px-4 py-1.5 rounded-[100px]  hover:bg-[rgba(255,77,0,0.1)]  transition'
+                className='cursor-pointer border flex gap-2 items-center border-orange-600 text-orange-600 px-4 py-1.5 rounded-[100px]  hover:bg-[rgba(255,77,0,0.05)]  transition'
               >
                 <div className='flex items-center justify-center w-4 h-4'>
                   <EditIcon className='' />
@@ -180,30 +187,40 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
             {/* Location */}
             <h2 className='text-[24px] font-semibold  mb-6'>Location</h2>
             <div className='p-6 bg-white rounded-[24px] '>
-              <div className='flex items-center gap-2 mb-4'>
-                <div className='flex items-center justify-center w-4 h-4'>
-                  <LocationIcon className='' />
+              <div className=' mb-4'>
+                <div className='flex items-center gap-4 mb-2'>
+                  <div className='flex items-center justify-center w-4 h-4'>
+                    <LocationIcon className='' />
+                  </div>
+                  <p className='text-[16px]'>
+                    {user.address} , {countryMap[user.country]}
+                  </p>
                 </div>
-                <p className='text-[16px]'>
-                  {user.address} , {countryMap[user.country]}
-                </p>
+                <div className='flex items-center gap-4'>
+                  <div className='flex items-center justify-center w-4 h-4'>
+                    <PhoneIcon className='' />
+                  </div>
+                  {user.contactNumber}
+                </div>
               </div>
+
               <div>
-                <iframe
+                <GoogleMapEmbed address={user.address} />
+                {/* <iframe
                   src='https://www.google.com/maps?q=8502+Preston+Rd,+Inglewood,+Maine&output=embed'
                   className='w-full h-56'
                   loading='lazy'
-                ></iframe>
+                ></iframe> */}
                 <div className='pt-4 flex items-center justify-between text-[16px]'>
-                  <div className='flex items-center gap-4'>
+                  {/* <div className='flex items-center gap-4'>
                     <div className='flex items-center justify-center w-4 h-4'>
                       <PhoneIcon className='' />
                     </div>
                     {user.contactNumber}
-                  </div>
-                  <button className='cursor-pointer px-6 py-2 bg-orange-600 text-white rounded-[100px] hover:bg-orange-700 transition ease-in-out duration-300'>
+                  </div> */}
+                  {/* <button className='cursor-pointer px-6 py-2 bg-orange-600 text-white rounded-[100px] hover:bg-orange-700 transition ease-in-out duration-300'>
                     View on map
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

@@ -35,7 +35,7 @@ export const Header = async () => {
           <NavLink href='/about' text='About us' />
           <NavLink href='/directory' text='Company Directory' />
           <NewsButton />
-          <NavLink href='/contacts' text='Contacts & Support' />
+          {/* <NavLink href='/contacts' text='Contacts & Support' /> */}
         </nav>
 
         {user ? <UserMenu name={user.contactName} avatar={user.companyLogo.url} /> : <AuthButtons />}

@@ -5,6 +5,8 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Image from 'next/image';
 import { ChangeEvent, FocusEvent, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { ChangePasswordForm } from '@/app/components/form/ChangePasswordForm';
+import { ModalComponent } from '@/app/components/Modal';
 
 const navItems = [
   { name: 'Company details', active: true },
@@ -15,6 +17,8 @@ const navItems = [
 export const ProfileComponent = ({ user }: any) => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(0);
+  const [isChangeModalOpen, setIsChangeModalOpen] = useState(false);
+  const [isSuccessPasswordModalOpen, setIsSuccessPasswordModalOpen] = useState(false);
 
   //logo company
   const initialCompanyLogo: string | null =
@@ -126,7 +130,7 @@ export const ProfileComponent = ({ user }: any) => {
           </ul>
         </nav>
       </aside>
-      <main className='flex-1'>
+      <div className='flex-1'>
         <Formik initialValues={initialValues} onSubmit={() => {}}>
           {({ values }) => (
             <Form>
@@ -302,7 +306,10 @@ export const ProfileComponent = ({ user }: any) => {
             <p className='text-[20px] font-semibold mb-2'>Password</p>
             <p className='text-[16px]'>You can change your password at any time.</p>
           </div>
-          <p className='text-[16px] p-1 font-semibold text-orange-600 hover:text-orange-700 cursor-pointer'>
+          <p
+            onClick={() => setIsChangeModalOpen(true)}
+            className='text-[16px] p-1 font-semibold text-orange-600 hover:text-orange-700 cursor-pointer'
+          >
             Change password
           </p>
         </section>
@@ -316,7 +323,34 @@ export const ProfileComponent = ({ user }: any) => {
             Delete account
           </p>
         </div>
-      </main>
+      </div>
+
+      {isChangeModalOpen && (
+        <ModalComponent
+          title=' Change password'
+          description='Enter your current and new password below'
+          isOpen={isChangeModalOpen}
+          handleClose={() => setIsChangeModalOpen(false)}
+        >
+          <ChangePasswordForm
+            onClose={() => {
+              setIsChangeModalOpen(false);
+            }}
+            onSuccess={() => {
+              setIsChangeModalOpen(false);
+              setIsSuccessPasswordModalOpen(true);
+            }}
+          />
+        </ModalComponent>
+      )}
+      {isSuccessPasswordModalOpen && (
+        <ModalComponent
+          title='Password changed'
+          description='Your password has been changed successfully.'
+          isOpen={isSuccessPasswordModalOpen}
+          handleClose={() => setIsSuccessPasswordModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
