@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from 'react';
 import { updateMember, uploadImage } from '@/services/auth';
 import { useRouter } from 'next/navigation';
 import { GoogleMapEmbed } from '../components/MapComponent';
+import { updateCompanyMember } from '@/services/api';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: any; isEditMode?: boolean }) => {
@@ -40,6 +41,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
 
       setSelectedImage(fullUrl);
       router.refresh();
+      await updateCompanyMember(user.documentId, { banerLogo: id });
     } catch (error) {
       console.error('Failed to upload banerLogo logo:', error);
     }
@@ -86,12 +88,12 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
             <input ref={inputRef} type='file' className='hidden' onChange={(e) => handleUploadBanerLogo(e)} />
           </div>
         ) : (
-          <div className='h-[400px] bg-gray-200 flex items-center justify-center'>
+          <div className='h-[400px] bg-gray-200 flex items-center justify-center group  transition duration-300 relative'>
             <input ref={inputRef} type='file' className='hidden' onChange={(e) => handleUploadBanerLogo(e)} />
             {isEditMode && (
               <button
                 onClick={() => inputRef.current?.click()}
-                className='cursor-pointer flex gap-2  px-4 py-2 text-white text-[16px] '
+                className='opacity-0 group-hover:opacity-100 cursor-pointer flex gap-2  px-4 py-2 text-white text-[16px] '
               >
                 <div className='flex items-center justify-center w-6 h-6'>
                   <CameraIcon className='' />
@@ -109,8 +111,9 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
               <Image
                 src={`${process.env.NEXT_PUBLIC_API_URL}${user.companyLogo.url}`}
                 alt='company-img'
-                width={90}
+                width={116}
                 height={90}
+                className='h-[90px] w-[116px] rounded-[8px]'
               />
             ) : (
               <Image src='/images/image-exp.png' alt='company-img' width={90} height={90} />
@@ -180,9 +183,9 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
             </div>
 
             {/* Company branches */}
-            <div>
+            {/* <div>
               <h2 className='text-[24px] font-semibold mb-6'>Company branches</h2>
-            </div>
+            </div> */}
 
             {/* Location */}
             <h2 className='text-[24px] font-semibold  mb-6'>Location</h2>

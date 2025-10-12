@@ -84,15 +84,6 @@ export const ResetPasswordForm = ({
       >
         {() => (
           <Form className='flex flex-col gap-4 max-w-md mx-auto'>
-            {message && (
-              <div className={`p-3 rounded-md text-sm ${
-                message.type === 'success' 
-                  ? 'bg-green-100 text-green-700 border border-green-200' 
-                  : 'bg-red-100 text-red-700 border border-red-200'
-              }`}>
-                {message.text}
-              </div>
-            )}
             {/* New password */}
             <div>
               <label htmlFor='newPassword' className='block text-sm font-semibold mb-1'>
@@ -125,8 +116,7 @@ export const ResetPasswordForm = ({
 
             <button
               type='submit'
-              disabled={isSubmitting}
-              className='cursor-pointer mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition disabled:opacity-50 disabled:cursor-not-allowed'
+              className='cursor-pointer mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition'
             >
               {isSubmitting ? 'Saving...' : 'Save'}
             </button>

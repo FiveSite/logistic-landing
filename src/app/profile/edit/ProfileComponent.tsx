@@ -7,6 +7,7 @@ import { ChangeEvent, FocusEvent, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChangePasswordForm } from '@/app/components/form/ChangePasswordForm';
 import { ModalComponent } from '@/app/components/Modal';
+import { updateCompanyMember } from '@/services/api';
 
 const navItems = [
   { name: 'Company details', active: true },
@@ -78,6 +79,9 @@ export const ProfileComponent = ({ user }: any) => {
       await updateMember(user.id, { [name]: value });
       console.log(`Field ${name} updated with value:`, value);
       router.refresh();
+
+      const member = await updateCompanyMember(user.documentId, { [name]: value });
+      console.log('Member updated:', member);
     } catch (err) {
       console.error(`Failed to update field ${name}:`, err);
     }
@@ -94,10 +98,11 @@ export const ProfileComponent = ({ user }: any) => {
       setSelectedImage(URL.createObjectURL(file));
 
       const { fullUrl, id } = await uploadImage(file);
-      console.log('Uploaded URL:', fullUrl);
-      console.log('Uploaded ID:', id);
 
       await updateMember(user.id, { companyLogo: id });
+
+      router.refresh();
+      await updateCompanyMember(user.documentId, { companyLogo: id });
 
       setSelectedImage(fullUrl);
     } catch (error) {
@@ -152,7 +157,7 @@ export const ProfileComponent = ({ user }: any) => {
                       alt='Company Logo'
                       width={116}
                       height={90}
-                      className='w-[116px] h-[90px] object-contain rounded-[8px]'
+                      className='w-[116px] h-[90px]  rounded-[8px]'
                     />
                   ) : (
                     <Image

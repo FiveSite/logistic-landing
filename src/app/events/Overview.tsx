@@ -23,7 +23,7 @@ export const EventOverview = ({ event }: EventProp) => {
         {event.endDate && (
           <div>
             <div className='flex items-center gap-2'>
-              <span className='w-3 h-0.5 bg-black mr-1.5'></span>
+              <span className='w-3 h-0.5 bg-black mr-2'></span>
               {new Date(event.endDate).toLocaleDateString('en-US', {
                 month: 'long',
                 day: 'numeric',

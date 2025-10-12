@@ -38,7 +38,7 @@ export const Header = async () => {
           {/* <NavLink href='/contacts' text='Contacts & Support' /> */}
         </nav>
 
-        {user ? <UserMenu name={user.contactName} avatar={user.companyLogo.url} /> : <AuthButtons />}
+        {user ? <UserMenu user={user} /> : <AuthButtons />}
       </div>
     </div>
   );

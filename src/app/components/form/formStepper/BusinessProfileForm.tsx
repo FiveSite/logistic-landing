@@ -5,8 +5,8 @@ export const BusinessProfileForm = () => {
   return (
     <>
       <div className='grid grid-cols-2 gap-6'>
-        <div>
-          <label className='block text-sm font-medium mb-2'>
+        <div className='relative'>
+          <label className='block text-sm font-medium mb-1'>
             Business start date <span className='text-red-500'>*</span>
           </label>
           <Field
@@ -15,10 +15,14 @@ export const BusinessProfileForm = () => {
             placeholder='00/00/00'
             className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
           />
-          <ErrorMessage name='startBusinessDate' component='div' className='text-red-500 text-xs mt-1' />
+          <ErrorMessage
+            name='startBusinessDate'
+            component='div'
+            className='absolute top-[58px] left-0 text-red-500 text-xs mt-1'
+          />
         </div>
-        <div>
-          <label className='block text-sm font-medium mb-2'>
+        <div className='relative'>
+          <label className='block text-sm font-medium mb-1'>
             Main Markets <span className='text-red-500'>*</span>
           </label>
           <Field
@@ -27,11 +31,15 @@ export const BusinessProfileForm = () => {
             placeholder='Europe, Africa, Middle East'
             className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
           />
-          <ErrorMessage name='markets' component='div' className='text-red-500 text-xs mt-1' />
+          <ErrorMessage
+            name='markets'
+            component='div'
+            className='absolute top-[58px] left-0 text-red-500 text-xs mt-1'
+          />
         </div>
       </div>
-      <div className='mt-4'>
-        <label className='block text-sm font-medium mb-2'>
+      <div className='mt-4 relative'>
+        <label className='block text-sm font-medium mb-1'>
           Main activities <span className='text-red-500'>*</span>
         </label>
         <Field
@@ -40,19 +48,27 @@ export const BusinessProfileForm = () => {
           placeholder='International shipping, logistics consulting'
           className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
         />
-        <ErrorMessage name='activities' component='div' className='text-red-500 text-xs mt-1' />
+        <ErrorMessage
+          name='activities'
+          component='div'
+          className='absolute top-[58px] left-0 text-red-500 text-xs mt-1'
+        />
       </div>
 
-      <div className='mt-4'>
-        <label className='block text-sm font-medium mb-2'>
+      <div className='mt-4 relative'>
+        <label className='block text-sm font-medium mb-1'>
           Services <span className='text-red-500'>*</span>
         </label>
         <FormikMultiSelect name='services' label='' />
-        <ErrorMessage name='services' component='div' className='text-red-500 text-xs mt-1' />
+        <ErrorMessage
+          name='services'
+          component='div'
+          className='absolute top-[58px] left-0 text-red-500 text-xs mt-1'
+        />
       </div>
 
-      <div className='mt-4'>
-        <label className='block text-sm font-medium mb-2'>
+      <div className='mt-4 relative'>
+        <label className='block text-sm font-medium mb-1'>
           Brief Company Profile <span className='text-red-500'>*</span>
         </label>
         <Field
@@ -63,7 +79,11 @@ export const BusinessProfileForm = () => {
           placeholder='Short overview of your company'
           className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
         />
-        <ErrorMessage name='profile' component='div' className='text-red-500 text-xs mt-1' />
+        <ErrorMessage
+          name='profile'
+          component='div'
+          className='absolute top-[118px] left-0 text-red-500 text-xs mt-1'
+        />
       </div>
     </>
   );

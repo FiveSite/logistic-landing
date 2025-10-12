@@ -29,9 +29,9 @@ export const Footer = () => {
             Events
           </Link>
 
-          <Link href='/contacts' className='px-2 py-3 text-[16px] font-medium'>
+          {/* <Link href='/contacts' className='px-2 py-3 text-[16px] font-medium'>
             Contacts & Support
-          </Link>
+          </Link> */}
         </nav>
 
         <div className='flex items-center gap-4 mt-8 md:hidden'>

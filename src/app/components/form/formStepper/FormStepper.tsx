@@ -33,6 +33,7 @@ export const initialValues: MemberSignUpFormValues = {
   branchLocations: '',
   references: '',
   companyLogo: '',
+  banerLogo: '',
 };
 
 // Step 1: Company info
@@ -133,6 +134,8 @@ export const FormStepper = ({
           ...values,
           isApproved: false,
           memberId: String(Math.floor(100000 + Math.random() * 900000)),
+          companyLogo: null,
+          banerLogo: null,
         });
         console.log('res', res);
 

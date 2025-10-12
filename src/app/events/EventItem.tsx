@@ -59,7 +59,7 @@ const EventCard = ({ title, description, startDate, endDate, location, photo, do
         </div>
         <p className=' text-[16px] leading-relaxed line-clamp-3 mb-6'>{description}</p>
 
-        <button className='cursor-pointer flex items-center gap-2 w-fit text-[16px] rounded-[100px]  font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-3'>
+        <button className='cursor-pointer flex items-center gap-2 w-fit text-[16px] rounded-[100px]  font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-2'>
           Register now
           <div className='flex items-center justify-center w-5 h-5'>
             <ArrowRightIcon className='stroke-white' />

@@ -76,6 +76,7 @@ export type MemberSignUpFormValues = {
   branchLocations: string;
   references: string;
   companyLogo: string | null;
+  banerLogo: string | null;
 };
 
 export type MemberData = MemberSignUpFormValues & {

@@ -1,13 +1,20 @@
 'use client';
 
 import { signIn } from '@/services/auth';
-import { Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import * as Yup from 'yup';
 
 interface FormValues {
   email: string;
   password: string;
 }
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string().min(6, 'Password must be at least 6 characters').required('Required'),
+});
 export const LoginForm = ({
   onClose,
   onChange,
@@ -17,9 +24,11 @@ export const LoginForm = ({
   onChange: () => void;
   onBecomeMember: () => void;
 }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const handleSubmit = async (values: FormValues) => {
-    console.log(values);
+    setIsSubmitting(true);
+
     try {
       const data = await signIn(values.email, values.password);
 
@@ -31,52 +40,61 @@ export const LoginForm = ({
         });
 
         if (res.ok) {
-          console.log('Token set in cookie');
-          router.refresh();
           onClose();
+          router.push('/directory');
+          router.refresh();
         }
       }
-
-      console.log('data', data);
     } catch (error) {
       console.error('Error:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div className='pt-6'>
-      <Formik initialValues={{ email: '', password: '' }} onSubmit={(values) => handleSubmit(values)}>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        onSubmit={(values) => handleSubmit(values)}
+        validationSchema={validationSchema}
+      >
         {() => (
           <Form className='flex flex-col gap-4 max-w-md mx-auto'>
             {/* Email */}
-            <div>
-              <label htmlFor='email' className='block text-sm font-semibold mb-1'>
+            <div className='relative'>
+              <label htmlFor='email' className='block text-sm  mb-1 '>
                 Email
+                <span className='text-red-500 ml-1'>*</span>
               </label>
               <Field
                 id='email'
                 name='email'
                 type='email'
                 placeholder='Your email'
-                className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500'
+                className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-orange-500'
               />
+              <ErrorMessage name='email' component='div' className='absolute top-[66px] left-0 text-red-500 text-xs' />
             </div>
 
             {/* Password */}
-            <div>
-              <label htmlFor='password' className='block text-sm font-semibold mb-1'>
+            <div className='relative'>
+              <label htmlFor='password' className='block text-sm  mb-1 '>
                 Password
+                <span className='text-red-500 ml-1'>*</span>
               </label>
               <Field
                 id='password'
                 name='password'
                 type='password'
                 placeholder='Your password'
-                className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500'
+                className=' w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-orange-500'
               />
-              <p className='text-xs text-gray-500 mt-1'>
-                It must be a combination of minimum 8 letters, numbers, and symbols.
-              </p>
+              <ErrorMessage
+                name='password'
+                component='div'
+                className='absolute top-[66px] left-0 text-red-500 text-xs'
+              />
             </div>
 
             <div className='flex items-center justify-end text-sm '>
@@ -89,7 +107,7 @@ export const LoginForm = ({
               type='submit'
               className='cursor-pointer mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition'
             >
-              Sign in
+              {isSubmitting ? 'Signing in...' : ' Sign in'}
             </button>
 
             <div className='h-[1px] w-full bg-[#E1E4ED]'></div>

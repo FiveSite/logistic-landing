@@ -7,7 +7,8 @@ import LogoutIcon from '../../../public/icons/logout-icon.svg';
 import { Popover } from '@mui/material';
 import { useState } from 'react';
 
-export function UserMenu({ name, avatar }: { name: string; avatar?: string }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function UserMenu({ user }: { user: any }) {
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -17,6 +18,8 @@ export function UserMenu({ name, avatar }: { name: string; avatar?: string }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  {
+  }
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
@@ -38,14 +41,20 @@ export function UserMenu({ name, avatar }: { name: string; avatar?: string }) {
         onClick={() => router.push('/profile')}
         className='cursor-pointer text-2xl font-bold rounded-full w-10 h-10 flex items-center justify-center bg-gray-100'
       >
-        {avatar ? (
-          <Image src={`${process.env.NEXT_PUBLIC_API_URL}${avatar}`} alt='user' width={40} height={40} />
+        {user.companyLogo && user.companyLogo.url ? (
+          <Image
+            src={`${process.env.NEXT_PUBLIC_API_URL}${user.companyLogo.url}`}
+            alt='user'
+            width={40}
+            height={40}
+            className='rounded-full shrink-0 object-cover w-full h-full'
+          />
         ) : (
           <Image src='/images/avatar.png' alt='user' width={40} height={40} />
         )}
       </div>
       <div aria-describedby={id} className='flex items-center gap-1 cursor-pointer' onClick={handleClick}>
-        {name}
+        {user.contactName}
         <div className='flex items-center justify-center w-5 h-5'>
           <ArrowIcon className='' />
         </div>

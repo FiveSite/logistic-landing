@@ -189,6 +189,7 @@ export const DirectoryComponent = () => {
                       alt='image'
                       width={167}
                       height={167}
+                      className='h-[167px] w-[167px] object-cover rounded-[8px]'
                     />
                   ) : (
                     <Image src='/images/image-exp.png' alt='image' width={167} height={167} className='h-[167px]' />

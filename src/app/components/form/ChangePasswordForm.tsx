@@ -65,9 +65,9 @@ export const ChangePasswordForm = ({ onClose, onSuccess }: { onClose: () => void
                 {message.text}
               </div>
             )}
-            {/* New password */}
-            <div>
-              <label htmlFor='newPassword' className='block text-sm font-semibold mb-1'>
+
+            <div className='relative'>
+              <label htmlFor='newPassword' className='block text-sm  mb-1'>
                 Current password <span className='text-red-500'>*</span>
               </label>
               <Field
@@ -77,12 +77,15 @@ export const ChangePasswordForm = ({ onClose, onSuccess }: { onClose: () => void
                 placeholder='Your current password'
                 className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-orange-500'
               />
-              <ErrorMessage name='currentPassword' component='div' className='text-red-500 text-xs mt-1' />
+              <ErrorMessage
+                name='currentPassword'
+                component='div'
+                className='absolute top-[62px] left-0 text-red-500 text-xs mt-1'
+              />
             </div>
 
-            {/* New password */}
-            <div>
-              <label htmlFor='newPassword' className='block text-sm font-semibold mb-1'>
+            <div className='relative'>
+              <label htmlFor='newPassword' className='block text-sm  mb-1'>
                 New password <span className='text-red-500'>*</span>
               </label>
               <Field
@@ -92,12 +95,15 @@ export const ChangePasswordForm = ({ onClose, onSuccess }: { onClose: () => void
                 placeholder='Your new password'
                 className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-orange-500'
               />
-              <ErrorMessage name='password' component='div' className='text-red-500 text-xs mt-1' />
+              <ErrorMessage
+                name='password'
+                component='div'
+                className='absolute top-[62px] left-0 text-red-500 text-xs mt-1'
+              />
             </div>
 
-            {/* Re-enter password */}
-            <div>
-              <label htmlFor='password' className='block text-sm font-semibold mb-1'>
+            <div className='relative'>
+              <label htmlFor='password' className='block text-sm  mb-1'>
                 Re-enter password <span className='text-red-500'>*</span>
               </label>
               <Field
@@ -107,17 +113,19 @@ export const ChangePasswordForm = ({ onClose, onSuccess }: { onClose: () => void
                 placeholder='Re-enter your password'
                 className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-orange-500'
               />
-              <ErrorMessage name='passwordConfirmation' component='div' className='text-red-500 text-xs mt-1' />
+              <ErrorMessage
+                name='passwordConfirmation'
+                component='div'
+                className='absolute top-[62px] left-0 text-red-500 text-xs mt-1'
+              />
             </div>
 
             <button
               type='submit'
-              className='cursor-pointer mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition'
+              className='cursor-pointer mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition mt-4'
             >
               {isSubmitting ? 'Saving...' : 'Save'}
             </button>
-
-            <div className='h-[1px] w-full bg-[#E1E4ED]'></div>
           </Form>
         )}
       </Formik>

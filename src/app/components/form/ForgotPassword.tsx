@@ -48,9 +48,9 @@ export const ForgotPassword = ({
         {({ isSubmitting }) => (
           <Form className='flex flex-col gap-4 max-w-md mx-auto'>
             {/* Email */}
-            <div>
-              <label htmlFor='email' className='block text-sm font-semibold mb-1'>
-                Email
+            <div className='relative'>
+              <label htmlFor='email' className='block text-sm  mb-1'>
+                Email <span className='text-red-500'>*</span>
               </label>
               <Field
                 id='email'
@@ -59,7 +59,11 @@ export const ForgotPassword = ({
                 placeholder='Your email'
                 className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-orange-500'
               />
-              <ErrorMessage name='email' component='div' className='text-red-500 text-xs mt-1' />
+              <ErrorMessage
+                name='email'
+                component='div'
+                className='absolute top-[62px] left-0 text-red-500 text-xs mt-1'
+              />
             </div>
 
             <button

@@ -95,6 +95,15 @@ export const fetchMembersList2 = async () => {
   }
 };
 
+export const updateCompanyMember = async (id: string, data: Record<string, string>) => {
+  try {
+    const res = await axiosInstance.put(`/api/members/${id}`, { data });
+    return res.data;
+  } catch (error) {
+    console.error('Error updating member:', error);
+  }
+};
+
 export const fetchCountriesList = async () => {
   try {
     const res = await fetch(countries);
