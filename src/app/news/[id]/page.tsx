@@ -1,8 +1,8 @@
 import { NewsDetails } from '@/app/news/NewsDetails';
 import { getOneNews } from '@/services/api';
 
-const CardNewsDetailsPage = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+const CardNewsDetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
   console.log('id', id);
   const data = await getOneNews(id);
   console.log(data);
