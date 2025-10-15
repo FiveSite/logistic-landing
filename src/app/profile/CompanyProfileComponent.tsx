@@ -16,9 +16,7 @@ import { updateCompanyMember } from '@/services/api';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: any; isEditMode?: boolean }) => {
-  const initialBanerLogo: string | null =
-    typeof user?.banerLogo === 'string' ? user.banerLogo : user?.banerLogo?.url ?? null;
-  const [selectedImage, setSelectedImage] = useState<string | null>(initialBanerLogo);
+  const [selectedImage, setSelectedImage] = useState<string | null>(user?.banerLogo?.url ?? null);
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
@@ -40,8 +38,8 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
       await updateMember(user.id, { banerLogo: id });
 
       setSelectedImage(fullUrl);
-      router.refresh();
       await updateCompanyMember(user.documentId, { banerLogo: id });
+      router.refresh();
     } catch (error) {
       console.error('Failed to upload banerLogo logo:', error);
     }
@@ -51,23 +49,14 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
     if (contentRef.current) {
       setContentHeight(contentRef.current.scrollHeight);
     }
-  }, [user.profile]);
+  }, []);
 
   return (
     <div>
       <section className='bg-[#f6f6f6] pb-16'>
         {selectedImage ? (
           <div className='relative h-[400px] w-full flex items-center justify-center group overflow-hidden'>
-            <img
-              src={
-                typeof selectedImage === 'string' &&
-                (selectedImage.startsWith('http') || selectedImage.startsWith('blob:'))
-                  ? selectedImage
-                  : `${process.env.NEXT_PUBLIC_API_URL}${selectedImage}`
-              }
-              className='object-cover w-full h-[400px]'
-              alt='Banner'
-            />
+            <img src={selectedImage} className='object-cover w-full h-[400px]' alt='Banner' />
 
             {isEditMode && (
               <div className='absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300' />
@@ -93,7 +82,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
             {isEditMode && (
               <button
                 onClick={() => inputRef.current?.click()}
-                className='opacity-0 group-hover:opacity-100 cursor-pointer flex gap-2  px-4 py-2 text-white text-[16px] '
+                className='opacity-0 group-hover:opacity-100 border border-transparent group-hover:border-white group-hover:border-[2px] cursor-pointer flex gap-2 px-4 py-2 text-white text-[16px]'
               >
                 <div className='flex items-center justify-center w-6 h-6'>
                   <CameraIcon className='' />
@@ -109,7 +98,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
           <div className='flex items-center space-x-4'>
             {user.companyLogo ? (
               <Image
-                src={`${process.env.NEXT_PUBLIC_API_URL}${user.companyLogo.url}`}
+                src={user.companyLogo.url}
                 alt='company-img'
                 width={116}
                 height={90}
@@ -128,7 +117,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
                   <LocationIcon className='' />
                 </div>
                 <p className='text-sm font-semibold'>
-                  {user.address} , {countryMap[user.country]}
+                  {user.address} - {user.city}, {countryMap[user.country]}
                 </p>
               </div>
             </div>
@@ -196,7 +185,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
                     <LocationIcon className='' />
                   </div>
                   <p className='text-[16px]'>
-                    {user.address} , {countryMap[user.country]}
+                    {user.address} - {user.city}, {countryMap[user.country]}
                   </p>
                 </div>
                 <div className='flex items-center gap-4'>
@@ -209,22 +198,8 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
 
               <div>
                 <GoogleMapEmbed address={user.address} />
-                {/* <iframe
-                  src='https://www.google.com/maps?q=8502+Preston+Rd,+Inglewood,+Maine&output=embed'
-                  className='w-full h-56'
-                  loading='lazy'
-                ></iframe> */}
-                <div className='pt-4 flex items-center justify-between text-[16px]'>
-                  {/* <div className='flex items-center gap-4'>
-                    <div className='flex items-center justify-center w-4 h-4'>
-                      <PhoneIcon className='' />
-                    </div>
-                    {user.contactNumber}
-                  </div> */}
-                  {/* <button className='cursor-pointer px-6 py-2 bg-orange-600 text-white rounded-[100px] hover:bg-orange-700 transition ease-in-out duration-300'>
-                    View on map
-                  </button> */}
-                </div>
+
+                <div className='pt-4 flex items-center justify-between text-[16px]'></div>
               </div>
             </div>
           </div>
@@ -243,7 +218,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
               </div>
             </div>
 
-            {/* Contacts */}
+            {/* Contact details */}
             <h2 className='text-[24px] font-semibold  mb-6'>Contacts</h2>
             <div className='p-4 bg-white rounded-[24px]'>
               <ul className='grid gap-y-5 text-sm '>
@@ -263,10 +238,75 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
                 </li>
                 <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
                   <p className=' w-[150px]'>Website:</p>
-                  <span className='font-semibold text-orange-600 underline'>{user.website}</span>
+                  <a href={user.website} target='_blank' className='font-semibold text-orange-600 underline'>
+                    {user.website}
+                  </a>
                 </li>
               </ul>
             </div>
+
+            {/* Invoicing details */}
+            {user.showInvoicingDetails && (
+              <div>
+                <h2 className='text-[24px] font-semibold  mb-6'>Invoicing details</h2>
+                <div className='p-4 bg-white rounded-[24px]'>
+                  <ul className='grid gap-y-5 text-sm '>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
+                      <p className=' w-[150px]'>Company name:</p>
+                      <div className='flex items-center gap-2'>
+                        <span className=' font-semibold'>{user.invoiceCompanyName}</span>
+                      </div>
+                    </li>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
+                      <p className=' w-[150px]'>Company address:</p>
+                      <span className=' font-semibold'>{user.invoiceCompanyAddress}</span>
+                    </li>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
+                      <p className=' w-[150px]'>Registration number:</p>
+                      <span className='font-semibold'>{user.companyRegistrationNumber}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {/* Bank details */}
+            {user.showBankDetails && (
+              <div>
+                {' '}
+                <h2 className='text-[24px] font-semibold  mb-6'>Bank details</h2>
+                <div className='p-4 bg-white rounded-[24px]'>
+                  <ul className='grid gap-y-5 text-sm '>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
+                      <p className=' w-[150px]'>Bank name:</p>
+                      <div className='flex items-center gap-2'>
+                        <span className=' font-semibold'>{user.bankName}</span>
+                      </div>
+                    </li>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
+                      <p className=' w-[150px]'>Address:</p>
+                      <span className=' font-semibold'>{user.bankAddress}</span>
+                    </li>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
+                      <p className=' w-[150px]'>Currency:</p>
+                      <span className='font-semibold'>{user.currency}</span>
+                    </li>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
+                      <p className=' w-[150px]'>Swift code:</p>
+                      <span className='font-semibold'>{user.currency}</span>
+                    </li>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
+                      <p className=' w-[150px]'>IBAN:</p>
+                      <span className='font-semibold'>{user.iban}</span>
+                    </li>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
+                      <p className=' w-[150px]'>Bank account:</p>
+                      <span className='font-semibold'>{user.bankAccount}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

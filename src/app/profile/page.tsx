@@ -1,6 +1,7 @@
 import { CompanyProfileComponent } from './CompanyProfileComponent';
 import { cookies } from 'next/headers';
 import { getUserFromToken } from '@/services/auth';
+import { redirect } from 'next/navigation';
 
 export const CompanyProfilePage = async () => {
   const cookieStore = await cookies();
@@ -8,9 +9,14 @@ export const CompanyProfilePage = async () => {
 
   const user = await getUserFromToken(token ?? '');
   console.log('user', user);
+
+  if (!user) {
+    redirect('/');
+  }
+
   return (
     <div className='bg-[#F6F6F6]'>
-      <CompanyProfileComponent user={user} isEditMode />
+      <CompanyProfileComponent user={user ?? null} isEditMode />
     </div>
   );
 };

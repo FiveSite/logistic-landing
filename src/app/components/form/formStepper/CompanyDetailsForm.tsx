@@ -1,4 +1,4 @@
-import { Field, ErrorMessage } from 'formik';
+import { Field, ErrorMessage, useFormikContext } from 'formik';
 
 export interface Country {
   cities: string[];
@@ -11,6 +11,15 @@ export interface CountryDataProp {
 }
 
 export const CompanyDetailsForm = ({ data }: CountryDataProp) => {
+  const { values } = useFormikContext<{ country: string }>();
+
+  // Знаходимо вибрану країну
+  const selectedCountry = data.find((item) => item.iso2 === values.country || item.country === values.country);
+
+  // Отримуємо міста для цієї країни
+  const cities = selectedCountry ? selectedCountry.cities.map((city) => ({ value: city, label: city })) : [];
+
+  console.log('cities', cities);
   return (
     <>
       <div className='grid grid-cols-2 gap-6'>
@@ -84,20 +93,39 @@ export const CompanyDetailsForm = ({ data }: CountryDataProp) => {
         </div>
         <div className='mt-4 relative'>
           <label className='block text-sm font-medium mb-1'>
-            Address <span className='text-red-500'>*</span>
+            City <span className=' text-red-500'>*</span>
           </label>
           <Field
-            type='text'
-            name='address'
-            placeholder='123 Main Street, London'
+            as='select'
+            name='city'
             className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
-          />
-          <ErrorMessage
-            name='address'
-            component='div'
-            className='absolute top-[58px] left-0 text-red-500 text-xs mt-1'
-          />
+          >
+            <option value=''>Select city</option>
+            {cities.map((c) => {
+              const key = c.value;
+              const value = c.value;
+              return (
+                <option key={key} value={value}>
+                  {c.value}
+                </option>
+              );
+            })}
+          </Field>
+          <ErrorMessage name='city' component='div' className='absolute top-[58px] left-0 text-red-500 text-xs mt-1' />
         </div>
+      </div>
+
+      <div className='mt-4 relative'>
+        <label className='block text-sm font-medium mb-1'>
+          Address <span className='text-red-500'>*</span>
+        </label>
+        <Field
+          type='text'
+          name='address'
+          placeholder='123 Main Street'
+          className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
+        />
+        <ErrorMessage name='address' component='div' className='absolute top-[58px] left-0 text-red-500 text-xs mt-1' />
       </div>
       <div className='mt-4 relative'>
         <label className='block text-sm font-medium mb-1'>

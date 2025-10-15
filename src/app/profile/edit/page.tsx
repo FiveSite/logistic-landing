@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { getUserFromToken } from '@/services/auth';
 import { ProfileComponent } from './ProfileComponent';
+import { redirect } from 'next/navigation';
 
 export const EditProfilePage = async () => {
   const cookieStore = await cookies();
@@ -8,6 +9,10 @@ export const EditProfilePage = async () => {
 
   const user = await getUserFromToken(token ?? '');
   console.log('user', user);
+
+  if (!user) {
+    redirect('/');
+  }
 
   return (
     <div className='bg-[#F6F6F6]'>

@@ -3,46 +3,46 @@
 import { updateMember, uploadImage } from '@/services/auth';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Image from 'next/image';
-import { ChangeEvent, FocusEvent, useRef, useState } from 'react';
+import { ChangeEvent, FocusEvent, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChangePasswordForm } from '@/app/components/form/ChangePasswordForm';
 import { ModalComponent } from '@/app/components/Modal';
 import { updateCompanyMember } from '@/services/api';
+import { SwitchComponent } from '@/app/components/Switch';
+import clsx from 'clsx';
 
 const navItems = [
-  { name: 'Company details', active: true },
-  { name: 'Key contacts', active: false },
-  { name: 'Settings', active: false },
+  { name: 'Company details', active: true, id: 'companyDetails' },
+  { name: 'Key contacts', active: false, id: 'keyContacts' },
+  { name: 'Invoicing details', active: false, id: 'invoicingDetails' },
+  { name: 'Bank details', active: false, id: 'bankDetails' },
+  { name: 'Settings', active: false, id: 'settings' },
 ];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ProfileComponent = ({ user }: any) => {
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState(0);
+
   const [isChangeModalOpen, setIsChangeModalOpen] = useState(false);
   const [isSuccessPasswordModalOpen, setIsSuccessPasswordModalOpen] = useState(false);
 
-  //logo company
-  const initialCompanyLogo: string | null =
-    typeof user?.companyLogo === 'string' ? user.companyLogo : user?.companyLogo?.url ?? null;
-  const [selectedImage, setSelectedImage] = useState<string | null>(initialCompanyLogo);
+  const [selectedImage, setSelectedImage] = useState<string | null>(user?.companyLogo?.url ?? null);
+
   const [isUploadingLogo, setIsUploadingLogo] = useState(false);
   const [uploadLogoError, setUploadLogoError] = useState<string | null>(null);
+
+  const [isInvoicingDetailsEnabled, setIsInvoicingDetailsEnabled] = useState(user?.showInvoicingDetails);
+  console.log('isInvoicingDetailsEnabled', isInvoicingDetailsEnabled);
+  const [isBankDetailsEnabled, setIsBankDetailsEnabled] = useState(user?.showBankDetails);
+  console.log('isBankDetailsEnabled', isBankDetailsEnabled);
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const companyDetailsRef = useRef<HTMLDivElement>(null);
   const keyContactsRef = useRef<HTMLDivElement>(null);
   const settingsRef = useRef<HTMLDivElement>(null);
-
-  const handleScrollToSection = (index: number) => {
-    setActiveTab(index);
-
-    const refs = [companyDetailsRef, keyContactsRef, settingsRef];
-
-    const targetRef = refs[index];
-    if (targetRef.current) {
-      targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
 
   const initialValues = {
     company: user?.company || '',
@@ -62,7 +62,19 @@ export const ProfileComponent = ({ user }: any) => {
     profile: user?.profile || '',
     annualTurnover: user?.annualTurnover || '',
     employees: user?.employees || '',
-    companyLogo: user?.companyLogo || '',
+    bankName: user?.bankName || '',
+    bankAddress: user?.bankAddress || '',
+    iban: user?.iban || '',
+    swiftCode: user?.swiftCode || '',
+    bankAccount: user?.bankAccount || '',
+    currency: user?.currency || '',
+    invoiceCompanyName: user?.invoiceCompanyName || '',
+    invoiceCompanyAddress: user?.invoiceCompanyAddress || '',
+    companyRegistrationNumber: user?.companyRegistrationNumber || '',
+
+    // companyLogo: user?.companyLogo || '',
+    // showInvoicingDetails: user?.showInvoicingDetails || false,
+    // showBankDetails: user?.showBankDetails || false,
   };
   const onUploadCompanyLogo = () => {
     if (inputRef.current) {
@@ -114,6 +126,54 @@ export const ProfileComponent = ({ user }: any) => {
     }
   };
 
+  const handleToggleUpdate = async (
+    field: 'showInvoicingDetails' | 'showBankDetails',
+    currentValue: boolean,
+    setValue: (val: boolean) => void
+  ) => {
+    const newValue = !currentValue;
+    setValue(newValue);
+    try {
+      await updateMember(user.id, { [field]: String(newValue) });
+      await updateCompanyMember(user.documentId, { [field]: String(newValue) });
+      router.refresh();
+    } catch (error) {
+      console.error(`Failed to update ${field}:`, error);
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('data-id');
+            if (id) setActiveSection(id);
+          }
+        });
+      },
+      {
+        rootMargin: '0px 0px -60% 0px', // щоб активувалось трохи раніше
+        threshold: 0.3,
+      }
+    );
+
+    Object.values(sectionRefs.current).forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const handleScrollTo = (id: string) => {
+    const el = sectionRefs.current[id];
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <div className='pt-[160px] px-10 flex pb-[160px]'>
       <aside className='w-64 p-8'>
@@ -123,9 +183,12 @@ export const ProfileComponent = ({ user }: any) => {
             {navItems.map((item, index) => (
               <li key={item.name}>
                 <button
-                  onClick={() => handleScrollToSection(index)}
+                  onClick={() => {
+                    setActiveSection(item.id);
+                    handleScrollTo(item.id);
+                  }}
                   className={`block py-1 text-[20px] transition-colors cursor-pointer ${
-                    activeTab === index ? 'text-gray-900 font-bold' : 'text-gray-600 hover:text-gray-900'
+                    activeSection === item.id ? 'text-gray-900 font-bold' : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
                   {item.name}
@@ -141,19 +204,17 @@ export const ProfileComponent = ({ user }: any) => {
             <Form>
               {/* Company Details Section */}
               <section
-                ref={companyDetailsRef}
+                ref={(el) => {
+                  sectionRefs.current['companyDetails'] = el;
+                }}
+                data-id='companyDetails'
                 className='grid grid-cols-[120px_auto_1fr] mb-8 gap-6 pb-10 bg-white rounded-[8px] p-10'
               >
                 {/* Upload Area */}
                 <div className='flex flex-col items-center'>
                   {selectedImage ? (
                     <Image
-                      src={
-                        typeof selectedImage === 'string' &&
-                        (selectedImage.startsWith('blob:') || selectedImage.startsWith('http'))
-                          ? selectedImage
-                          : `${process.env.NEXT_PUBLIC_API_URL}${selectedImage ?? ''}`
-                      }
+                      src={selectedImage}
                       alt='Company Logo'
                       width={116}
                       height={90}
@@ -241,7 +302,13 @@ export const ProfileComponent = ({ user }: any) => {
                 </div>
               </section>
 
-              <section ref={keyContactsRef} className='grid grid-cols-1 gap-8 pb-8 bg-white rounded-[8px] p-10'>
+              <section
+                ref={(el) => {
+                  sectionRefs.current['keyContacts'] = el;
+                }}
+                data-id='keyContacts'
+                className='grid grid-cols-1 gap-8 pb-8 bg-white rounded-[8px] p-10 mb-8'
+              >
                 {/* Form Area */}
                 <div>
                   <h3 className='text-[24px] font-semibold mb-2 text-orange-600'>Key contact</h3>
@@ -303,31 +370,371 @@ export const ProfileComponent = ({ user }: any) => {
                   </div>
                 </div>
               </section>
+
+              <section
+                ref={(el) => {
+                  sectionRefs.current['invoicingDetails'] = el;
+                }}
+                data-id='invoicingDetails'
+                className='grid grid-cols-1 gap-8 pb-8 bg-white rounded-[8px] p-10 mb-8'
+              >
+                {/* Form Area */}
+                <div>
+                  <div className='flex items-center justify-between'>
+                    <div className=''>
+                      <h3 className='text-[24px] font-semibold mb-2 text-orange-600'>Invoicing details</h3>
+                      <p className='mb-8'>Your company’s legal details for billing and payments.</p>
+                    </div>
+                    <SwitchComponent
+                      checked={isInvoicingDetailsEnabled}
+                      onChange={() =>
+                        handleToggleUpdate(
+                          'showInvoicingDetails',
+                          isInvoicingDetailsEnabled,
+                          setIsInvoicingDetailsEnabled
+                        )
+                      }
+                      // onChange={() => setIsInvoicingDetailsEnabled(!isInvoicingDetailsEnabled)}
+                    />
+                  </div>
+
+                  <div className='grid grid-cols-2 gap-6'>
+                    <div>
+                      <label
+                        className={clsx(
+                          !isInvoicingDetailsEnabled
+                            ? 'text-neutral-400 block text-sm font-medium mb-2'
+                            : 'block text-sm font-medium mb-2'
+                        )}
+                      >
+                        Company name{' '}
+                        <span className={clsx(!isInvoicingDetailsEnabled ? 'text-neutral-400' : 'text-red-500')}>
+                          *
+                        </span>
+                      </label>
+                      <Field
+                        type='text'
+                        name='invoiceCompanyName'
+                        placeholder='e.g. Global Logistics Ltd.'
+                        disabled={!isInvoicingDetailsEnabled}
+                        onBlur={(e: FocusEvent<HTMLInputElement>) => handleFieldUpdate(e, values)}
+                        className={clsx(
+                          'w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500',
+                          {
+                            'text-neutral-400': !isInvoicingDetailsEnabled, // apply gray text when disabled
+                          }
+                        )}
+                        // className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
+                      />
+                      <ErrorMessage name='invoiceCompanyName' component='div' className='text-red-500 text-xs mt-1' />
+                    </div>
+                    <div className=''>
+                      <label
+                        className={clsx(
+                          !isInvoicingDetailsEnabled
+                            ? 'text-neutral-400 block text-sm font-medium mb-2'
+                            : 'block text-sm font-medium mb-2'
+                        )}
+                      >
+                        Company address{' '}
+                        <span className={clsx(!isInvoicingDetailsEnabled ? 'text-neutral-400' : 'text-red-500')}>
+                          *
+                        </span>
+                      </label>
+                      <Field
+                        type='text'
+                        name='invoiceCompanyAddress'
+                        placeholder='101 King Street, London, SW1A 1AA, United Kingdom'
+                        disabled={!isInvoicingDetailsEnabled}
+                        onBlur={(e: FocusEvent<HTMLInputElement>) => handleFieldUpdate(e, values)}
+                        className={clsx(
+                          'w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500',
+                          {
+                            'text-neutral-400': !isInvoicingDetailsEnabled, // apply gray text when disabled
+                          }
+                        )}
+                        // className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
+                      />
+                      <ErrorMessage
+                        name='invoiceCompanyAddress'
+                        component='div'
+                        className='text-red-500 text-xs mt-1'
+                      />
+                    </div>
+                  </div>
+                  <div className='grid grid-cols-2 gap-6'>
+                    <div className='mt-4'>
+                      <label
+                        className={clsx(
+                          !isInvoicingDetailsEnabled
+                            ? 'text-neutral-400 block text-sm font-medium mb-2'
+                            : 'block text-sm font-medium mb-2'
+                        )}
+                      >
+                        Registration number{' '}
+                        <span className={clsx(!isInvoicingDetailsEnabled ? 'text-neutral-400' : 'text-red-500')}>
+                          *
+                        </span>
+                      </label>
+                      <Field
+                        type='text'
+                        name='companyRegistrationNumber'
+                        placeholder='1234567890'
+                        disabled={!isInvoicingDetailsEnabled}
+                        onBlur={(e: FocusEvent<HTMLInputElement>) => handleFieldUpdate(e, values)}
+                        className={clsx(
+                          'w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500',
+                          {
+                            'text-neutral-400': !isInvoicingDetailsEnabled, // apply gray text when disabled
+                          }
+                        )}
+                        // className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
+                      />
+                      <ErrorMessage
+                        name='companyRegistrationNumber'
+                        component='div'
+                        className='text-red-500 text-xs mt-1'
+                      />
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section
+                ref={(el) => {
+                  sectionRefs.current['bankDetails'] = el;
+                }}
+                id='bankDetails'
+                className='grid grid-cols-1 gap-8 pb-8 bg-white rounded-[8px] p-10'
+              >
+                {/* Form Area */}
+                <div>
+                  <div className='flex items-center justify-between'>
+                    <div className=''>
+                      <h3 className='text-[24px] font-semibold mb-2 text-orange-600'>Bank details</h3>
+                      <p className='mb-8'>Manage your banking information securely</p>
+                    </div>
+                    <SwitchComponent
+                      checked={isBankDetailsEnabled}
+                      onChange={() =>
+                        handleToggleUpdate('showBankDetails', isBankDetailsEnabled, setIsBankDetailsEnabled)
+                      }
+                      // onChange={() => setIsBankDetailsEnabled(!isBankDetailsEnabled)}
+                    />
+                  </div>
+
+                  <div className='grid grid-cols-2 gap-6'>
+                    <div>
+                      <label
+                        className={clsx(
+                          !isBankDetailsEnabled
+                            ? 'text-neutral-400 block text-sm font-medium mb-2'
+                            : 'block text-sm font-medium mb-2'
+                        )}
+                      >
+                        Bank name{' '}
+                        <span className={clsx(!isBankDetailsEnabled ? 'text-neutral-400' : 'text-red-500')}>*</span>
+                      </label>
+                      <Field
+                        type='text'
+                        name='bankName'
+                        placeholder='Dubai Islamic Bank'
+                        disabled={!isBankDetailsEnabled}
+                        onBlur={(e: FocusEvent<HTMLInputElement>) => handleFieldUpdate(e, values)}
+                        className={clsx(
+                          'w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500',
+                          {
+                            'text-neutral-400': !isBankDetailsEnabled,
+                          }
+                        )}
+                        // className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
+                      />
+                      <ErrorMessage name='bankName' component='div' className='text-red-500 text-xs mt-1' />
+                    </div>
+                    <div className=''>
+                      <label
+                        className={clsx(
+                          !isBankDetailsEnabled
+                            ? 'text-neutral-400 block text-sm font-medium mb-2'
+                            : 'block text-sm font-medium mb-2'
+                        )}
+                      >
+                        Address{' '}
+                        <span className={clsx(!isBankDetailsEnabled ? 'text-neutral-400' : 'text-red-500')}>*</span>
+                      </label>
+                      <Field
+                        type='text'
+                        name='bankAddress'
+                        placeholder='Sheikh Zayed Road, Dubai, United Arab Emirates'
+                        disabled={!isBankDetailsEnabled}
+                        onBlur={(e: FocusEvent<HTMLInputElement>) => handleFieldUpdate(e, values)}
+                        className={clsx(
+                          'w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500',
+                          {
+                            'text-neutral-400': !isBankDetailsEnabled,
+                          }
+                        )}
+                        // className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
+                      />
+                      <ErrorMessage name='bankAddress' component='div' className='text-red-500 text-xs mt-1' />
+                    </div>
+                  </div>
+                  <div className='grid grid-cols-2 gap-6'>
+                    <div className='mt-4'>
+                      <label
+                        className={clsx(
+                          !isBankDetailsEnabled
+                            ? 'text-neutral-400 block text-sm font-medium mb-2'
+                            : 'block text-sm font-medium mb-2'
+                        )}
+                      >
+                        Swift code{' '}
+                        <span className={clsx(!isBankDetailsEnabled ? 'text-neutral-400' : 'text-red-500')}>*</span>
+                      </label>
+                      <Field
+                        type='text'
+                        name='swiftCode'
+                        placeholder='SCBLAEADXXX'
+                        disabled={!isBankDetailsEnabled}
+                        onBlur={(e: FocusEvent<HTMLInputElement>) => handleFieldUpdate(e, values)}
+                        className={clsx(
+                          'w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500',
+                          {
+                            'text-neutral-400': !isBankDetailsEnabled,
+                          }
+                        )}
+                        // className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
+                      />
+                      <ErrorMessage name='swiftCode' component='div' className='text-red-500 text-xs mt-1' />
+                    </div>
+                    <div className='mt-4'>
+                      <label
+                        className={clsx(
+                          !isBankDetailsEnabled
+                            ? 'text-neutral-400 block text-sm font-medium mb-2'
+                            : 'block text-sm font-medium mb-2'
+                        )}
+                      >
+                        IBAN
+                        <span className={clsx(!isBankDetailsEnabled ? 'text-neutral-400' : 'text-red-500')}>*</span>
+                      </label>
+                      <Field
+                        type='text'
+                        name='iban'
+                        placeholder='AE07 0331 2345 6789 0123 456'
+                        disabled={!isBankDetailsEnabled}
+                        onBlur={(e: FocusEvent<HTMLInputElement>) => handleFieldUpdate(e, values)}
+                        className={clsx(
+                          'w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500',
+                          {
+                            'text-neutral-400': !isBankDetailsEnabled,
+                          }
+                        )}
+                        // className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
+                      />
+                      <ErrorMessage name='iban' component='div' className='text-red-500 text-xs mt-1' />
+                    </div>
+                  </div>
+                  <div className='grid grid-cols-2 gap-6'>
+                    <div className='mt-4'>
+                      <label
+                        className={clsx(
+                          !isBankDetailsEnabled
+                            ? 'text-neutral-400 block text-sm font-medium mb-2'
+                            : 'block text-sm font-medium mb-2'
+                        )}
+                      >
+                        Currency{' '}
+                        <span className={clsx(!isBankDetailsEnabled ? 'text-neutral-400' : 'text-red-500')}>*</span>
+                      </label>
+                      <Field
+                        type='text'
+                        name='currency'
+                        placeholder='EUR'
+                        disabled={!isBankDetailsEnabled}
+                        onBlur={(e: FocusEvent<HTMLInputElement>) => handleFieldUpdate(e, values)}
+                        className={clsx(
+                          'w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500',
+                          {
+                            'text-neutral-400': !isBankDetailsEnabled,
+                          }
+                        )}
+                        // className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
+                      />
+                      <ErrorMessage name='currency' component='div' className='text-red-500 text-xs mt-1' />
+                    </div>
+                    <div className='mt-4'>
+                      <label
+                        className={clsx(
+                          !isBankDetailsEnabled
+                            ? 'text-neutral-400 block text-sm font-medium mb-2'
+                            : 'block text-sm font-medium mb-2'
+                        )}
+                      >
+                        Bank account{' '}
+                        <span className={clsx(!isBankDetailsEnabled ? 'text-neutral-400' : 'text-red-500')}>*</span>
+                      </label>
+                      <Field
+                        type='text'
+                        name='bankAccount'
+                        placeholder='0012345678901'
+                        disabled={!isBankDetailsEnabled}
+                        onBlur={(e: FocusEvent<HTMLInputElement>) => handleFieldUpdate(e, values)}
+                        className={clsx(
+                          'w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500',
+                          {
+                            'text-neutral-400': !isBankDetailsEnabled,
+                          }
+                        )}
+                        // className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
+                      />
+                      <ErrorMessage name='bankAccount' component='div' className='text-red-500 text-xs mt-1' />
+                    </div>
+                  </div>
+                </div>
+              </section>
             </Form>
           )}
         </Formik>
-        <section ref={settingsRef} className='bg-white rounded-[8px] p-6 flex justify-between items-center mt-6'>
-          <div>
-            <p className='text-[20px] font-semibold mb-2'>Password</p>
-            <p className='text-[16px]'>You can change your password at any time.</p>
-          </div>
-          <p
-            onClick={() => setIsChangeModalOpen(true)}
-            className='text-[16px] p-1 font-semibold text-orange-600 hover:text-orange-700 cursor-pointer'
-          >
-            Change password
-          </p>
-        </section>
 
-        <div className='bg-white rounded-[8px] p-6 flex justify-between items-center mt-6'>
-          <div>
-            <p className='text-[20px] font-semibold mb-2'>Delete Account</p>
-            <p className='text-[16px]'>If you delete your account, you will lose the data associated with it.</p>
+        <section
+          ref={(el) => {
+            sectionRefs.current['settings'] = el;
+          }}
+          data-id='settings'
+        >
+          {' '}
+          <div className='bg-white rounded-[8px] p-6 flex justify-between items-center mt-6'>
+            <div>
+              <p className='text-[20px] font-semibold mb-2'>Branches</p>
+              <p className='text-[16px]'>You can add new branches.</p>
+            </div>
+            <p className='text-[16px] p-1 font-semibold text-orange-600 hover:text-orange-700 cursor-pointer'>
+              Add new branch
+            </p>
           </div>
-          <p className='text-[16px] p-1 font-semibold text-orange-600 hover:text-orange-700 cursor-pointer'>
-            Delete account
-          </p>
-        </div>
+          <div className='bg-white rounded-[8px] p-6 flex justify-between items-center mt-6'>
+            <div>
+              <p className='text-[20px] font-semibold mb-2'>Password</p>
+              <p className='text-[16px]'>You can change your password at any time.</p>
+            </div>
+            <p
+              onClick={() => setIsChangeModalOpen(true)}
+              className='text-[16px] p-1 font-semibold text-orange-600 hover:text-orange-700 cursor-pointer'
+            >
+              Change password
+            </p>
+          </div>
+          <div className='bg-white rounded-[8px] p-6 flex justify-between items-center mt-6'>
+            <div>
+              <p className='text-[20px] font-semibold mb-2'>Delete Account</p>
+              <p className='text-[16px]'>If you delete your account, you will lose the data associated with it.</p>
+            </div>
+            <p className='text-[16px] p-1 font-semibold text-orange-600 hover:text-orange-700 cursor-pointer'>
+              Delete account
+            </p>
+          </div>
+        </section>
       </div>
 
       {isChangeModalOpen && (

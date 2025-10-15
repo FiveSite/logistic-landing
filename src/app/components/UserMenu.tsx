@@ -6,6 +6,7 @@ import ArrowIcon from '../../../public/icons/chevron-down.svg';
 import LogoutIcon from '../../../public/icons/logout-icon.svg';
 import { Popover } from '@mui/material';
 import { useState } from 'react';
+import { nextAxios } from '@/utils/axios-next';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function UserMenu({ user }: { user: any }) {
@@ -27,9 +28,7 @@ export function UserMenu({ user }: { user: any }) {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', {
-      method: 'POST',
-    });
+    await nextAxios.post('/api/auth/logout');
 
     router.push('/');
     router.refresh();
@@ -43,7 +42,7 @@ export function UserMenu({ user }: { user: any }) {
       >
         {user.companyLogo && user.companyLogo.url ? (
           <Image
-            src={`${process.env.NEXT_PUBLIC_API_URL}${user.companyLogo.url}`}
+            src={user.companyLogo.url}
             alt='user'
             width={40}
             height={40}

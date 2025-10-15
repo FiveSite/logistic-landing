@@ -60,6 +60,7 @@ export type MemberSignUpFormValues = {
   website: string;
   address: string;
   country: string;
+  city: string;
   linkedin: string;
   contactName: string;
   contactPosition: string;

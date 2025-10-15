@@ -4,6 +4,11 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
         port: '1337',
@@ -11,6 +16,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

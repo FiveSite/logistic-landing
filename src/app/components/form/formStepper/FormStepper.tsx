@@ -17,6 +17,7 @@ export const initialValues: MemberSignUpFormValues = {
   website: '',
   address: '',
   country: '',
+  city: '',
   linkedin: '',
   contactName: '',
   contactPosition: '',
@@ -43,6 +44,7 @@ export const step1Schema = yup.object().shape({
   website: yup.string().url('Invalid URL').required('Website is required'),
   address: yup.string().required('Address is required'),
   country: yup.string().required('Country is required'),
+  city: yup.string().required('City is required'),
   linkedin: yup.string().url('Invalid URL').required('Linkedin is required'),
 });
 

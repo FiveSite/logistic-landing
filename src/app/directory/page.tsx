@@ -13,9 +13,6 @@ const CompanyDirectoryPage = async () => {
 
   const user = await getUserFromToken(token);
 
-  console.log('user', user);
-  console.log('token', token);
-
   if (!user) {
     redirect('/');
   }

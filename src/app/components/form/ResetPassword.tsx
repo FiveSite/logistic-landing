@@ -2,7 +2,7 @@
 
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface FormValues {
@@ -18,20 +18,16 @@ const validationSchema = Yup.object().shape({
 });
 export const ResetPasswordForm = ({
   onClose,
-  //onChange,
   onSuccess,
   code,
 }: {
   onClose: () => void;
-  //onChange: () => void;
   onSuccess: () => void;
   code: string;
 }) => {
   const router = useRouter();
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  //const searchParams = useSearchParams();
-  //const code = searchParams.get('code');
 
   const handleSubmit = async (values: FormValues) => {
     if (!code) {
@@ -85,9 +81,9 @@ export const ResetPasswordForm = ({
         {() => (
           <Form className='flex flex-col gap-4 max-w-md mx-auto'>
             {/* New password */}
-            <div>
-              <label htmlFor='newPassword' className='block text-sm font-semibold mb-1'>
-                New password
+            <div className='relative'>
+              <label htmlFor='newPassword' className='block text-sm  mb-1'>
+                New password <span className='text-red-500'>*</span>
               </label>
               <Field
                 id='newPassword'
@@ -96,13 +92,17 @@ export const ResetPasswordForm = ({
                 placeholder='Your new password'
                 className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-orange-500'
               />
-              <ErrorMessage name='newPassword' component='div' className='text-red-500 text-xs mt-1' />
+              <ErrorMessage
+                name='newPassword'
+                component='div'
+                className='absolute top-[62px] left-0 text-red-500 text-xs mt-1'
+              />
             </div>
 
             {/* Re-enter password */}
-            <div>
-              <label htmlFor='password' className='block text-sm font-semibold mb-1'>
-                Re-enter password
+            <div className='relative'>
+              <label htmlFor='password' className='block text-sm  mb-1'>
+                Re-enter password <span className='text-red-500'>*</span>
               </label>
               <Field
                 id='repeatPassword'
@@ -111,17 +111,19 @@ export const ResetPasswordForm = ({
                 placeholder='Re-enter your password'
                 className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-orange-500'
               />
-              <ErrorMessage name='repeatPassword' component='div' className='text-red-500 text-xs mt-1' />
+              <ErrorMessage
+                name='repeatPassword'
+                component='div'
+                className='absolute top-[62px] left-0 text-red-500 text-xs mt-1'
+              />
             </div>
 
             <button
               type='submit'
-              className='cursor-pointer mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition'
+              className='cursor-pointer mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition mt-4'
             >
               {isSubmitting ? 'Saving...' : 'Save'}
             </button>
-
-            <div className='h-[1px] w-full bg-[#E1E4ED]'></div>
           </Form>
         )}
       </Formik>

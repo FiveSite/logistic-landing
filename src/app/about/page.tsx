@@ -1,23 +1,16 @@
 'use client';
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Keyboard, Autoplay, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import { useEffect, useRef, useState } from 'react';
-import type { Swiper as SwiperType } from 'swiper';
-import { fetchTeam } from '@/services/api';
-import { Team } from '@/types';
 import { SupportForm } from '../components/form/SupportForm';
+import { useEffect, useState } from 'react';
+import { Benefit } from '@/types';
+import { fetchBenefits } from '@/services/api';
 
 const AboutPage = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [data, setData] = useState<Team[]>([]);
-
-  const swiperRef = useRef<SwiperType | null>(null);
+  const [benefits, setBenefits] = useState<Benefit[]>([]);
 
   const getData = async () => {
-    const data = await fetchTeam();
-    setData(data);
+    const data = await fetchBenefits();
+    setBenefits(data);
   };
 
   useEffect(() => {
@@ -78,7 +71,7 @@ const AboutPage = () => {
               {/* Image */}
               <div className='w-[475px] relative h-[500px] '>
                 <Image
-                  src='/images/img-1.png'
+                  src={benefits[1]?.photo.url}
                   alt='img'
                   width={475}
                   height={599}
@@ -133,7 +126,7 @@ const AboutPage = () => {
               {/* Image */}
               <div className='w-[475px] relative h-[320px] '>
                 <Image
-                  src='/images/img-3.png'
+                  src={benefits[0]?.photo.url}
                   alt='img'
                   width={475}
                   height={599}
@@ -151,7 +144,7 @@ const AboutPage = () => {
               {/* Image */}
               <div className='w-[475px] relative h-[370px] '>
                 <Image
-                  src='/images/img-2.png'
+                  src={benefits[2]?.photo.url}
                   alt='img'
                   width={475}
                   height={599}

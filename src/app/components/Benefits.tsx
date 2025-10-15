@@ -35,7 +35,7 @@ export const Benefits = () => {
             <div className='cursor-pointer group bg-white max-w-[475px] rounded-xl overflow-hidden flex flex-col text-center transition-all duration-500'>
               <div className='relative'>
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${benefits[0]?.photo.url}`}
+                  src={benefits[0]?.photo.url}
                   alt='Member benefits'
                   width={475}
                   height={365}
@@ -69,7 +69,7 @@ export const Benefits = () => {
             <div className='cursor-pointer group bg-white max-w-[475px] rounded-xl overflow-hidden flex flex-col text-center transition-all duration-500'>
               <div className='relative'>
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${benefits[1]?.photo.url}`}
+                  src={benefits[1]?.photo.url}
                   alt='Member benefits'
                   width={475}
                   height={365}
@@ -102,7 +102,7 @@ export const Benefits = () => {
             <div className='cursor-pointer group bg-white max-w-[475px] rounded-xl overflow-hidden flex flex-col text-center transition-all duration-500'>
               <div className='relative'>
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${benefits[2]?.photo.url}`}
+                  src={benefits[2]?.photo.url}
                   alt='Member benefits'
                   width={475}
                   height={365}

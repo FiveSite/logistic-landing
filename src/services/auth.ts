@@ -64,7 +64,7 @@ export async function uploadImage(file: File) {
   }
 
   // 3. Повертаємо повний URL (з доменом Strapi)
-  const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}${fileData.url}`;
+  const fullUrl = fileData.url;
 
   return { fullUrl, id: uploadedFile.id };
 }

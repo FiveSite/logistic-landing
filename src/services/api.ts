@@ -1,5 +1,6 @@
-import { News, Event, Team, Benefit, Country, MemberData, MemberSignUpFormValues } from '@/types';
+import { News, Event, Team, Benefit, Country, MemberData } from '@/types';
 import { axiosInstance } from '@/utils/axios';
+import { nextAxios } from '@/utils/axios-next';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const countries = 'https://countriesnow.space/api/v0.1/countries';
@@ -51,7 +52,7 @@ export const fetchMembersList = async ({
     }
 
     if (cityValue) {
-      params['filters[address][$contains]'] = cityValue;
+      params['filters[city][$eq]'] = cityValue;
     }
 
     if (servicesValue) {
@@ -63,7 +64,9 @@ export const fetchMembersList = async ({
       params['filters[$or][2][address][$contains]'] = searchValue;
       params['filters[$or][3][services][$contains]'] = searchValue;
       params['filters[$or][4][profile][$contains]'] = searchValue;
-      params['filters[$or][7][memberId][$contains]'] = searchValue;
+      params['filters[$or][5][memberId][$contains]'] = searchValue;
+      params['filters[$or][6][branchLocations][$contains]'] = searchValue;
+      params['filters[$or][7][city][$contains]'] = searchValue;
     }
 
     const res = await axiosInstance.get('/api/members', { params });
@@ -75,9 +78,13 @@ export const fetchMembersList = async ({
   }
 };
 
-export const fetchMember = async (id: string) => {
+export const fetchMember = async (id: string, token: string) => {
   try {
-    const res = await axiosInstance.get(`/api/members/${id}?populate=*`);
+    const res = await axiosInstance.get(`/api/members/${id}?populate=*`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data;
   } catch (error) {
     console.error('Error fetching member:', error);
@@ -97,7 +104,7 @@ export const fetchMembersList2 = async () => {
 
 export const updateCompanyMember = async (id: string, data: Record<string, string>) => {
   try {
-    const res = await axiosInstance.put(`/api/members/${id}`, { data });
+    const res = await nextAxios.put(`/api/members/update`, { id, data });
     return res.data;
   } catch (error) {
     console.error('Error updating member:', error);
