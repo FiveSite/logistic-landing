@@ -64,7 +64,7 @@ export const NewsDetails = ({ news }: NewsProp) => {
 
       <div className='flex gap-[80px]'>
         <aside className='min-w-[240px] max-w-[300px] '>
-          {news.content && news.content.length > 0 && <h2 className='text-[30px] mb-12 font-semibold'>Навігація</h2>}
+          {news.content && news.content.length > 0 && <h2 className='text-[30px] mb-12 font-semibold'>Navigation</h2>}
           <div className='flex flex-col gap-6'>
             {news.content?.map(({ title, id }) => (
               <button

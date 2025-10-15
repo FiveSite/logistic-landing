@@ -1,11 +1,16 @@
-'use client';
-
+import { getUserFromToken } from '@/services/auth';
+import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { DirectoryLink } from './DirectoryLink';
 
-export const Footer = () => {
-  const pathname = usePathname();
+export const Footer = async () => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token')?.value;
+
+  const user = await getUserFromToken(token ?? '');
+  console.log('user', user);
+
   return (
     <div className='bg-[#1A1A1A] text-white px-20 py-12 max-lg:py-8 max-md:px-3 max-md:py-8'>
       <div className='flex items-center justify-between max-lg:flex-col h-10 max-lg:h-fit mb-12 max-lg:mb-8'>
@@ -14,12 +19,16 @@ export const Footer = () => {
         </Link>
         <nav className='flex gap-4 h-10 max-md:h-fit max-md:flex-wrap max-md:justify-center max-md:mt-8'>
           <Link href='/' className='px-2 py-3 text-[16px] font-medium'>
+            Home
+          </Link>
+          <Link href='/about' className='px-2 py-3 text-[16px] font-medium'>
             About us
           </Link>
 
-          <Link href='/directory' className='px-2 py-3 text-[16px] font-medium'>
+          <DirectoryLink user={user} isFooter />
+          {/* <Link href='/directory' className='px-2 py-3 text-[16px] font-medium'>
             Company Directory
-          </Link>
+          </Link> */}
 
           <Link href='/news?tab=news' className='px-2 py-3 text-[16px] font-medium'>
             News

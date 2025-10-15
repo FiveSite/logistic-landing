@@ -38,7 +38,7 @@ export const fetchMembersList = async ({
   try {
     const params: Record<string, string> = {
       'pagination[page]': page.toString(),
-      'pagination[pageSize]': '2',
+      'pagination[pageSize]': '10',
       populate: '*',
       'filters[isApproved][$eq]': 'true',
     };
@@ -58,15 +58,13 @@ export const fetchMembersList = async ({
     if (servicesValue) {
       params['filters[services][$contains]'] = servicesValue;
     }
+
     if (searchValue) {
-      params['filters[$or][0][company][$contains]'] = searchValue;
-      params['filters[$or][1][country][$contains]'] = searchValue;
-      params['filters[$or][2][address][$contains]'] = searchValue;
-      params['filters[$or][3][services][$contains]'] = searchValue;
-      params['filters[$or][4][profile][$contains]'] = searchValue;
-      params['filters[$or][5][memberId][$contains]'] = searchValue;
-      params['filters[$or][6][branchLocations][$contains]'] = searchValue;
-      params['filters[$or][7][city][$contains]'] = searchValue;
+      const fields = ['company', 'country', 'address', 'services', 'profile', 'memberId', 'branchLocations', 'city'];
+
+      fields.forEach((field, index) => {
+        params[`filters[$or][${index}][${field}][$containsi]`] = searchValue;
+      });
     }
 
     const res = await axiosInstance.get('/api/members', { params });

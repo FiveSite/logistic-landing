@@ -6,6 +6,7 @@ import { cookies } from 'next/headers';
 import { getUserFromToken } from '@/services/auth';
 import { NewsButton } from './NewsButton';
 import { NavLink } from './NavLink';
+import { DirectoryLink } from './DirectoryLink';
 
 export const Header = async () => {
   const cookieStore = await cookies();
@@ -33,7 +34,8 @@ export const Header = async () => {
         <nav className='flex lg:gap-5 gap-8 max-lg:hidden'>
           <NavLink href='/' text='Home' />
           <NavLink href='/about' text='About us' />
-          <NavLink href='/directory' text='Company Directory' />
+          <DirectoryLink user={user} />
+          {/* <NavLink href='/directory' text='Company Directory' /> */}
           <NewsButton />
           {/* <NavLink href='/contacts' text='Contacts & Support' /> */}
         </nav>
