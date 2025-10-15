@@ -1,4 +1,5 @@
 import { axiosInstance } from '@/utils/axios';
+import axios from 'axios';
 import { cookies } from 'next/headers';
 import { NextResponse, type NextRequest } from 'next/server';
 
@@ -20,14 +21,14 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(response.data, { status: response.status });
-  } catch (error: any) {
-    console.log('Error changing password:', error);
-    return NextResponse.json(
-      { 
-        message: error.response?.data?.message || 'Failed to change password',
-        error: error.response?.data?.error || 'Internal server error'
-      }, 
-      { status: error.response?.status || 500 }
-    );
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      // err - це AxiosError
+      console.error('Axios error:', err.response?.data || err.message);
+    } else {
+      // якась інша помилка
+      console.error('Unknown error:', err);
+    }
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
