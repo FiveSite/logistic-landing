@@ -3,7 +3,7 @@ import { getUserFromToken } from '@/services/auth';
 import { ProfileComponent } from './ProfileComponent';
 import { redirect } from 'next/navigation';
 
-export const EditProfilePage = async () => {
+const EditProfilePage = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
 

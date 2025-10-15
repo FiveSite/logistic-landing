@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { getUserFromToken } from '@/services/auth';
 import { redirect } from 'next/navigation';
 
-export const CompanyProfilePage = async () => {
+const CompanyProfilePage = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
 
