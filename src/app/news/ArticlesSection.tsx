@@ -103,13 +103,7 @@ export const ArticlesNewsSection = () => {
           {data.map((item: News, index: number) => (
             <SwiperSlide key={index} className='max-w-[544px]'>
               <div className='flex flex-col'>
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${item.photo.url}`}
-                  alt='solution'
-                  width={544}
-                  height={553}
-                  className='mb-6 '
-                />
+                <Image src={item.photo?.url || ''} alt='solution' width={544} height={553} className='mb-6 ' />
 
                 <div className='text-[16px] flex items-center gap-2 mb-5'>
                   <div className='flex items-center gap-2'>

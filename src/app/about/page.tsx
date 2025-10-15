@@ -71,7 +71,7 @@ const AboutPage = () => {
               {/* Image */}
               <div className='w-[475px] relative h-[500px] '>
                 <Image
-                  src={benefits[1]?.photo.url}
+                  src={benefits[1]?.photo?.url || ''}
                   alt='img'
                   width={475}
                   height={599}
@@ -126,7 +126,7 @@ const AboutPage = () => {
               {/* Image */}
               <div className='w-[475px] relative h-[320px] '>
                 <Image
-                  src={benefits[0]?.photo.url}
+                  src={benefits[0]?.photo?.url ?? ''}
                   alt='img'
                   width={475}
                   height={599}
@@ -144,7 +144,7 @@ const AboutPage = () => {
               {/* Image */}
               <div className='w-[475px] relative h-[370px] '>
                 <Image
-                  src={benefits[2]?.photo.url}
+                  src={benefits[2]?.photo?.url ?? ''}
                   alt='img'
                   width={475}
                   height={599}

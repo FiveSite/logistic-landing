@@ -69,7 +69,7 @@ const EventDetails = ({ event }: EventProp) => {
     <div>
       <div className=''>
         <Image
-          src={`${process.env.NEXT_PUBLIC_API_URL}${event.photo.url}`}
+          src={event.photo?.url ?? ''}
           alt='Event banner'
           width={0}
           height={0}

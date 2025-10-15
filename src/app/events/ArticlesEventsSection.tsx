@@ -49,27 +49,8 @@ export const ArticlesEventsSection = () => {
             </div>
           </Link>
         </div>
-        {/* <p className='text-[#1A1A1A] mb-10 text-left max-w-[600px] max-md:text-center'>
-          Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore.
-        </p> */}
       </div>
       <div className='max-md:px-3 relative w-full  max-w-[1360px] block mx-auto'>
-        {/* Navigation Buttons */}
-        {/* <div className='absolute top-[-70px] right-10 z-10 flex gap-2 max-md:hidden'>
-          <button
-            ref={prevRef}
-            className='w-10 h-10 rounded-[8px] bg-white border border-gray-300 flex items-center justify-center text-black hover:bg-gray-100 transition'
-          >
-            ←
-          </button>
-          <button
-            ref={nextRef}
-            className='w-10 h-10 rounded-[8px] bg-orange-600 flex items-center justify-center text-white hover:bg-orange-600 transition'
-          >
-            →
-          </button>
-        </div> */}
-
         <Swiper
           grabCursor={true}
           centeredSlides={true}
@@ -117,13 +98,7 @@ export const ArticlesEventsSection = () => {
           {data.map((item: Event, index: number) => (
             <SwiperSlide key={index} className=''>
               <div className='flex flex-col'>
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${item.photo.url}`}
-                  alt='solution'
-                  width={544}
-                  height={553}
-                  className='mb-6'
-                />
+                <Image src={item.photo?.url || ''} alt='solution' width={544} height={553} className='mb-6' />
 
                 <div className='text-[16px] flex items-center gap-2 mb-5'>
                   <div className='flex items-center gap-2'>

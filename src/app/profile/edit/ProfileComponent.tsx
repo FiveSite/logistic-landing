@@ -10,6 +10,7 @@ import { ModalComponent } from '@/app/components/Modal';
 import { updateCompanyMember } from '@/services/api';
 import { SwitchComponent } from '@/app/components/Switch';
 import clsx from 'clsx';
+import { User } from '@/types';
 
 const navItems = [
   { name: 'Company details', active: true, id: 'companyDetails' },
@@ -18,8 +19,8 @@ const navItems = [
   { name: 'Bank details', active: false, id: 'bankDetails' },
   { name: 'Settings', active: false, id: 'settings' },
 ];
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const ProfileComponent = ({ user }: any) => {
+
+export const ProfileComponent = ({ user }: { user: User }) => {
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
@@ -84,7 +85,7 @@ export const ProfileComponent = ({ user }: any) => {
   ) => {
     const { name, value } = e.target;
     try {
-      await updateMember(user.id, { [name]: value });
+      await updateMember(user.id.toString(), { [name]: value });
 
       router.refresh();
 
@@ -106,7 +107,7 @@ export const ProfileComponent = ({ user }: any) => {
 
       const { fullUrl, id } = await uploadImage(file);
 
-      await updateMember(user.id, { companyLogo: id });
+      await updateMember(user.id.toString(), { companyLogo: id });
 
       router.refresh();
       await updateCompanyMember(user.documentId, { companyLogo: id });
@@ -129,7 +130,7 @@ export const ProfileComponent = ({ user }: any) => {
     const newValue = !currentValue;
     setValue(newValue);
     try {
-      await updateMember(user.id, { [field]: String(newValue) });
+      await updateMember(user.id.toString(), { [field]: String(newValue) });
       await updateCompanyMember(user.documentId, { [field]: String(newValue) });
       router.refresh();
     } catch (error) {

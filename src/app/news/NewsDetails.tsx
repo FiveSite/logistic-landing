@@ -52,7 +52,7 @@ export const NewsDetails = ({ news }: NewsProp) => {
     <div className='px-[166px] py-[60px] pt-[160px]'>
       <div className='mx-auto max-w-[1120px] mb-10'>
         <Image
-          src={`${process.env.NEXT_PUBLIC_API_URL}${news.photo.url}`}
+          src={news.photo?.url || ''}
           alt='photo'
           width={0}
           height={0}

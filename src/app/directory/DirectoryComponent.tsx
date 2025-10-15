@@ -10,12 +10,12 @@ import { SelectComponent } from '../components/SelectComponent';
 import { countryMap, services } from '@/constants';
 import { useRouter } from 'next/navigation';
 import { PaginationComponent } from '../components/Pagination';
+import { User } from '@/types';
 
 export const DirectoryComponent = () => {
   const router = useRouter();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [members, setMembers] = useState<any[]>([]);
+  const [members, setMembers] = useState<User[]>([]);
   console.log('members', members);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -175,8 +175,7 @@ export const DirectoryComponent = () => {
 
         <div className='space-y-4 flex flex-col gap-2'>
           {members.length > 0 ? (
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            members.map((company: any) => (
+            members.map((company: User) => (
               <div
                 onClick={() => router.push(`/directory/${company.documentId}`)}
                 key={company.id}
@@ -185,7 +184,7 @@ export const DirectoryComponent = () => {
                 <div className='flex items-center justify-center p-6 shrink-0'>
                   {company.companyLogo ? (
                     <Image
-                      src={company.companyLogo.url}
+                      src={company.companyLogo?.url ?? ''}
                       alt='image'
                       width={167}
                       height={167}

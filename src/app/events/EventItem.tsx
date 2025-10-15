@@ -26,7 +26,7 @@ const EventCard = ({ title, description, startDate, endDate, location, photo, do
       >
         {photo ? (
           <Image
-            src={`${process.env.NEXT_PUBLIC_API_URL}${photo.url}`}
+            src={photo?.url ?? ''}
             alt={title}
             width={256}
             height={176}

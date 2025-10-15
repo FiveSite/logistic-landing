@@ -13,9 +13,9 @@ import { updateMember, uploadImage } from '@/services/auth';
 import { useRouter } from 'next/navigation';
 import { GoogleMapEmbed } from '../components/MapComponent';
 import { updateCompanyMember } from '@/services/api';
+import { User } from '@/types';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: any; isEditMode?: boolean }) => {
+export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: User; isEditMode?: boolean }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(user?.banerLogo?.url ?? null);
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -35,7 +35,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
 
       const { fullUrl, id } = await uploadImage(file);
 
-      await updateMember(user.id, { banerLogo: id });
+      await updateMember(user.id.toString(), { banerLogo: id });
 
       setSelectedImage(fullUrl);
       await updateCompanyMember(user.documentId, { banerLogo: id });
@@ -105,7 +105,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
           <div className='flex items-center space-x-4'>
             {user.companyLogo ? (
               <Image
-                src={user.companyLogo.url}
+                src={user.companyLogo?.url ?? ''}
                 alt='company-img'
                 width={116}
                 height={90}
