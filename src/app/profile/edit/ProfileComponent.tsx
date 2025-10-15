@@ -71,10 +71,6 @@ export const ProfileComponent = ({ user }: any) => {
     invoiceCompanyName: user?.invoiceCompanyName || '',
     invoiceCompanyAddress: user?.invoiceCompanyAddress || '',
     companyRegistrationNumber: user?.companyRegistrationNumber || '',
-
-    // companyLogo: user?.companyLogo || '',
-    // showInvoicingDetails: user?.showInvoicingDetails || false,
-    // showBankDetails: user?.showBankDetails || false,
   };
   const onUploadCompanyLogo = () => {
     if (inputRef.current) {
@@ -89,11 +85,10 @@ export const ProfileComponent = ({ user }: any) => {
     const { name, value } = e.target;
     try {
       await updateMember(user.id, { [name]: value });
-      console.log(`Field ${name} updated with value:`, value);
+
       router.refresh();
 
       const member = await updateCompanyMember(user.documentId, { [name]: value });
-      console.log('Member updated:', member);
     } catch (err) {
       console.error(`Failed to update field ${name}:`, err);
     }

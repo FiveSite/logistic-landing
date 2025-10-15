@@ -56,7 +56,14 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: an
       <section className='bg-[#f6f6f6] pb-16'>
         {selectedImage ? (
           <div className='relative h-[400px] w-full flex items-center justify-center group overflow-hidden'>
-            <img src={selectedImage} className='object-cover w-full h-[400px]' alt='Banner' />
+            <Image
+              src={selectedImage}
+              alt='Banner'
+              layout='fill'
+              objectFit='cover'
+              className='object-cover w-full h-[400px]'
+              priority
+            />
 
             {isEditMode && (
               <div className='absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300' />
