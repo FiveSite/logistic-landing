@@ -18,10 +18,10 @@ export const Footer = async () => {
           <Image src='/images/logo-light.svg' alt='Vercel Logo' width={117} height={40} />
         </Link>
         <nav className='flex gap-4 h-10 max-md:h-fit max-md:flex-wrap max-md:justify-center max-md:mt-8'>
-          <Link href='/' className='px-2 py-3 text-[16px] font-medium'>
+          <Link href='/' className='px-2 py-3 text-[16px] font-medium hover:text-orange-400'>
             Home
           </Link>
-          <Link href='/about' className='px-2 py-3 text-[16px] font-medium'>
+          <Link href='/about' className='px-2 py-3 text-[16px] font-medium hover:text-orange-400'>
             About us
           </Link>
 
@@ -30,11 +30,11 @@ export const Footer = async () => {
             Company Directory
           </Link> */}
 
-          <Link href='/news?tab=news' className='px-2 py-3 text-[16px] font-medium'>
+          <Link href='/news?tab=news' className='px-2 py-3 text-[16px] font-medium hover:text-orange-400'>
             News
           </Link>
 
-          <Link href='/news?tab=events' className='px-2 py-3 text-[16px] font-medium'>
+          <Link href='/news?tab=events' className='px-2 py-3 text-[16px] font-medium hover:text-orange-400'>
             Events
           </Link>
 
