@@ -4,14 +4,14 @@ import Image from 'next/image';
 import TagIcon from '../../../public/icons/tag.svg';
 import CalendarIcon from '../../../public/icons/calendar.svg';
 import Link from 'next/link';
+import { Media } from '@/types';
 
 type NewCardProps = {
   title: string;
   description: string;
   date: string;
   category: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  photo?: any;
+  photo?: Media | null;
   documentId: string;
 };
 
@@ -24,7 +24,7 @@ const NewsCard = ({ title, description, date, category, photo, documentId }: New
       >
         {photo ? (
           <Image
-            src={photo.url}
+            src={photo?.url ?? ''}
             alt={title}
             width={256}
             height={176}

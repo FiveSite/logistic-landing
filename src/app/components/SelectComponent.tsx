@@ -13,13 +13,7 @@ export const SelectComponent = ({
     label: string;
   }[];
   label: string;
-  onChange: (
-    event: React.SyntheticEvent,
-    value: { value: string; label: string } | null,
-    reason: string
-
-    //details?: any
-  ) => void;
+  onChange: (event: React.SyntheticEvent, value: { value: string; label: string } | null, reason: string) => void;
   value: {
     value: string;
     label: string;

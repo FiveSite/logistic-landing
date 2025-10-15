@@ -36,9 +36,7 @@ export const ChangePasswordForm = ({ onClose, onSuccess }: { onClose: () => void
 
       onClose();
       onSuccess();
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
+    } catch (err) {
       console.error('Error changing password:', err);
     } finally {
       setIsSubmitting(false);

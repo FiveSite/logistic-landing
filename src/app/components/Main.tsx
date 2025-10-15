@@ -12,9 +12,9 @@ import { MemberDialog } from './dialog/MemberDialog';
 import { CongratulationDialog } from './dialog/CongratulationDialog';
 import { ForgotPassword } from './form/ForgotPassword';
 import { ForgotPasswordSuccessDialog } from './dialog/ForgotPasswordSuccessDialog';
+import { User } from '@/types';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const Main = ({ user }: { user: any }) => {
+export const Main = ({ user }: { user: User }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -50,9 +50,6 @@ export const Main = ({ user }: { user: any }) => {
             className='h-10 border border-[#E1E4ED] hover:bg-gray-50 shadow-xs cursor-pointer flex items-center gap-2 font-semibold  text-[16px] bg-white px-8 py-3 rounded-[100px] transition-all ease-in  duration-300 '
           >
             About us
-            {/* <div className='flex items-center justify-center w-5 h-5'>
-              <ArrowRightIcon className='stroke-white' />
-            </div> */}
           </button>
 
           {!user && (

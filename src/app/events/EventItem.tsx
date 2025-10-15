@@ -5,6 +5,7 @@ import LocationIcon from '../../../public/icons/location.svg';
 import CalendarIcon from '../../../public/icons/calendar.svg';
 import ArrowRightIcon from '../../../public/icons/arrow-right.svg';
 import Link from 'next/link';
+import { Media } from '@/types';
 
 type NewEventProps = {
   title: string;
@@ -12,8 +13,8 @@ type NewEventProps = {
   startDate: string;
   endDate: string;
   location: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  photo?: any;
+
+  photo?: Media | null;
   documentId: string;
 };
 

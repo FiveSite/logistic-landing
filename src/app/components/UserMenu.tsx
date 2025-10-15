@@ -7,9 +7,9 @@ import LogoutIcon from '../../../public/icons/logout-icon.svg';
 import { Popover } from '@mui/material';
 import { useState } from 'react';
 import { nextAxios } from '@/utils/axios-next';
+import { User } from '@/types';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function UserMenu({ user }: { user: any }) {
+export function UserMenu({ user }: { user: User }) {
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
