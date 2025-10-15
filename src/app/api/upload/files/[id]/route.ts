@@ -2,7 +2,8 @@ import { axiosInstance } from '@/utils/axios';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest, context: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get('token')?.value;
@@ -11,9 +12,7 @@ export async function GET(req: NextRequest, context: { params: { id: string } })
       return NextResponse.json({ error: 'Unauthorized: No JWT token in cookies' }, { status: 401 });
     }
 
-    const fileId = context.params.id;
-
-    const strapiRes = await axiosInstance.get(`/api/upload/files/${fileId}`, {
+    const strapiRes = await axiosInstance.get(`/api/upload/files/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
