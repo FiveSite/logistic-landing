@@ -4,13 +4,11 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 type DirectoryDetailsPageProps = {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 };
 
 const DirectoryDetailsPage = async ({ params }: DirectoryDetailsPageProps) => {
-  const { id } = params;
+  const { id } = await params;
 
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
