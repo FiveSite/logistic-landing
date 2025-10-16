@@ -4,6 +4,8 @@ import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import axios from 'axios';
+import { axiosInstance } from '@/utils/axios';
 
 interface FormValues {
   newPassword: string;
@@ -39,30 +41,17 @@ export const ResetPasswordForm = ({
     setMessage(null);
 
     try {
-      const res = await fetch('http://localhost:1337/api/auth/reset-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          code,
-          password: values.newPassword,
-          passwordConfirmation: values.repeatPassword,
-        }),
+      const res = await axiosInstance.post('api/auth/reset-password', {
+        code,
+        password: values.newPassword,
+        passwordConfirmation: values.repeatPassword,
       });
 
-      const data = await res.json();
-
-      if (res.ok && data) {
-        setMessage({ type: 'success', text: 'Password reset successfully!' });
-        setTimeout(() => {
-          router.push('/');
-          onSuccess();
-        }, 1500);
-      } else {
-        setMessage({ type: 'error', text: data.message || 'Failed to reset password' });
-      }
-      console.log('data', data);
+      setMessage({ type: 'success', text: 'Password reset successfully!' });
+      setTimeout(() => {
+        router.push('/');
+        onSuccess();
+      }, 1500);
     } catch (error) {
       console.log('err', error);
       setMessage({ type: 'error', text: 'Network error. Please try again.' });
