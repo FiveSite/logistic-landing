@@ -1,6 +1,7 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import ArrowLeftIcon from '../../../../public/icons/arrow-left.svg';
 import * as yup from 'yup';
+import { axiosInstance } from '@/utils/axios';
 
 interface FormValues {
   email: string;
@@ -19,18 +20,8 @@ export const ForgotPassword = ({
   onSuccess: () => void;
 }) => {
   const handleSubmit = async (values: FormValues) => {
-    console.log(values);
-
     try {
-      const res = await fetch('http://localhost:1337/api/auth/forgot-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: values.email }),
-      });
-
-      const data = await res.json();
+      await axiosInstance.post('api/auth/forgot-password', { email: values.email });
 
       onSuccess();
     } catch (err) {

@@ -39,7 +39,7 @@ export const updateMember = async (id: string, data: Record<string, string>) => 
 
 export async function uploadImage(file: File) {
   const formData = new FormData();
-  formData.append('files', file); // <-- важливо: "files"
+  formData.append('files', file);
 
   const res = await nextAxios.post('/api/upload', formData, {
     headers: {
@@ -55,7 +55,6 @@ export async function uploadImage(file: File) {
 
   console.log('Uploaded file info:', uploadedFile.id);
 
-  // 2. Отримання детальної інформації про файл (включає url)
   const fileRes = await nextAxios.get(`/api/upload/files/${uploadedFile.id}`);
   const fileData = fileRes.data;
 
@@ -63,7 +62,6 @@ export async function uploadImage(file: File) {
     throw new Error('Failed to retrieve file URL');
   }
 
-  // 3. Повертаємо повний URL (з доменом Strapi)
   const fullUrl = fileData.url;
 
   return { fullUrl, id: uploadedFile.id };

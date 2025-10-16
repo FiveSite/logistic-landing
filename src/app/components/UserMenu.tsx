@@ -53,7 +53,7 @@ export function UserMenu({ user }: { user: User }) {
         )}
       </div>
       <div aria-describedby={id} className='flex items-center gap-1 cursor-pointer' onClick={handleClick}>
-        {user.contactName}
+        {user.company}
         <div className='flex items-center justify-center w-5 h-5'>
           <ArrowIcon className='' />
         </div>
