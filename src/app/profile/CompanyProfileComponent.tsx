@@ -89,7 +89,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
             {isEditMode && (
               <button
                 onClick={() => inputRef.current?.click()}
-                className='opacity-0 group-hover:opacity-100 border border-transparent group-hover:border-white group-hover:border-[2px] cursor-pointer flex gap-2 px-4 py-2 text-white text-[16px]'
+                className=' border-white border-[2px] cursor-pointer flex gap-2 px-4 py-2 text-white text-[16px]'
               >
                 <div className='flex items-center justify-center w-6 h-6'>
                   <CameraIcon className='' />
