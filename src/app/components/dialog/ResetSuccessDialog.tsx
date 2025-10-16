@@ -21,7 +21,7 @@ export const ResetSuccessDialog = ({ isOpen, handleClose, onSuccess }: ModalProp
           <p className='mb-[56px] text-[16px] text-center'>You&#39;ve Successfully Completed Your Password Reset!</p>
           <Link
             href='/'
-            onClick={handleClose}
+            onClick={onSuccess}
             className='flex items-center justify-center gap-1 cursor-pointer  w-full text-white py-2 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition'
           >
             Sign in
