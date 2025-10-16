@@ -6,9 +6,10 @@ import Lottie from 'lottie-react';
 interface ModalProps {
   isOpen: boolean;
   handleClose: () => void;
+  onSuccess: () => void;
 }
 
-export const ResetSuccessDialog = ({ isOpen, handleClose }: ModalProps) => {
+export const ResetSuccessDialog = ({ isOpen, handleClose, onSuccess }: ModalProps) => {
   return (
     <div>
       <Modal open={isOpen} onClose={handleClose} className='flex items-center justify-center'>

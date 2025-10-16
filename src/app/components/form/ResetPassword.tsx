@@ -4,7 +4,6 @@ import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import axios from 'axios';
 import { axiosInstance } from '@/utils/axios';
 
 interface FormValues {

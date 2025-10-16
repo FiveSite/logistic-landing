@@ -109,7 +109,14 @@ export const Main = ({ user }: { user: User }) => {
         </ModalComponent>
       )}
       {isSuccessModalOpen && (
-        <ResetSuccessDialog isOpen={isSuccessModalOpen} handleClose={() => setIsSuccessModalOpen(false)} />
+        <ResetSuccessDialog
+          isOpen={isSuccessModalOpen}
+          handleClose={() => setIsSuccessModalOpen(false)}
+          onSuccess={() => {
+            setIsSuccessModalOpen(false);
+            setIsLoginModalOpen(true);
+          }}
+        />
       )}
       {isLoginModalOpen && (
         <ModalComponent

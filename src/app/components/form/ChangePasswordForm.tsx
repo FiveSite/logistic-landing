@@ -25,7 +25,6 @@ export const ChangePasswordForm = ({ onClose, onSuccess }: { onClose: () => void
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (values: FormValues) => {
-    console.log('Submitted values:', values);
     setIsSubmitting(true);
     setMessage(null);
 
