@@ -14,6 +14,7 @@ import { User } from '@/types';
 import { useRouter } from 'next/navigation';
 import { nextAxios } from '@/utils/axios-next';
 import ArrowIcon from '../../../public/icons/chevron-down.svg';
+import LogoutIcon from '../../../public/icons/logout-icon.svg';
 
 export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -112,7 +113,7 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
               </div>
               <div>
                 <p className='flex items-center gap-1 cursor-pointer mb-1'>{user.contactName}</p>
-                <p className='flex items-center gap-1 text-orange-600 px-2 py-1 rounded-[100px] bg-orange-200 cursor-pointer'>
+                <p className='flex items-center gap-1 text-orange-600 px-2 py-0.5 rounded-[100px] bg-orange-200 cursor-pointer'>
                   {user.company}
                 </p>
               </div>
@@ -121,9 +122,15 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
               </div>
             </div>
 
-            <p className='text-orange-600 mt-8 font-medium pl-2' onClick={handleLogout}>
-              Log out
-            </p>
+            <div
+              className='cursor-pointer py-2 px-2 flex items-center gap-2 text-[#D21717] mt-6'
+              onClick={handleLogout}
+            >
+              Logout
+              <div className='flex items-center justify-center w-5 h-5'>
+                <LogoutIcon className='' />
+              </div>
+            </div>
           </div>
         ) : (
           <div className='px-6 flex flex-col gap-4 py-8 mt-[120px]'>
