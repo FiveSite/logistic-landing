@@ -63,7 +63,7 @@ export const World = () => {
         {/* Карта */}
 
         <div className='max-w-3xl mx-auto  bg-[#F6F6F6] rounded'>
-          <div className='responsive-map-wrapper scale-x-130 scale-y-120'>
+          <div className='responsive-map-wrapper lg:scale-x-130 scale-x-110 scale-y-110 pl-4 lg:scale-y-120'>
             <WorldMap
               data={mapData}
               valueSuffix='participants'
@@ -87,13 +87,16 @@ export const World = () => {
         </div>
 
         <div className=' bg-white rounded-[20px] p-10  relative '>
-          <h3 className='font-semibold pb-6 border-b border-dotted border-gray-200 text-[26px]'>
-            Already work with <span className='text-orange-600 text-[26px]font-semibold'>{data.length} countries</span>
+          <h3 className='max-sm:text-center font-semibold pb-6 border-b border-dotted border-gray-200 text-[26px] max-sm:text-[24px] leading-none'>
+            Already work with <span className=' text-orange-600 text-[26px]font-semibold'>{data.length} countries</span>
           </h3>
-          <ul className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-sm pt-6 max-h-[140px] overflow-y-auto'>
+          <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm pt-6 max-h-[140px] max-sm:max-h-[400px] overflow-y-auto'>
             {data.length > 0 &&
               data.map((country) => (
-                <li key={country.country} className='flex items-center gap-2'>
+                <li
+                  key={country.country}
+                  className='flex items-center gap-2 max-sm:border max-sm:rounded-[8px] max-sm:py-2 max-sm:px-4 max-sm:border-gray-200'
+                >
                   <Image
                     src={`https://flagcdn.com/w40/${country.country.toLowerCase()}.png`}
                     alt={country.name}

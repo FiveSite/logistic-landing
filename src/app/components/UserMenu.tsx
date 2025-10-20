@@ -35,7 +35,7 @@ export function UserMenu({ user }: { user: User }) {
   };
 
   return (
-    <div className='flex gap-3 items-center'>
+    <div className='flex gap-3 items-center max-lg:hidden'>
       <div
         onClick={() => router.push('/profile')}
         className='cursor-pointer text-2xl font-bold rounded-full w-10 h-10 flex items-center justify-center bg-gray-100'

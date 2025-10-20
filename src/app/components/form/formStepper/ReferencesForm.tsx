@@ -4,7 +4,7 @@ import React from 'react';
 export const ReferencesForm = () => {
   return (
     <>
-      <div className='grid grid-cols-2 gap-6'>
+      <div className='grid grid-cols-2 max-md:grid-cols-1 max-md:gap-4 gap-6'>
         <div className='relative'>
           <label className='block text-sm font-medium mb-1'>
             Annual turnover <span className='text-red-500'>*</span>

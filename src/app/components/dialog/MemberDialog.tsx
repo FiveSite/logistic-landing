@@ -33,7 +33,7 @@ export const MemberDialog = ({ isOpen, handleClose, onChange, onSuccess }: Modal
         <MemberSignUpContext.Provider value={memberSignUpContextValue}>
           <div className='bg-white rounded-lg flex max-w-[1044px] w-full overflow-hidden '>
             {/* sidebar */}
-            <div className='bg-[#0F0F13] text-white p-10 w-[340px]'>
+            <div className='bg-[#0F0F13] text-white p-10 w-[340px] max-lg:hidden'>
               <h2 className='text-xl font-semibold mb-8'>{`Step ${activeStep + 1}`}</h2>
               <div className='flex flex-col gap-6'>
                 {articles.map((step, idx) => (

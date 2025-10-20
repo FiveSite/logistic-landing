@@ -3,20 +3,15 @@ import Link from 'next/link';
 
 export const PhotoSection = () => {
   return (
-    <section className='bg-[#F6F6F6] px-10 w-full pt-[120px]'>
-      <div
-        className='relative h-[400px] w-full bg-no-repeat bg-cover bg-center rounded-[20px] overflow-hidden'
-        style={{
-          backgroundImage: "url('/images/lorry-bg.png')",
-        }}
-      >
-        <div className="absolute top-0 left-0 h-full w-[600px] bg-[url('/images/gradient-dark.png')] bg-cover bg-no-repeat bg-left z-10 rounded-l-[20px]" />
+    <section className='bg-[#F6F6F6] sm:px-10 w-full lg:pt-[120px] pt-20'>
+      <div className="relative sm:h-[400px] w-full bg-no-repeat bg-cover bg-center sm:rounded-[20px] overflow-hidden sm:bg-[url('/images/lorry-bg.png')] bg-[url('/images/lorry-bg-min.png')] ">
+        <div className="absolute top-0 left-0 h-full w-[600px] sm:bg-[url('/images/gradient-dark.png')] bg-cover bg-no-repeat bg-left z-10 rounded-l-[20px]" />
 
-        <div className='absolute top-25 left-0 h-full w-full z-20 flex flex-col justify-start px-20'>
+        <div className='sm:absolute top-25 left-0 h-full w-full z-20 flex flex-col justify-start lg:px-20 px-6 max-sm:py-40'>
           <h2 className='text-white text-[34px] leading-[34px] font-semibold max-w-[500px] mb-6'>
             Move Your Business Forward With Logistics You Can Trust
           </h2>
-          <p className='text-white text-[16px] max-w-[500px] mb-8'>
+          <p className='text-white text-[16px] max-w-[500px] sm:mb-8 mb-6'>
             Fast, reliable, and transparent delivery solutions tailored to your needs. From warehouse to destination, we
             make every mile count.
           </p>

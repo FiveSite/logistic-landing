@@ -1,19 +1,19 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { AuthButtons } from './AuthButton';
 import { UserMenu } from './UserMenu';
-import { cookies } from 'next/headers';
-import { getUserFromToken } from '@/services/auth';
+
 import { NewsButton } from './NewsButton';
 import { NavLink } from './NavLink';
 import { DirectoryLink } from './DirectoryLink';
+import { MobMenu } from './MobMenu';
+import { useState } from 'react';
+import { User } from '@/types';
 
-export const Header = async () => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
-
-  const user = await getUserFromToken(token ?? '');
-  console.log('user', user);
+export const Header = ({ user }: { user: User }) => {
+  const [isMobMenuOpen, setIsMobMenuOpen] = useState(false);
 
   return (
     <div>
@@ -28,20 +28,19 @@ export const Header = async () => {
           width={24}
           height={24}
           className='lg:hidden block cursor-pointer'
-          //onClick={onOpen}
+          onClick={() => setIsMobMenuOpen(true)}
         />
 
         <nav className='flex lg:gap-5 gap-8 max-lg:hidden'>
           <NavLink href='/' text='Home' />
           <NavLink href='/about' text='About us' />
           <DirectoryLink user={user} />
-          {/* <NavLink href='/directory' text='Company Directory' /> */}
           <NewsButton />
-          {/* <NavLink href='/contacts' text='Contacts & Support' /> */}
         </nav>
 
         {user ? <UserMenu user={user} /> : <AuthButtons />}
       </div>
+      {isMobMenuOpen && <MobMenu onClose={() => setIsMobMenuOpen(false)} user={user} />}
     </div>
   );
 };

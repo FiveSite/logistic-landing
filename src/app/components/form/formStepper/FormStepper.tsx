@@ -184,7 +184,7 @@ export const FormStepper = ({
           <Form>
             {formData}
 
-            <div className='flex justify-between items-center mt-6'>
+            <div className='flex max-sm:flex-col max-sm:gap-4 justify-between items-center mt-6'>
               <p className='text-sm text-orange-600 mr-1'>
                 Already have an account?{' '}
                 <span onClick={onChange} className='hover:underline cursor-pointer'>

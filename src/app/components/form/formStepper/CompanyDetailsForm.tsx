@@ -22,7 +22,7 @@ export const CompanyDetailsForm = ({ data }: CountryDataProp) => {
   console.log('cities', cities);
   return (
     <>
-      <div className='grid grid-cols-2 gap-6'>
+      <div className='grid grid-cols-2 max-md:grid-cols-1 max-md:gap-4 gap-6'>
         <div className='relative'>
           <label className='block text-sm font-medium mb-1'>
             Company name <span className='text-red-500'>*</span>
@@ -64,7 +64,7 @@ export const CompanyDetailsForm = ({ data }: CountryDataProp) => {
         />
         <ErrorMessage name='website' component='div' className='absolute top-[58px] left-0 text-red-500 text-xs mt-1' />
       </div>
-      <div className='grid grid-cols-2 gap-6 '>
+      <div className='grid grid-cols-2 max-md:grid-cols-1 max-md:gap-0 gap-6 '>
         <div className='mt-4 relative'>
           <label className='block text-sm font-medium mb-1'>
             Country <span className=' text-red-500'>*</span>

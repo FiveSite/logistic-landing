@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import ArrowRightIcon from '../../../public/icons/arrow-right.svg';
 import { ResetPasswordForm } from './form/ResetPassword';
 import { ModalComponent } from './Modal';
 import { useEffect, useState } from 'react';
@@ -36,7 +35,7 @@ export const Main = ({ user }: { user: User }) => {
 
   return (
     <section className="bg-[url('/images/main-bg.png')] bg-cover bg-no-repeat ">
-      <div className='xl:px-[300px] pt-[360px] max-md:pt-[100px] max-md:px-8'>
+      <div className='xl:px-[300px] lg:pt-[360px] pt-[170px] max-md:px-8'>
         <h1 className='text-[62px] max-md:text-[36px] font-bold text-[#1A1A1A] text-center leading-[62px] max-md:leading-[36px] mb-8 max-md:mb-6'>
           Global Reach. African Trust. Boundless Possibilities.
         </h1>
@@ -57,12 +56,9 @@ export const Main = ({ user }: { user: User }) => {
               onClick={() => {
                 setIsMemberModalOpen(true);
               }}
-              className='h-10 cursor-pointer flex items-center gap-2 shadow-xs text-white text-[16px] bg-orange-600 hover:bg-orange-700 px-8 py-3 rounded-[100px] transition-all ease-in  duration-300 '
+              className='h-10 flex items-center cursor-pointer  shadow-xs text-white text-[16px] bg-orange-600 hover:bg-orange-700 px-8 py-3 rounded-[100px] transition-all ease-in  duration-300 '
             >
               Become a member
-              <div className='flex items-center justify-center w-4 h-4'>
-                <ArrowRightIcon className='stroke-white' />
-              </div>
             </button>
           )}
         </div>

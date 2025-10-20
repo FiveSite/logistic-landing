@@ -35,11 +35,12 @@ export const ArticlesNewsSection = () => {
   return (
     <section className='pt-[60px] max-md:pt-20 w-full'>
       <div className=' mx-auto max-md:px-4'>
-        <div className='flex items-center justify-between mb-10'>
-          <h2 className='text-3xl font-bold text-[#1D1D1F] mb-4 text-left max-md:text-center'>Latest articles</h2>
+        <Image src='/images/caption.svg' alt='solution' width={118} height={32} className='mx-auto mb-6' />
+        <div className='flex items-center justify-between max-lg:justify-center mb-10'>
+          <h2 className='text-3xl font-bold text-[#1D1D1F] mb-4 text-left max-lg::text-center'>Latest articles</h2>
           <Link
             href='/news'
-            className='cursor-pointer flex items-center gap-2 w-fit text-[16px] rounded-[100px] font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-3'
+            className='max-lg:hidden cursor-pointer flex items-center gap-2 w-fit text-[16px] rounded-[100px] font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-3'
           >
             Explore more articles
             <div className='flex items-center justify-center w-5 h-5'>
@@ -51,7 +52,7 @@ export const ArticlesNewsSection = () => {
 
       <div className='max-md:px-3 relative w-full max-w-[1120px] block mx-auto pl-4'>
         {/* Navigation Buttons */}
-        <div className='flex justify-between items-center z-10'>
+        <div className='flex justify-between items-center z-10 max-lg:hidden'>
           <button
             ref={prevRef}
             className='absolute top-1/2  left-[-40px] w-10 h-10 rounded-full bg-orange-600 flex items-center justify-center text-white hover:bg-orange-700 transition'
@@ -117,7 +118,7 @@ export const ArticlesNewsSection = () => {
                   </div>
                 </div>
                 <h1 className='text-[30px] leading-[30px] font-semibold mb-8'>{item.title}</h1>
-                <p className='text-[16px]'>{item.description}</p>
+                <p className='text-[16px] line-clamp-2'>{item.description}</p>
               </div>
             </SwiperSlide>
           ))}
