@@ -16,7 +16,6 @@ export const DirectoryComponent = () => {
   const router = useRouter();
 
   const [members, setMembers] = useState<User[]>([]);
-  console.log('members', members);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -145,7 +144,7 @@ export const DirectoryComponent = () => {
   }, [page, selectedCity, selectedConpany, selectedCountry, selectedServices, searchValue]);
 
   return (
-    <div className='flex gap-6 px-[166px] py-[60px] pt-[160px]'>
+    <div className='flex gap-6 lg:px-[80px] px-4 py-[60px] max-lg:pt-[90px] pt-[160px]'>
       <div className='flex-1'>
         <input
           type='text'
@@ -155,7 +154,7 @@ export const DirectoryComponent = () => {
           className='placeholder:text-[#6B7280] w-full max-w-[800px] px-4 py-2.5 mb-6 rounded-[100px] border border-[#F1F3F7] bg-white text-[16px] shadow-[0px_1px_14px_rgba(25,33,61,0.08)] focus:outline-none hover:border-orange-600 focus:border-orange-600 transition-colors'
         />
 
-        <div className='flex gap-2 mb-6'>
+        <div className='flex gap-3 mb-6 max-lg:flex-wrap'>
           <SelectComponent options={options} label='Country' value={selectedCountry} onChange={handleCountryChange} />
           <SelectComponent
             options={cities}
@@ -164,47 +163,65 @@ export const DirectoryComponent = () => {
             onChange={handleCityChange}
             isDisabled={!selectedCountry.value}
           />
-          <SelectComponent options={companies} label='Company' value={selectedConpany} onChange={handleCompanyChange} />
+
           <SelectComponent
             options={servicesOptions}
             label='Services'
             value={selectedServices}
             onChange={handleServicesChange}
           />
+          <SelectComponent
+            options={companies}
+            label='Company name'
+            value={selectedConpany}
+            onChange={handleCompanyChange}
+          />
         </div>
 
-        <div className='space-y-4 flex flex-col gap-2'>
+        <div className='space-y-4 flex flex-col gap-2 items-center'>
           {members.length > 0 ? (
             members.map((company: User) => (
               <div
-                onClick={() => router.push(`/directory/${company.documentId}`)}
                 key={company.id}
-                className='flex  gap-6 bg-white rounded-[8px] cursor-pointer'
+                className='flex max-sm:flex-col max-sm:gap-0 gap-6 bg-white max-sm:max-w-[367px] w-full rounded-[8px]'
               >
-                <div className='flex items-center justify-center p-6 shrink-0'>
+                <div className='flex items-center justify-center p-6 max-sm:p-4 shrink-0'>
                   {company.companyLogo ? (
                     <Image
                       src={company.companyLogo?.url ?? ''}
                       alt='image'
                       width={167}
                       height={167}
-                      className='h-[167px] w-[167px] object-cover rounded-[8px]'
+                      className='h-[167px] max-sm:w-[335px] max-sm:h-[335px] w-[167px]  object-cover rounded-[8px] cursor-pointer'
+                      onClick={() => router.push(`/directory/${company.documentId}`)}
                     />
                   ) : (
-                    <Image src='/images/image-exp.png' alt='image' width={167} height={167} className='h-[167px]' />
+                    <Image
+                      src='/images/image-exp.png'
+                      alt='image'
+                      width={167}
+                      height={167}
+                      className='h-[167px] max-sm:w-[335px] max-sm:h-[335px] cursor-pointer'
+                      onClick={() => router.push(`/directory/${company.documentId}`)}
+                    />
                   )}
                 </div>
-                <div className='flex flex-col p-6 pl-0'>
-                  <div className='flex items-center gap-4 mb-6'>
-                    <h3 className='text-[24px] leading-[24px] font-semibold'>{company.company}</h3>
+                <div className='flex flex-col sm:p-6 sm:pl-0 p-4'>
+                  <div className='flex items-center gap-4 mb-6 max-sm:mb-4'>
+                    <h3
+                      onClick={() => router.push(`/directory/${company.documentId}`)}
+                      className='text-[24px] leading-[24px] font-semibold hover:underline cursor-pointer'
+                    >
+                      {company.company}
+                    </h3>
                     {company.isVerified && <VerifyIcon className='w-8 h-8' />}
                   </div>
-                  <div className='flex items-center text-[16px] mb-6'>
+                  <div className='flex items-center text-[16px] mb-6 max-sm:mb-4'>
                     <LocationIcon className='w-5 h-5' />
                     {company.city}, {countryMap[company.country]} - {company.address}
                   </div>
-                  <p className='text-[16px] line-clamp-2 pr-30'>{company.profile}</p>
-                  <div className='flex flex-wrap gap-2 mt-6'>
+                  <p className='text-[16px] line-clamp-2 lg:pr-30'>{company.profile}</p>
+                  <div className='flex flex-wrap gap-2 mt-6  max-sm:mt-4'>
                     {company.services.map((item: string, idx: number) => {
                       return (
                         <div
