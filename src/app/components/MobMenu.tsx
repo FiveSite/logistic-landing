@@ -121,7 +121,7 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
               </div>
             </div>
 
-            <p className='text-orange-600 mt-4 font-medium' onClick={handleLogout}>
+            <p className='text-orange-600 mt-8 font-medium pl-2' onClick={handleLogout}>
               Log out
             </p>
           </div>
