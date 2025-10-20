@@ -35,7 +35,7 @@ export const Main = ({ user }: { user: User }) => {
 
   return (
     <section className="bg-[url('/images/main-bg.png')] bg-cover bg-no-repeat ">
-      <div className='xl:px-[300px] lg:pt-[360px] pt-[170px] max-md:px-8'>
+      <div className='xl:px-[300px] lg:pt-[360px] pt-[170px] max-sm:px-4 sm:px-8'>
         <h1 className='text-[62px] max-md:text-[36px] font-bold text-[#1A1A1A] text-center leading-[62px] max-md:leading-[36px] mb-8 max-md:mb-6'>
           Global Reach. African Trust. Boundless Possibilities.
         </h1>
@@ -46,7 +46,7 @@ export const Main = ({ user }: { user: User }) => {
         <div className='relative flex justify-center gap-6 md:px-4 w-full mb-[100px] max-md:mb-10'>
           <button
             onClick={() => router.push('/about')}
-            className='h-10 border border-[#E1E4ED] hover:bg-gray-50 shadow-xs cursor-pointer flex items-center gap-2 font-semibold  text-[16px] bg-white px-8 py-3 rounded-[100px] transition-all ease-in  duration-300 '
+            className='whitespace-nowrap h-10 border border-[#E1E4ED] hover:bg-gray-50 shadow-xs cursor-pointer flex items-center gap-2 font-semibold  text-[16px] bg-white px-8 py-3 rounded-[100px] transition-all ease-in  duration-300 '
           >
             About us
           </button>
@@ -56,7 +56,7 @@ export const Main = ({ user }: { user: User }) => {
               onClick={() => {
                 setIsMemberModalOpen(true);
               }}
-              className='h-10 flex items-center cursor-pointer  shadow-xs text-white text-[16px] bg-orange-600 hover:bg-orange-700 px-8 py-3 rounded-[100px] transition-all ease-in  duration-300 '
+              className='whitespace-nowrap h-10 flex items-center cursor-pointer  shadow-xs text-white text-[16px] bg-orange-600 hover:bg-orange-700 px-8 py-3 rounded-[100px] transition-all ease-in  duration-300 '
             >
               Become a member
             </button>

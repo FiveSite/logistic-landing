@@ -46,8 +46,8 @@ export const FaQ = () => {
 
   return (
     <>
-      <h2 className='text-3xl font-bold  mb-4'>Frequently Asked Questions</h2>
-      <p className=' max-w-[600px]   mb-8'>
+      <h2 className='text-3xl max-sm:text-center font-bold  mb-4'>Frequently Asked Questions</h2>
+      <p className=' max-w-[600px] max-sm:text-center   mb-8'>
         Find answers about joining, using, and partnering with our logistics network across Africa and globally.
       </p>
       {/* <div className='flex gap-1.5  overflow-x-auto rounded-full border border-gray-200 bg-white p-2 max-w-[428px] h-[54px] mb-8'>
