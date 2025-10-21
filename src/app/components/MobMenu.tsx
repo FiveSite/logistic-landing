@@ -158,7 +158,6 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
           <div className='px-6 flex flex-col gap-4 py-8 mt-[120px]'>
             <button
               onClick={() => {
-                onClose();
                 setIsMemberModalOpen(true);
               }}
               className='w-full h-[52px] flex items-center justify-center text-white bg-orange-600 rounded-[100px]'
@@ -167,7 +166,6 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
             </button>
             <button
               onClick={() => {
-                onClose();
                 setIsLoginModalOpen(true);
               }}
               className='w-full h-[52px] flex items-center justify-center text-orange-600 rounded-[100px] bg-[rgba(255,77,0,0.1)]'
