@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ModalComponent } from './Modal';
 import { LoginForm } from './form/LoginForm';
 import { ForgotPassword } from './form/ForgotPassword';
@@ -193,6 +193,7 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
             }}
             onClose={() => {
               setIsLoginModalOpen(false);
+              onClose();
             }}
             onBecomeMember={() => {
               setIsLoginModalOpen(false);
@@ -207,7 +208,10 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
           title='Forgot your password?'
           description='Enter your email to get a reset link'
           isOpen={isForgotPasswordModalOpen}
-          handleClose={() => setIsForgotPasswordModalOpen(false)}
+          handleClose={() => {
+            setIsForgotPasswordModalOpen(false);
+            onClose();
+          }}
         >
           <ForgotPassword
             onChange={() => {
@@ -216,10 +220,12 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
             }}
             onClose={() => {
               setIsForgotPasswordModalOpen(false);
+              onClose();
             }}
             onSuccess={() => {
               setIsForgotPasswordModalOpen(false);
               setIsForgotPasswordSuccessOpen(true);
+              onClose();
             }}
           />
         </ModalComponent>
@@ -228,7 +234,10 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
       {isMemberModalOpen && (
         <MemberDialog
           isOpen={isMemberModalOpen}
-          handleClose={() => setIsMemberModalOpen(false)}
+          handleClose={() => {
+            setIsMemberModalOpen(false);
+            onClose();
+          }}
           onChange={() => {
             setIsMemberModalOpen(false);
             setIsLoginModalOpen(true);
@@ -236,6 +245,7 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
           onSuccess={() => {
             setIsMemberModalOpen(false);
             setIsCongratsOpen(true);
+            onClose();
           }}
         />
       )}
