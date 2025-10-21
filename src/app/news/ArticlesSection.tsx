@@ -37,7 +37,7 @@ export const ArticlesNewsSection = () => {
       <div className=' mx-auto max-md:px-4'>
         <Image src='/images/caption.svg' alt='solution' width={118} height={32} className='mx-auto mb-6' />
         <div className='flex items-center justify-between max-lg:justify-center mb-10'>
-          <h2 className='text-3xl font-bold text-[#1D1D1F] mb-4 text-left max-lg::text-center'>Latest articles</h2>
+          <h2 className='text-3xl font-bold text-[#1D1D1F] sm:mb-4 text-left max-lg::text-center'>Latest articles</h2>
           <Link
             href='/news'
             className='max-lg:hidden cursor-pointer flex items-center gap-2 w-fit text-[16px] rounded-[100px] font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-3'

@@ -45,48 +45,63 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
         </div>
 
         <nav className='flex flex-col gap-8 mt-8 mb-8 px-6'>
-          <Link
+          <p
             className={clsx(pathname === '/' && 'border-b border-orange-600', 'text-[16px] px-2 py-3 font-medium')}
-            href='/'
+            onClick={() => {
+              router.push('/');
+              onClose();
+            }}
           >
             Home
-          </Link>
-          <Link
+          </p>
+          <p
             className={clsx(pathname === '/about' && 'border-b border-orange-600', 'text-[16px] px-2 py-3 font-medium')}
-            href='/about'
+            onClick={() => {
+              router.push('/about');
+              onClose();
+            }}
           >
             About us
-          </Link>
-          <Link
+          </p>
+          <p
             className={clsx(
               pathname === '/directory' && 'border-b border-orange-600',
               'text-[16px] px-2 py-3 font-medium'
             )}
-            href='/directory'
+            onClick={() => {
+              router.push('/directory');
+              onClose();
+            }}
           >
             Company Directory
-          </Link>
-          <Link
+          </p>
+          <p
             className={clsx(
               pathname === '/news?tab=news' && 'border-b border-orange-600',
               'text-[16px] px-2 py-3 font-medium flex gap-2'
             )}
-            href='/news?tab=news'
+            onClick={() => {
+              router.push('/news?tab=news');
+              onClose();
+            }}
           >
             News
             <Image src='/icons/arrow-right.svg' alt='logo' width={24} height={24} />
-          </Link>
+          </p>
 
-          <Link
+          <p
             className={clsx(
               pathname === '/news?tab=events' && 'border-b border-orange-600',
               'text-[16px] px-2 py-3 font-medium flex gap-2'
             )}
-            href='/news?tab=events'
+            onClick={() => {
+              router.push('/news?tab=events');
+              onClose();
+            }}
           >
             Events
             <Image src='/icons/arrow-right.svg' alt='logo' width={24} height={24} />
-          </Link>
+          </p>
         </nav>
 
         {user ? (
@@ -135,13 +150,19 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
         ) : (
           <div className='px-6 flex flex-col gap-4 py-8 mt-[120px]'>
             <button
-              onClick={() => setIsMemberModalOpen(true)}
+              onClick={() => {
+                onClose();
+                setIsMemberModalOpen(true);
+              }}
               className='w-full h-[52px] flex items-center justify-center text-white bg-orange-600 rounded-[100px]'
             >
               Become member
             </button>
             <button
-              onClick={() => setIsLoginModalOpen(true)}
+              onClick={() => {
+                onClose();
+                setIsLoginModalOpen(true);
+              }}
               className='w-full h-[52px] flex items-center justify-center text-orange-600 rounded-[100px] bg-[rgba(255,77,0,0.1)]'
             >
               Login
