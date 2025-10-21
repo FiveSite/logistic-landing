@@ -12,7 +12,7 @@ export const ModalComponent = ({ title, description, isOpen, children, handleClo
   return (
     <div>
       <Modal open={isOpen} onClose={handleClose}>
-        <div className='bg-white p-10 rounded-lg mx-auto mt-20 outline-none max-w-[570px] w-full'>
+        <div className='bg-white p-10 max-sm:px-4 rounded-lg mx-auto mt-20 outline-none max-w-[570px] w-full'>
           <div>
             <h2 className='text-[30px] leading-[30px] font-bold mb-4 text-center text-orange-600'>{title}</h2>
             <p className='text-center text-[16px]'>{description}</p>
