@@ -53,7 +53,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
 
   return (
     <div>
-      <section className='bg-[#f6f6f6] pb-16'>
+      <section className='bg-[#f6f6f6] pb-16 lg:px-20 sm:px-4'>
         {selectedImage ? (
           <div className='relative h-[400px] w-full flex items-center justify-center group overflow-hidden'>
             <Image
@@ -101,25 +101,31 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
         )}
 
         {/* Company header */}
-        <div className='z-10 relative max-w-6xl mx-auto mt-[-90px] bg-white rounded-[24px]  flex items-center justify-between p-6'>
-          <div className='flex items-center space-x-4'>
+        <div className='z-10 relative max-w-6xl mx-auto max-sm:max-w-[343px] mt-[-90px] bg-white rounded-[24px]  flex items-center max-sm:justify-center  justify-between sm:p-6 p-4'>
+          <div className='flex max-sm:flex-col gap-6 items-center max-sm:items-start space-x-4'>
             {user.companyLogo ? (
               <Image
                 src={user.companyLogo?.url ?? ''}
                 alt='company-img'
                 width={116}
                 height={90}
-                className='h-[90px] w-[116px] rounded-[8px]'
+                className='h-[90px] w-[116px] rounded-[8px] m-0 max-sm:w-[311px] max-sm:h-[311px]'
               />
             ) : (
-              <Image src='/images/image-exp.png' alt='company-img' width={90} height={90} />
+              <Image
+                src='/images/image-exp.png'
+                alt='company-img'
+                width={90}
+                height={90}
+                className='h-[90px] w-[116px] rounded-[8px] m-0 max-sm:w-[311px] max-sm:h-[311px]'
+              />
             )}
-            <div>
+            <div className=''>
               <div className='flex items-center gap-4 mb-4'>
                 <h3 className='text-[24px] leading-[24px] font-semibold'>{user.company}</h3>
                 {user.isVerified && <VerifyIcon className='w-8 h-8' />}
               </div>
-              <div className='flex items-center gap-2 '>
+              <div className='flex items-center gap-2 mb-2'>
                 <div className='flex items-center justify-center w-4 h-4'>
                   <LocationIcon className='' />
                 </div>
@@ -127,16 +133,32 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
                   {user.address} - {user.city}, {countryMap[user.country]}
                 </p>
               </div>
+              <div className='sm:hidden flex items-center gap-8'>
+                <p className='text-sm text-gray-500 '>
+                  Member id: <span className='font-semibold'>{user.memberId}</span>
+                </p>
+                {isEditMode && (
+                  <Link
+                    href={'/profile/edit'}
+                    className='cursor-pointer border flex gap-2 items-center border-orange-600 text-orange-600 px-4 py-1.5 rounded-[100px]  hover:bg-[rgba(255,77,0,0.05)]  transition'
+                  >
+                    <div className='flex items-center justify-center w-4 h-4'>
+                      <EditIcon className='' />
+                    </div>
+                    Edit profile
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
           <div className='flex flex-col justify-between items-end gap-7 '>
-            <p className='text-sm text-gray-500'>
+            <p className='text-sm text-gray-500 max-sm:hidden'>
               Member id: <span className='font-semibold'>{user.memberId}</span>
             </p>
             {isEditMode && (
               <Link
                 href={'/profile/edit'}
-                className='cursor-pointer border flex gap-2 items-center border-orange-600 text-orange-600 px-4 py-1.5 rounded-[100px]  hover:bg-[rgba(255,77,0,0.05)]  transition'
+                className=' max-sm:hidden cursor-pointer border flex gap-2 items-center border-orange-600 text-orange-600 px-4 py-1.5 rounded-[100px]  hover:bg-[rgba(255,77,0,0.05)]  transition'
               >
                 <div className='flex items-center justify-center w-4 h-4'>
                   <EditIcon className='' />
@@ -147,9 +169,9 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
           </div>
         </div>
 
-        <div className='max-w-6xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8 '>
+        <div className='max-w-6xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8 max-sm:px-4 '>
           {/* Left column */}
-          <div className='space-y-10'>
+          <div className='space-y-10 max-sm:space-y-8 max-sm:order-2 order-1'>
             {/* About company */}
             <div>
               <h2 className='text-[24px] font-semibold  mb-6'>About company</h2>
@@ -185,7 +207,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
 
             {/* Location */}
             <h2 className='text-[24px] font-semibold  mb-6'>Location</h2>
-            <div className='p-6 bg-white rounded-[24px] '>
+            <div className='p-6 max-sm:p-4 bg-white rounded-[24px] '>
               <div className=' mb-4'>
                 <div className='flex items-center gap-4 mb-2'>
                   <div className='flex items-center justify-center w-4 h-4'>
@@ -205,14 +227,12 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
 
               <div>
                 <GoogleMapEmbed address={user.address} />
-
-                <div className='pt-4 flex items-center justify-between text-[16px]'></div>
               </div>
             </div>
           </div>
 
           {/* Right column */}
-          <div className='space-y-10'>
+          <div className='space-y-10 max-sm:space-y-8 max-sm:order-1 order-2'>
             {/* Services */}
             <h2 className='text-[24px] font-semibold mb-6'>Services</h2>
             <div className='p-4 bg-white rounded-[24px]'>
@@ -227,25 +247,30 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
 
             {/* Contact details */}
             <h2 className='text-[24px] font-semibold  mb-6'>Contacts</h2>
+
             <div className='p-4 bg-white rounded-[24px]'>
               <ul className='grid gap-y-5 text-sm '>
-                <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                  <p className=' w-[150px]'>Person:</p>
+                <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                  <p className=' w-[140px]'>Person:</p>
                   <div className='flex items-center gap-2'>
-                    <span className=' font-semibold'>{user.contactName}</span>
+                    <span className=' font-semibold break-words max-w-[calc(100%-16px)]'>{user.contactName}</span>
                   </div>
                 </li>
-                <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                  <p className=' w-[150px]'>Email:</p>
-                  <span className=' font-semibold'>{user.contactEmail}</span>
+                <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                  <p className='w-[140px]'>Email:</p>
+                  <span className=' font-semibold break-words max-w-[calc(100%-16px)]'>{user.contactEmail}</span>
                 </li>
-                <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                  <p className=' w-[150px]'>Phone:</p>
-                  <span className='font-semibold'>{user.contactNumber}</span>
+                <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                  <p className=' w-[140px]'>Phone:</p>
+                  <span className='font-semibold break-words max-w-[calc(100%-16px)]'>{user.contactNumber}</span>
                 </li>
-                <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                  <p className=' w-[150px]'>Website:</p>
-                  <a href={user.website} target='_blank' className='font-semibold text-orange-600 underline'>
+                <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                  <p className=' w-[140px]'>Website:</p>
+                  <a
+                    href={user.website}
+                    target='_blank'
+                    className='font-semibold text-orange-600 underline break-words max-w-[calc(100%-16px)]'
+                  >
                     {user.website}
                   </a>
                 </li>
@@ -258,19 +283,23 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
                 <h2 className='text-[24px] font-semibold  mb-6'>Invoicing details</h2>
                 <div className='p-4 bg-white rounded-[24px]'>
                   <ul className='grid gap-y-5 text-sm '>
-                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                      <p className=' w-[150px]'>Company name:</p>
-                      <div className='flex items-center gap-2'>
-                        <span className=' font-semibold'>{user.invoiceCompanyName}</span>
-                      </div>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                      <p className='w-[140px]'>Company name:</p>
+                      <span className=' font-semibold break-words max-w-[calc(100%-16px)]'>
+                        {user.invoiceCompanyName}
+                      </span>
                     </li>
-                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                      <p className=' w-[150px]'>Company address:</p>
-                      <span className=' font-semibold'>{user.invoiceCompanyAddress}</span>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                      <p className=' w-[140px]'>Company address:</p>
+                      <span className=' font-semibold break-words max-w-[calc(100%-16px)]'>
+                        {user.invoiceCompanyAddress}
+                      </span>
                     </li>
-                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                      <p className=' w-[150px]'>Registration number:</p>
-                      <span className='font-semibold'>{user.companyRegistrationNumber}</span>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                      <p className=' w-[140px]'>Registration number:</p>
+                      <span className='font-semibold break-words max-w-[calc(100%-16px)]'>
+                        {user.companyRegistrationNumber}
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -284,31 +313,31 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
                 <h2 className='text-[24px] font-semibold  mb-6'>Bank details</h2>
                 <div className='p-4 bg-white rounded-[24px]'>
                   <ul className='grid gap-y-5 text-sm '>
-                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                      <p className=' w-[150px]'>Bank name:</p>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                      <p className=' w-[140px]'>Bank name:</p>
                       <div className='flex items-center gap-2'>
                         <span className=' font-semibold'>{user.bankName}</span>
                       </div>
                     </li>
-                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                      <p className=' w-[150px]'>Address:</p>
-                      <span className=' font-semibold'>{user.bankAddress}</span>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                      <p className=' w-[140px]'>Address:</p>
+                      <span className=' font-semibold break-words max-w-[calc(100%-16px)]'>{user.bankAddress}</span>
                     </li>
-                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                      <p className=' w-[150px]'>Currency:</p>
-                      <span className='font-semibold'>{user.currency}</span>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                      <p className=' w-[140px]'>Currency:</p>
+                      <span className='font-semibold break-words max-w-[calc(100%-16px)]'>{user.currency}</span>
                     </li>
-                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                      <p className=' w-[150px]'>Swift code:</p>
-                      <span className='font-semibold'>{user.currency}</span>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                      <p className=' w-[140px]'>Swift code:</p>
+                      <span className='font-semibold break-words max-w-[calc(100%-16px)]'>{user.currency}</span>
                     </li>
-                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                      <p className=' w-[150px]'>IBAN:</p>
-                      <span className='font-semibold'>{user.iban}</span>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                      <p className=' w-[140px]'>IBAN:</p>
+                      <span className='font-semibold break-words max-w-[calc(100%-16px)]'>{user.iban}</span>
                     </li>
-                    <li className='grid [grid-template-columns:auto_1fr] gap-x-4 items-start'>
-                      <p className=' w-[150px]'>Bank account:</p>
-                      <span className='font-semibold'>{user.bankAccount}</span>
+                    <li className='grid [grid-template-columns:auto_1fr] gap-x-0 items-start'>
+                      <p className=' w-[140px]'>Bank account:</p>
+                      <span className='font-semibold break-words max-w-[calc(100%-16px)]'>{user.bankAccount}</span>
                     </li>
                   </ul>
                 </div>
