@@ -185,12 +185,6 @@ export const FormStepper = ({
             {formData}
 
             <div className='flex max-sm:flex-col max-sm:gap-4 justify-between items-center mt-6'>
-              <p className='text-sm text-orange-600 mr-1'>
-                Already have an account?{' '}
-                <span onClick={onChange} className='hover:underline cursor-pointer'>
-                  Sign in
-                </span>
-              </p>
               <div className='flex gap-4'>
                 <button
                   type='button'
@@ -219,6 +213,12 @@ export const FormStepper = ({
                   </button>
                 )}
               </div>
+              <p className='text-sm text-orange-600 mr-1'>
+                Already have an account?{' '}
+                <span onClick={onChange} className='hover:underline cursor-pointer'>
+                  Sign in
+                </span>
+              </p>
             </div>
           </Form>
         )}
