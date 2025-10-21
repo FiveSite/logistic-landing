@@ -34,6 +34,16 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
     onClose();
   };
 
+  const handleDirectoryClick = () => {
+    if (!user) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+
+    router.push('/directory');
+    onClose();
+  };
+
   return (
     <div className='absolute top-0 right-0 z-20'>
       <div className='bg-white h-full w-[334px]'>
@@ -68,10 +78,7 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
               pathname === '/directory' && 'border-b border-orange-600',
               'text-[16px] px-2 py-3 font-medium'
             )}
-            onClick={() => {
-              router.push('/directory');
-              onClose();
-            }}
+            onClick={handleDirectoryClick}
           >
             Company Directory
           </p>
@@ -176,7 +183,10 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
           title='Welcome Back'
           description='Please log in to continue'
           isOpen={isLoginModalOpen}
-          handleClose={() => setIsLoginModalOpen(false)}
+          handleClose={() => {
+            setIsLoginModalOpen(false);
+            onClose();
+          }}
         >
           <LoginForm
             onChange={() => {
