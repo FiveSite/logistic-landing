@@ -3,7 +3,7 @@ import { FaQ } from './Faq';
 
 export const FaqSection = () => {
   return (
-    <section className='relative w-full pb-[120px] max-md:pb-15 pt-[160px] max-md:pt-20 px-4 md:px-10 bg-[#F6F6F6] overflow-hidden'>
+    <section className='relative w-full pb-[120px] max-md:pb-15 pt-[100px] max-md:pt-20 px-4 md:px-10 bg-[#F6F6F6] overflow-hidden'>
       <Image
         src='/images/solution-bg.png'
         alt='background decoration'

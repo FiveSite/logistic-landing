@@ -46,7 +46,7 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
 
   return (
     <div className='absolute top-0 right-0 z-20'>
-      <div className='bg-white h-full w-[334px]'>
+      <div className='bg-white h-full max-h-[100dvh] overflow-y-auto w-[334px]'>
         <div className='flex items-center justify-between px-6 py-4.5'>
           <Link href='/'>
             <Image src='/images/logo-dark.svg' alt='logo' width={114} height={38} />
@@ -155,7 +155,7 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
             </div>
           </div>
         ) : (
-          <div className='px-6 flex flex-col gap-4 py-8 mt-[120px]'>
+          <div className='px-6 flex flex-col gap-4 py-8 mt-[60px]'>
             <button
               onClick={() => {
                 setIsMemberModalOpen(true);

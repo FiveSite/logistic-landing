@@ -49,21 +49,21 @@ export const NewsDetails = ({ news }: NewsProp) => {
   };
 
   return (
-    <div className='px-[166px] py-[60px] pt-[160px]'>
-      <div className='mx-auto max-w-[1120px] mb-10'>
+    <div className='px-[160px] max-lg:px-0 py-[60px] pt-[160px]'>
+      <div className='mx-auto max-w-[1124px] mb-10 max-sm:mb-4 max-sm:rounded-none rounded-[8px]'>
         <Image
           src={news.photo?.url || ''}
           alt='photo'
           width={0}
           height={0}
           sizes='100vw'
-          className='w-full max-h-[360px]'
+          className='w-full max-h-[360px] max-sm:rounded-none rounded-[8px] '
           priority
         />
       </div>
 
-      <div className='flex gap-[80px]'>
-        <aside className='min-w-[240px] max-w-[300px] '>
+      <div className='flex gap-[80px] max-lg:px-4 mx-auto max-w-[1124px]'>
+        <aside className='min-w-[240px] max-w-[300px] max-lg:hidden'>
           {news.content && news.content.length > 0 && <h2 className='text-[30px] mb-12 font-semibold'>Navigation</h2>}
           <div className='flex flex-col gap-6'>
             {news.content?.map(({ title, id }) => (
@@ -81,30 +81,32 @@ export const NewsDetails = ({ news }: NewsProp) => {
           </div>
         </aside>
 
-        <div className='flex-1 max-w-[800px]'>
-          <h1 className='text-[30px] font-semibold mb-8'>{news.title}</h1>
-          <div className='text-[16px] flex items-center gap-2 mb-6'>
-            <div className='flex items-center gap-2'>
-              <CalendarIcon className='w-4 h-4' />
-              {new Date(news.date).toLocaleDateString()}
-            </div>
-            <span>—</span>
-            <div className='flex items-center gap-2'>
-              <TagIcon className='w-4 h-4' />
-              {news.category}
+        <div className='flex-1 max-w-[800px] '>
+          <div className='flex flex-col'>
+            <h1 className='text-[30px] leading-tight  font-semibold mb-8 order-1 max-sm:order-2'>{news.title}</h1>
+            <div className='text-[16px] flex items-center gap-2 mb-6 order-2 max-sm:order-1'>
+              <div className='flex items-center gap-2'>
+                <CalendarIcon className='w-4 h-4' />
+                {new Date(news.date).toLocaleDateString()}
+              </div>
+              <span>—</span>
+              <div className='flex items-center gap-2'>
+                <TagIcon className='w-4 h-4' />
+                {news.category}
+              </div>
             </div>
           </div>
 
-          {news.content?.map(({ title, body, id }) => (
+          {news.content?.map(({ title, body, id }, index, array) => (
             <section
               key={id}
               ref={(el) => {
                 sectionRefs.current[id] = el;
               }}
               data-id={id}
-              className='mb-12 scroll-mt-24'
+              className={clsx('scroll-mt-24', index === array.length - 1 ? 'mb-0' : 'mb-8')}
             >
-              <h2 className='text-[30px] font-semibold mb-4'>{title}</h2>
+              <h2 className='text-[30px] max-sm:text-[24px] font-semibold mb-4'>{title}</h2>
               <p className='text-[16px]'>{body}</p>
             </section>
           ))}

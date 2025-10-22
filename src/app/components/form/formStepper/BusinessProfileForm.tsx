@@ -1,4 +1,5 @@
 import { Field, ErrorMessage } from 'formik';
+import { services } from '@/constants';
 import { FormikMultiSelect } from './MultiSelectComponent';
 
 export const BusinessProfileForm = () => {
@@ -59,6 +60,24 @@ export const BusinessProfileForm = () => {
         <label className='block text-sm font-medium mb-1'>
           Services <span className='text-red-500'>*</span>
         </label>
+
+        {/* <Field
+          as='select'
+          name='services'
+          className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1
+        focus:ring-orange-500'
+        >
+          <option value=''>Select services</option>
+          {services.map((c) => {
+            const key = c;
+            const value = c;
+            return (
+              <option key={key} value={value}>
+                {c}
+              </option>
+            );
+          })}
+        </Field> */}
         <FormikMultiSelect name='services' label='' />
         <ErrorMessage
           name='services'

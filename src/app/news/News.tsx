@@ -19,7 +19,7 @@ export const NewsList = () => {
   }, []);
 
   return (
-    <div className='flex flex-col max-md:items-center gap-8 mx-auto'>
+    <div className='flex flex-col max-lg:items-center gap-8 mx-auto'>
       {news.map((article) => (
         <NewsCard
           key={article.documentId}

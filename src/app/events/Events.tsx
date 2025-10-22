@@ -19,7 +19,7 @@ export const EventsList = () => {
   }, []);
 
   return (
-    <div className='flex flex-col max-sm:items-center gap-8 mx-auto'>
+    <div className='flex flex-col max-lg:items-center gap-8 mx-auto'>
       {events.map((event) => (
         <EventCard
           key={event.documentId}

@@ -20,10 +20,10 @@ type NewEventProps = {
 
 const EventCard = ({ title, description, startDate, endDate, location, photo, documentId }: NewEventProps) => {
   return (
-    <div className='flex gap-6.5  max-sm:gap-0 items-center  max-sm:flex-col max-sm:max-w-[343px]'>
+    <div className='flex gap-6.5  max-lg:gap-0 items-center  max-lg:flex-col max-w-[343px] sm:max-w-[585px] lg:max-w-full'>
       <Link
         href={`/events/${documentId}`}
-        className='max-w-[585px] bg-gray-100 flex items-center justify-center rounded-[8px]  max-sm:rounded-b-none shrink-0'
+        className='sm:max-w-[585px] bg-gray-100 flex items-center justify-center rounded-[8px]  max-lg:rounded-b-none shrink-0'
       >
         {photo ? (
           <Image
@@ -31,14 +31,14 @@ const EventCard = ({ title, description, startDate, endDate, location, photo, do
             alt={title}
             width={585}
             height={343}
-            className='object-cover w-full h-full max-sm:w-[343px] max-sm:h-[354px] rounded-[8px] max-sm:rounded-b-none'
+            className='object-cover w-full h-full max-sm:w-[343px] sm:w-[585px] max-sm:h-[354px] rounded-[8px] max-lg:rounded-b-none'
           />
         ) : (
           <div className='text-gray-400 text-xl'>🖼️</div>
         )}
       </Link>
 
-      <div className='flex flex-col max-sm:bg-white max-sm:p-4 rounded-b-[8px]'>
+      <div className='flex flex-col max-lg:bg-white max-lg:p-4 rounded-b-[8px]'>
         <Link
           href={`/events/${documentId}`}
           className='text-[30px] leading-none max-sm:text-[24px222222] font-semibold mb-6 hover:underline'
@@ -63,7 +63,7 @@ const EventCard = ({ title, description, startDate, endDate, location, photo, do
         </div>
         <p className=' text-[16px] leading-relaxed line-clamp-3 mb-6'>{description}</p>
 
-        <button className='max-sm:w-full max-sm:justify-center cursor-pointer flex items-center gap-2 w-fit text-[16px] rounded-[100px]  font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-2'>
+        <button className='max-lg:w-full max-lg:justify-center cursor-pointer flex items-center gap-2 w-fit text-[16px] rounded-[100px]  font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-2'>
           Register now
           <div className='flex items-center justify-center w-5 h-5'>
             <ArrowRightIcon className='stroke-white' />

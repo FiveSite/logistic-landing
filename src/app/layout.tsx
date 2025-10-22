@@ -32,7 +32,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang='en'>
       <body className={clsx(geistSans.variable, geistMono.variable, 'antialiased')}>
-        <div className='absolute px-10 max-md:px-0 md:top-8 top-0 w-full'>
+        <div className='absolute px-10 max-lg:px-0 lg:top-8 top-0 w-full'>
           <Header user={user} />
         </div>
 

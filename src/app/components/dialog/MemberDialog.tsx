@@ -55,7 +55,7 @@ export const MemberDialog = ({ isOpen, handleClose, onChange, onSuccess }: Modal
             </div>
 
             {/* form */}
-            <div className='flex-1 p-10 max-sm:p-4'>
+            <div className='flex-1 p-10 max-sm:px-4'>
               <h2 className='text-[30px] font-bold text-orange-600 mb-2'>{articles[activeStep]}</h2>
               <p className='text-[16px] mb-10 max-sm:mb-6'>Provide general details about your company</p>
 

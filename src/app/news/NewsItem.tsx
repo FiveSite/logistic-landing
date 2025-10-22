@@ -17,10 +17,10 @@ type NewCardProps = {
 
 const NewsCard = ({ title, description, date, category, photo, documentId }: NewCardProps) => {
   return (
-    <div className='flex gap-6.5 max-md:gap-0 items-center  max-md:flex-col max-md:max-w-[343px]'>
+    <div className='flex gap-6.5  max-lg:gap-0 items-center  max-lg:flex-col max-w-[343px] sm:max-w-[585px] lg:max-w-full'>
       <Link
         href={`/news/${documentId}`}
-        className='max-w-[585px] bg-gray-100 flex items-center justify-center rounded-[8px]  max-md:rounded-b-none shrink-0'
+        className='sm:max-w-[585px] bg-gray-100 flex items-center justify-center rounded-[8px]  max-lg:rounded-b-none shrink-0'
       >
         {photo ? (
           <Image
@@ -28,14 +28,14 @@ const NewsCard = ({ title, description, date, category, photo, documentId }: New
             alt={title}
             width={585}
             height={343}
-            className='object-cover w-full h-full max-md:w-[343px] max-md:h-[354px] rounded-[8px] max-md:rounded-b-none'
+            className='object-cover w-full h-full max-sm:w-[343px] sm:w-[585px] max-sm:h-[354px] rounded-[8px] max-lg:rounded-b-none'
           />
         ) : (
           <div className='text-gray-400 text-xl'>🖼️</div>
         )}
       </Link>
 
-      <div className='flex flex-col max-md:bg-white max-md:p-4 rounded-b-[8px]'>
+      <div className='flex flex-col max-lg:bg-white max-lg:p-4 rounded-b-[8px]'>
         <div className='text-[16px] flex items-center gap-2 mb-6'>
           <div className='flex items-center gap-2'>
             <CalendarIcon className='w-4 h-4' />

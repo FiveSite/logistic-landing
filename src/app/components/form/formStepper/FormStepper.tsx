@@ -184,7 +184,7 @@ export const FormStepper = ({
           <Form>
             {formData}
 
-            <div className='flex max-sm:flex-col max-sm:gap-4 justify-between items-center mt-6'>
+            <div className='flex max-sm:flex-col max-sm:gap-4 justify-between items-center mt-6 max:lg:pb-6'>
               <div className='flex gap-4'>
                 <button
                   type='button'

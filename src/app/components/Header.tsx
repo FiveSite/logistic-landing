@@ -9,15 +9,28 @@ import { NewsButton } from './NewsButton';
 import { NavLink } from './NavLink';
 import { DirectoryLink } from './DirectoryLink';
 import { MobMenu } from './MobMenu';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { User } from '@/types';
 
 export const Header = ({ user }: { user: User }) => {
   const [isMobMenuOpen, setIsMobMenuOpen] = useState(false);
 
+  useEffect(() => {
+    if (isMobMenuOpen) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    // При демонтажі компонента — очистити
+    return () => {
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [isMobMenuOpen]);
+
   return (
     <div>
-      <div className='relative z-10 flex items-center justify-between px-6 py-3.5 rounded-[20px] max-md:rounded-none bg-white  '>
+      <div className='relative z-10 flex items-center justify-between px-6 py-3.5 rounded-[20px] max-lg:rounded-none bg-white  '>
         <Link href='/'>
           <Image src='/images/logo-dark.svg' alt='Vercel Logo' width={117} height={40} />
         </Link>

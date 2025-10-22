@@ -33,9 +33,9 @@ export const ArticlesNewsSection = () => {
   }, []);
 
   return (
-    <section className='pt-[60px] max-md:pt-20 w-full'>
+    <section className='pt-[60px] max-md:pt-20 w-full max-w-[1124px] mx-auto'>
       <div className=' mx-auto max-md:px-4'>
-        <Image src='/images/caption.svg' alt='solution' width={118} height={32} className='mx-auto mb-6' />
+        <Image src='/icons/news-icon.svg' alt='solution' width={118} height={32} className='mx-auto mb-4 sm:hidden' />
         <div className='flex items-center justify-between max-lg:justify-center mb-10'>
           <h2 className='text-3xl font-bold text-[#1D1D1F] sm:mb-4 text-left max-lg::text-center'>Latest articles</h2>
           <Link
@@ -104,25 +104,49 @@ export const ArticlesNewsSection = () => {
           {data.map((item: News, index: number) => (
             <SwiperSlide key={index} className='max-w-[544px]'>
               <div className='flex flex-col'>
-                <Image src={item.photo?.url || ''} alt='solution' width={544} height={553} className='mb-6 ' />
+                <Image
+                  src={item.photo?.url || ''}
+                  alt='solution'
+                  width={544}
+                  height={553}
+                  className='max-sm:rounded-b-none'
+                />
 
-                <div className='text-[16px] flex items-center gap-2 mb-5'>
-                  <div className='flex items-center gap-2'>
-                    <CalendarIcon className='w-4 h-4' />
-                    {new Date(item.date).toLocaleDateString()}
+                <div className='max-sm:bg-white max-sm:p-4 sm:mt-4 rounded-b-[8px] h-[246px]'>
+                  <div className='text-[16px]  flex items-center gap-2 mb-5'>
+                    <div className='flex items-center gap-2'>
+                      <CalendarIcon className='w-4 h-4' />
+                      {new Date(item.date).toLocaleDateString()}
+                    </div>
+                    <span>—</span>
+                    <div className='flex items-center gap-2'>
+                      <TagIcon className='w-4 h-4' />
+                      {item.category}
+                    </div>
                   </div>
-                  <span>—</span>
-                  <div className='flex items-center gap-2'>
-                    <TagIcon className='w-4 h-4' />
-                    {item.category}
-                  </div>
+                  <Link
+                    href={`/news/${item.documentId}`}
+                    className='hover:underlineaZSqwe   text-[30px] leading-tight max-sm:text-[24px] font-semibold mb-8 line-clamp-3'
+                  >
+                    {item.title}
+                  </Link>
+                  <p className='text-[16px] line-clamp-2'>{item.description}</p>
                 </div>
-                <h1 className='text-[30px] leading-[30px] font-semibold mb-8'>{item.title}</h1>
-                <p className='text-[16px] line-clamp-2'>{item.description}</p>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
+      </div>
+      <div className='max-lg:px-4'>
+        <Link
+          href='/news'
+          className=' mt-8 lg:hidden max-lg:justify-center cursor-pointer max-sm:w-full flex items-center  gap-2 text-[16px] rounded-[100px] font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-3'
+        >
+          Explore more articles
+          <div className='flex items-center justify-center w-5 h-5'>
+            <ArrowRightIcon className='stroke-white' />
+          </div>
+        </Link>
       </div>
     </section>
   );
