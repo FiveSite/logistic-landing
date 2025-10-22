@@ -8,10 +8,10 @@ import WorldMap from 'react-svg-worldmap';
 
 // Функція для підбору кольору
 const getColor = (count: number) => {
-  if (count < 1) return '#ffffff'; // lightgreen
-  if (count <= 3) return '#FED7AA'; // orangered
-  if (count <= 5) return '#FDBA74';
-  return '#F97316'; // intenced
+  if (count < 1) return '#ffffff'; // light
+  if (count <= 2) return '#FFC2A6'; // orangered
+  if (count <= 3) return '#FF6A33';
+  return '#FF4500'; // intenced
 };
 
 const countCountries = (data: { country: string }[]) => {
@@ -73,8 +73,8 @@ export const World = () => {
                 const { countryValue } = context;
                 return {
                   fill: getColor(countryValue || 0),
-                  stroke: '#333',
-                  strokeWidth: 0.5,
+                  stroke: '#000',
+                  strokeWidth: 1,
                   cursor: 'pointer',
                   transition: 'all 0.3s ease-in-out',
                   '&:hover': {
