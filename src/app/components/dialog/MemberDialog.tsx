@@ -31,7 +31,8 @@ export const MemberDialog = ({ isOpen, handleClose, onChange, onSuccess }: Modal
     <div>
       <Modal open={isOpen} onClose={handleClose} className='flex items-center justify-center'>
         <MemberSignUpContext.Provider value={memberSignUpContextValue}>
-          <div className='bg-white rounded-lg flex max-w-[1044px] w-full overflow-hidden '>
+          <div className='bg-white rounded-lg flex max-w-[1044px] w-full max-h-[100dvh] overflow-y-auto'>
+            {/* <div className='bg-white rounded-lg flex max-w-[1044px] w-full overflow-hidden '> */}
             {/* sidebar */}
             <div className='bg-[#0F0F13] text-white p-10 w-[340px] max-lg:hidden'>
               <h2 className='text-xl font-semibold mb-8'>{`Step ${activeStep + 1}`}</h2>
