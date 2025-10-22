@@ -45,10 +45,10 @@ export const NewsButton = () => {
         }}
       >
         <div className='w-[132px] h-[88px] flex flex-col justify-center gap-2'>
-          <Link href='/news' className='cursor-pointer py-2 px-3 hover:bg-gray-100'>
+          <Link href='/news' onClick={handleClose} className='cursor-pointer py-2 px-3 hover:bg-gray-100'>
             News
           </Link>
-          <Link href='/events' className='cursor-pointer py-2 px-3 hover:bg-gray-100'>
+          <Link href='/events' onClick={handleClose} className='cursor-pointer py-2 px-3 hover:bg-gray-100'>
             Events
           </Link>
         </div>

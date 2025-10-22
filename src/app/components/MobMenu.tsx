@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ModalComponent } from './Modal';
 import { LoginForm } from './form/LoginForm';
 import { ForgotPassword } from './form/ForgotPassword';

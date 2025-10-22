@@ -74,7 +74,13 @@ export function UserMenu({ user }: { user: User }) {
         }}
       >
         <div className=' flex flex-col '>
-          <div onClick={() => router.push('/profile')} className='cursor-pointer py-2 px-4 hover:bg-gray-100'>
+          <div
+            onClick={() => {
+              router.push('/profile');
+              handleClose();
+            }}
+            className='cursor-pointer py-2 px-4 hover:bg-gray-100'
+          >
             Profile
           </div>
           <div
