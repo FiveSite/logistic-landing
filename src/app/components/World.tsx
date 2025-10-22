@@ -86,7 +86,7 @@ export const World = () => {
           </div>
         </div>
 
-        <div className=' bg-white rounded-[20px] p-10 max-sm:p-4 relative '>
+        <div className=' bg-white max-sm:bg-white/60 rounded-[20px] p-10 max-sm:p-4 relative max-sm:mt-4'>
           <h3 className='max-sm:text-center font-semibold pb-6 border-b border-dotted border-gray-200 text-[26px] max-sm:text-[24px] leading-none'>
             Already work with <span className=' text-orange-600 text-[26px]font-semibold'>{data.length} countries</span>
           </h3>
@@ -95,7 +95,7 @@ export const World = () => {
               data.map((country) => (
                 <li
                   key={country.country}
-                  className='flex items-center gap-2 max-sm:border max-sm:rounded-[8px] max-sm:py-2 max-sm:px-4 max-sm:border-gray-200'
+                  className='flex items-center gap-2 max-sm:border max-sm:rounded-[8px] max-sm:py-2 max-sm:px-4 max-sm:border-gray-200 max-sm:bg-white'
                 >
                   <Image
                     src={`https://flagcdn.com/w40/${country.country.toLowerCase()}.png`}
