@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { AuthButtons } from './AuthButton';
 import { UserMenu } from './UserMenu';
-
 import { NewsButton } from './NewsButton';
 import { NavLink } from './NavLink';
 import { DirectoryLink } from './DirectoryLink';
@@ -22,11 +21,19 @@ export const Header = ({ user }: { user: User }) => {
       document.body.classList.remove('overflow-hidden');
     }
 
-    // При демонтажі компонента — очистити
     return () => {
       document.body.classList.remove('overflow-hidden');
     };
   }, [isMobMenuOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobMenuOpen(false);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <div>

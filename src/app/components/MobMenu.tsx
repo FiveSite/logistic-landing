@@ -45,74 +45,87 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
   };
 
   return (
-    <div className='absolute top-0 right-0 z-20'>
-      <div className='bg-white h-full max-h-[100dvh] overflow-y-auto w-[334px]'>
-        <div className='flex items-center justify-between px-6 py-4.5'>
-          <Link href='/'>
-            <Image src='/images/logo-dark.svg' alt='logo' width={114} height={38} />
-          </Link>
-          <Image onClick={onClose} src='/icons/double-arrow.svg' alt='logo' width={24} height={24} />
+    <div className='fixed inset-0 z-20 flex justify-end bg-black/20' onClick={onClose}>
+      <div
+        className='bg-white h-[100dvh] overflow-y-auto w-[334px] flex flex-col justify-between'
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* <div className='absolute top-0 left-0 right-0 z-20  bg-black/20'> */}
+        {/* <div className='bg-white h-[100dvh] overflow-y-auto w-[334px] flex flex-col justify-between'> */}
+        <div>
+          <div className='flex items-center justify-between px-6 py-4.5'>
+            <Link href='/'>
+              <Image src='/images/logo-dark.svg' alt='logo' width={114} height={38} />
+            </Link>
+            <Image onClick={onClose} src='/icons/double-arrow.svg' alt='logo' width={24} height={24} />
+          </div>
+
+          <nav className='flex flex-col gap-6 mt-8 mb-8 px-6'>
+            <p
+              className={clsx(
+                pathname === '/' && 'border-b border-orange-600',
+                'h-10 text-[16px] px-2 py-3 font-medium'
+              )}
+              onClick={() => {
+                router.push('/');
+                onClose();
+              }}
+            >
+              Home
+            </p>
+            <p
+              className={clsx(
+                pathname === '/about' && 'border-b border-orange-600',
+                'h-10 text-[16px] px-2 py-3 font-medium'
+              )}
+              onClick={() => {
+                router.push('/about');
+                onClose();
+              }}
+            >
+              About us
+            </p>
+            <p
+              className={clsx(
+                pathname === '/directory' && 'border-b border-orange-600',
+                'h-10 text-[16px] px-2 py-3 font-medium'
+              )}
+              onClick={handleDirectoryClick}
+            >
+              Company Directory
+            </p>
+            <p
+              className={clsx(
+                pathname === '/news?tab=news' && 'border-b border-orange-600',
+                'h-10 text-[16px] px-2 py-3 font-medium flex gap-2'
+              )}
+              onClick={() => {
+                router.push('/news?tab=news');
+                onClose();
+              }}
+            >
+              News
+              <Image src='/icons/arrow-right.svg' alt='logo' width={24} height={24} />
+            </p>
+
+            <p
+              className={clsx(
+                pathname === '/news?tab=events' && 'border-b border-orange-600',
+                'h-10 text-[16px] px-2 py-3 font-medium flex gap-2'
+              )}
+              onClick={() => {
+                router.push('/news?tab=events');
+                onClose();
+              }}
+            >
+              Events
+              <Image src='/icons/arrow-right.svg' alt='logo' width={24} height={24} />
+            </p>
+          </nav>
         </div>
 
-        <nav className='flex flex-col gap-8 mt-8 mb-8 px-6'>
-          <p
-            className={clsx(pathname === '/' && 'border-b border-orange-600', 'text-[16px] px-2 py-3 font-medium')}
-            onClick={() => {
-              router.push('/');
-              onClose();
-            }}
-          >
-            Home
-          </p>
-          <p
-            className={clsx(pathname === '/about' && 'border-b border-orange-600', 'text-[16px] px-2 py-3 font-medium')}
-            onClick={() => {
-              router.push('/about');
-              onClose();
-            }}
-          >
-            About us
-          </p>
-          <p
-            className={clsx(
-              pathname === '/directory' && 'border-b border-orange-600',
-              'text-[16px] px-2 py-3 font-medium'
-            )}
-            onClick={handleDirectoryClick}
-          >
-            Company Directory
-          </p>
-          <p
-            className={clsx(
-              pathname === '/news?tab=news' && 'border-b border-orange-600',
-              'text-[16px] px-2 py-3 font-medium flex gap-2'
-            )}
-            onClick={() => {
-              router.push('/news?tab=news');
-              onClose();
-            }}
-          >
-            News
-            <Image src='/icons/arrow-right.svg' alt='logo' width={24} height={24} />
-          </p>
-
-          <p
-            className={clsx(
-              pathname === '/news?tab=events' && 'border-b border-orange-600',
-              'text-[16px] px-2 py-3 font-medium flex gap-2'
-            )}
-            onClick={() => {
-              router.push('/news?tab=events');
-              onClose();
-            }}
-          >
-            Events
-            <Image src='/icons/arrow-right.svg' alt='logo' width={24} height={24} />
-          </p>
-        </nav>
-
         {user ? (
-          <div className='px-6 py-8  border-t border-gray-200'>
+          <div className='px-6 py-6 border-t border-gray-200'>
             <div
               className='flex gap-6 items-center'
               onClick={() => {
@@ -145,7 +158,7 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
             </div>
 
             <div
-              className='cursor-pointer py-2 px-2 flex items-center gap-2 text-[#D21717] mt-6'
+              className='cursor-pointer py-2 px-2 flex items-center gap-2 text-[#D21717] mt-4'
               onClick={handleLogout}
             >
               Logout
@@ -155,7 +168,7 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
             </div>
           </div>
         ) : (
-          <div className='px-6 flex flex-col gap-4 py-8 mt-[60px]'>
+          <div className='px-6 flex flex-col gap-4 py-6 border-t border-gray-200'>
             <button
               onClick={() => {
                 setIsMemberModalOpen(true);
