@@ -61,7 +61,7 @@ export const Benefits = () => {
               </div>
             </div>
 
-            <div className='flex flex-col gap-24 flex-1'>
+            <div className='flex flex-col gap-8 lg:gap-24 flex-1'>
               {[1, 2].map((index) => (
                 <div
                   key={index}
