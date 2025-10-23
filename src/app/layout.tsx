@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const user = await getUserFromToken(token ?? '');
 
   return (
-    <html lang='en'>
+    <html lang='en' className='light'>
       <body className={clsx(geistSans.variable, geistMono.variable, 'antialiased')}>
         <div className='absolute px-10 max-lg:px-0 lg:top-8 top-0 w-full'>
           <Header user={user} />

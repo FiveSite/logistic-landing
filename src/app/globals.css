@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #fff;
+  --background: #ffffff; /* світлий фон */
   --foreground: #171717;
 }
 
@@ -12,10 +12,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html,
 body {
-  color: #1a1a1a;
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: Roboto, sans-serif;
-  /* overflow: hidden; */
 }
 
 /* Адаптивне масштабування SVG */
