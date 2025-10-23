@@ -92,7 +92,7 @@ export const fetchMember = async (id: string, token: string) => {
 
 export const fetchMembersList2 = async () => {
   try {
-    const res = await axiosInstance.get('/api/members');
+    const res = await axiosInstance.get('/api/members?populate=*&&filters[isApproved][$eq]=true');
     return res.data;
   } catch (error) {
     console.error('Error fetching members:', error);
