@@ -1,6 +1,7 @@
 import { Field, Formik, Form, ErrorMessage } from 'formik';
 import ArrowRightIcon from '../../../../public/icons/arrow-right.svg';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 const validationSchema = Yup.object().shape({
   company: Yup.string().required('Company is required'),
@@ -18,11 +19,16 @@ type SupportFormValues = {
   message: string;
 };
 
-const handleSubmit = (values: SupportFormValues) => {
-  console.log(values);
-};
-
 export const SupportForm = () => {
+  const handleSubmit = async (values: SupportFormValues) => {
+    try {
+      const data = { ...values, form: 'Support' };
+      await axios.post('/api/send-email', data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className='max-w-2xl max-sm:w-full p-8 max-sm:px-4 bg-[#F6F6F6] rounded-[20px]'>
       <h2 className='text-2xl font-semibold text-gray-800 mb-8'>Contact our logistics team</h2>

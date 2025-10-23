@@ -10,6 +10,7 @@ import { FormikErrors, FormikTouched } from 'formik';
 import * as yup from 'yup';
 import { addMember, fetchCountriesList } from '@/services/api';
 import { MemberSignUpFormValues } from '@/types';
+import axios from 'axios';
 
 export const initialValues: MemberSignUpFormValues = {
   company: '',
@@ -127,7 +128,7 @@ export const FormStepper = ({
   };
 
   const handleSubmitClickHandler = async (values: MemberSignUpFormValues) => {
-    console.log('values', values);
+    // console.log('values', values);
     if (activeStep < 3) {
       nextStepHandler(activeStep + 1);
     } else {
@@ -139,14 +140,17 @@ export const FormStepper = ({
           companyLogo: null,
           banerLogo: null,
         });
-        console.log('res', res);
+        // console.log('res', res);
 
         if (res.data) {
           onSuccess();
           handleClose();
+
+          const data = { ...values, form: 'Member' };
+          await axios.post('/api/send-email', data);
         }
       } catch (error) {
-        console.error('Error:', error);
+        // console.error('Error:', error);
       }
     }
   };
