@@ -45,7 +45,7 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
   };
 
   return (
-    <div className='fixed inset-0 z-20 flex justify-end bg-black/20' onClick={onClose}>
+    <div className='fixed inset-0 z-20 flex justify-end bg-black/20'>
       <div
         className='bg-white h-[100dvh] overflow-y-auto w-[334px] flex flex-col justify-between'
         onClick={(e) => e.stopPropagation()}
@@ -170,7 +170,8 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
         ) : (
           <div className='px-6 flex flex-col gap-4 py-6 border-t border-gray-200'>
             <button
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setIsMemberModalOpen(true);
               }}
               className='w-full h-[52px] flex items-center justify-center text-white bg-orange-600 rounded-[100px]'
@@ -178,7 +179,8 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
               Become member
             </button>
             <button
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setIsLoginModalOpen(true);
               }}
               className='w-full h-[52px] flex items-center justify-center text-orange-600 rounded-[100px] bg-[rgba(255,77,0,0.1)]'

@@ -2,6 +2,7 @@ import { Event } from '@/types';
 import CalendarIcon from '../../../public/icons/calendar.svg';
 import LocationIcon from '../../../public/icons/location.svg';
 import { GoogleMapEmbed } from '../components/MapComponent';
+import clsx from 'clsx';
 
 interface EventProp {
   event: Event;
@@ -43,9 +44,9 @@ export const EventOverview = ({ event }: EventProp) => {
       <GoogleMapEmbed address={event.location} />
 
       {event.content &&
-        event.content.map(({ title, body, id }) => (
-          <div key={id} className='mb-6'>
-            <h2 className='text-[30px] font-semibold mb-6'>{title}</h2>
+        event.content.map(({ title, body, id }, index, array) => (
+          <div key={id} className={clsx(index === array.length - 1 ? 'mb-0' : 'mb-6')}>
+            <h2 className='text-[30px] max-sm:text-[24px] leading-tight font-semibold] mb-6'>{title}</h2>
             <p className='text-[16px]'>{body}</p>
           </div>
         ))}

@@ -24,7 +24,7 @@ const handleSubmit = (values: SupportFormValues) => {
 
 export const SupportForm = () => {
   return (
-    <div className='max-w-2xl max-sm:w-full p-8 bg-[#F6F6F6] rounded-[20px]'>
+    <div className='max-w-2xl max-sm:w-full p-8 max-sm:px-4 bg-[#F6F6F6] rounded-[20px]'>
       <h2 className='text-2xl font-semibold text-gray-800 mb-8'>Contact our logistics team</h2>
 
       <Formik
@@ -32,9 +32,7 @@ export const SupportForm = () => {
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        {/* Form */}
         <Form className='space-y-4'>
-          {/* Email & Name */}
           <div className='flex max-sm:flex-col max-sm:gap-4 gap-8'>
             <div className='sm:w-1/2 relative'>
               <label className='block text-sm font-medium  mb-1'>

@@ -213,7 +213,7 @@ export const FormStepper = ({
                   </button>
                 )}
               </div>
-              <p className='text-sm text-orange-600 mr-1'>
+              <p className='text-sm text-orange-600 mr-1 max-sm:pb-6'>
                 Already have an account?{' '}
                 <span onClick={onChange} className='hover:underline cursor-pointer'>
                   Sign in

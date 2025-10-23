@@ -126,7 +126,7 @@ export const ArticlesNewsSection = () => {
                   </div>
                   <Link
                     href={`/news/${item.documentId}`}
-                    className='hover:underlineaZSqwe   text-[30px] leading-tight max-sm:text-[24px] font-semibold mb-8 line-clamp-3'
+                    className='hover:underline   text-[30px] leading-tight max-sm:text-[24px] font-semibold mb-8 line-clamp-3'
                   >
                     {item.title}
                   </Link>

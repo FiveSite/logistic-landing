@@ -34,14 +34,14 @@ export const ArticlesEventsSection = () => {
   }, []);
 
   return (
-    <section className=' max-md:pt-20 w-full'>
-      {/* <Image src='/images/caption.svg' alt='solution' width={118} height={32} className='mb-6' /> */}
-      <div className='max-w-[1360px] mx-auto max-md:px-4'>
-        <div className='flex items-center justify-between mb-10'>
-          <h2 className='text-3xl font-bold text-[#1D1D1F] mb-4 text-left max-md:text-center'>Latest events</h2>
+    <section className='pt-[50px] max-lg:pt-20 w-full max-w-[1124px] mx-auto'>
+      <div className=' mx-auto max-md:px-4'>
+        <Image src='/icons/news-icon.svg' alt='solution' width={118} height={32} className='mx-auto mb-4 sm:hidden' />
+        <div className='flex items-center justify-between max-lg:justify-center mb-10'>
+          <h2 className='text-3xl font-bold text-[#1D1D1F] sm:mb-4 text-left max-lg::text-center'>Latest events</h2>
           <Link
-            href='/events'
-            className='cursor-pointer flex items-center gap-2 w-fit text-[16px] rounded-[100px]  font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-3'
+            href='/news'
+            className='max-lg:hidden cursor-pointer flex items-center gap-2 w-fit text-[16px] rounded-[100px] font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-3'
           >
             Explore more events
             <div className='flex items-center justify-center w-5 h-5'>
@@ -50,17 +50,37 @@ export const ArticlesEventsSection = () => {
           </Link>
         </div>
       </div>
-      <div className='max-md:px-3 relative w-full  max-w-[1360px] block mx-auto'>
+
+      <div className='max-md:px-3 relative w-full max-w-[1120px] block mx-auto pl-4'>
+        {/* Navigation Buttons */}
+        <div className='flex justify-between items-center z-10 max-lg:hidden'>
+          <button
+            ref={prevRef}
+            className='absolute top-1/2  left-[-40px] w-10 h-10 rounded-full bg-orange-600 flex items-center justify-center text-white hover:bg-orange-700 transition'
+          >
+            <div className='flex items-center justify-center w-4 h-4 rotate-180'>
+              <ArrowRightIcon className='stroke-white' />
+            </div>
+          </button>
+          <button
+            ref={nextRef}
+            className='absolute  right-[-54px] top-1/2 w-10 h-10 rounded-full bg-orange-600 flex items-center justify-center text-white hover:bg-orange-700 transition'
+          >
+            <div className='flex items-center justify-center w-4 h-4'>
+              <ArrowRightIcon className='stroke-white' />
+            </div>
+          </button>
+        </div>
+
         <Swiper
           grabCursor={true}
           centeredSlides={true}
           loop={true}
           spaceBetween={16}
+          className='mx-auto max-w-[1120px] w-full'
           onSwiper={(swiper) => (swiperRef.current = swiper)}
-          // onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
           modules={[Navigation, Keyboard, Autoplay]}
           onBeforeInit={(swiper) => {
-            // Прив'язка кнопок до swiper
             if (swiper.params.navigation && typeof swiper.params.navigation !== 'boolean') {
               swiper.params.navigation.prevEl = prevRef.current;
               swiper.params.navigation.nextEl = nextRef.current;
@@ -71,57 +91,69 @@ export const ArticlesEventsSection = () => {
             onlyInViewport: true,
           }}
           autoplay={{
-            delay: 2000, // ⏱ час між слайдами (мс)
-            disableOnInteraction: false, // не зупиняти при свайпі
+            delay: 2000,
+            disableOnInteraction: false,
           }}
-          speed={2000} // ⏱ час між слайдами (мс)
+          speed={2000}
           breakpoints={{
-            // 0: {
-            //   slidesPerView: 1,
-            //   centeredSlides: true,
-            //   // slidesOffsetBefore: 12,
-            //   // slidesOffsetAfter: 12,
-            // },
-            // До 425px включно показуємо 1 центрований слайд
-            // 376: {
-            //   slidesPerView: 'auto',
-            //   centeredSlides: false,
-            // },
-            // Для екранів від 1440px і вище
             1280: {
               slidesPerView: 2,
               centeredSlides: false,
             },
           }}
-          className=''
         >
           {data.map((item: Event, index: number) => (
-            <SwiperSlide key={index} className=''>
+            <SwiperSlide key={index} className='max-w-[544px]'>
               <div className='flex flex-col'>
-                <Image src={item.photo?.url || ''} alt='solution' width={544} height={553} className='mb-6' />
+                <Image
+                  src={item.photo?.url || ''}
+                  alt='solution'
+                  width={544}
+                  height={553}
+                  className='max-sm:rounded-b-none'
+                />
 
-                <div className='text-[16px] flex items-center gap-2 mb-5'>
-                  <div className='flex items-center gap-2'>
-                    <CalendarIcon className='w-4 h-4 stroke-orange-600' />
-                    {new Date(item.startDate).toLocaleDateString()}
+                <div className='max-sm:bg-white max-sm:p-4 sm:mt-4 rounded-b-[8px] h-[280px]'>
+                  <div className='text-[16px] flex items-center gap-2 mb-5'>
+                    <div className='flex items-center gap-2'>
+                      <CalendarIcon className='w-4 h-4 stroke-orange-600' />
+                      {new Date(item.startDate).toLocaleDateString()}
+                    </div>
+                    {item.endDate && (
+                      <>
+                        <span>—</span>
+                        <div className='flex items-center gap-2'>{new Date(item.endDate).toLocaleDateString()}</div>
+                      </>
+                    )}
                   </div>
-                  {item.endDate && (
-                    <>
-                      <span>—</span>
-                      <div className='flex items-center gap-2'>{new Date(item.endDate).toLocaleDateString()}</div>
-                    </>
-                  )}
+                  <div className='text-[16px] flex items-center gap-2 mb-5'>
+                    <LocationIcon className='w-4 h-4 stroke-black' />
+                    {item.location}
+                  </div>
+
+                  <h1
+                    className='hover:underline text-[30px] leading-tight max-sm:text-[24px] font-semibold mb-8
+                  line-clamp-3'
+                  >
+                    {item.title}
+                  </h1>
+                  <p className='text-[16px] line-clamp-2'>{item.description}</p>
                 </div>
-                <div className='text-[16px] flex items-center gap-2 mb-5'>
-                  <LocationIcon className='w-4 h-4 stroke-black' />
-                  {item.location}
-                </div>
-                <h1 className='text-[30px] leading-[30px] font-semibold mb-6'>{item.title}</h1>
-                <p className='text-[16px]'>{item.description}</p>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
+      </div>
+      <div className='max-lg:px-4'>
+        <Link
+          href='/news'
+          className=' mt-8 lg:hidden max-lg:justify-center cursor-pointer max-sm:w-full flex items-center  gap-2 text-[16px] rounded-[100px] font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-3'
+        >
+          Explore more events
+          <div className='flex items-center justify-center w-5 h-5'>
+            <ArrowRightIcon className='stroke-white' />
+          </div>
+        </Link>
       </div>
     </section>
   );
