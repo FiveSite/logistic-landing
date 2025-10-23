@@ -12,12 +12,19 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@theme dark {
+  --color-background: var(--background) !important ;
+  --color-foreground: var(--foreground) !important;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
 html,
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: Roboto, sans-serif;
-  color-scheme: light;
+  color-scheme: light !important;
 }
 
 /* Адаптивне масштабування SVG */
