@@ -63,7 +63,7 @@ export const World = () => {
         {/* Карта */}
 
         <div className='max-w-3xl mx-auto  bg-[#F6F6F6] rounded'>
-          <div className='responsive-map-wrapper lg:scale-x-130 scale-x-105 scale-y-105 pl-2 lg:scale-y-120'>
+          <div className='responsive-map-wrapper lg:scale-x-130 scale-x-105 scale-y-110 pl-2 lg:scale-y-120'>
             <WorldMap
               data={mapData}
               valueSuffix='participants'
@@ -74,7 +74,7 @@ export const World = () => {
                 return {
                   fill: getColor(countryValue || 0),
                   stroke: '#000',
-                  strokeWidth: 1,
+                  strokeWidth: 1.2,
                   cursor: 'pointer',
                   transition: 'all 0.3s ease-in-out',
                   '&:hover': {
@@ -86,7 +86,7 @@ export const World = () => {
           </div>
         </div>
 
-        <div className=' bg-white max-sm:bg-white/60 rounded-[20px] p-10 max-sm:p-4 relative max-sm:mt-4'>
+        <div className=' bg-white max-sm:bg-white/70 rounded-[20px] p-10 max-sm:p-4 relative max-sm:mt-4'>
           <h3 className='max-sm:text-center font-semibold pb-6 border-b border-dotted border-gray-200 text-[26px] max-sm:text-[24px] leading-none'>
             Already work with <span className=' text-orange-600 text-[26px]font-semibold'>{data.length} countries</span>
           </h3>

@@ -34,7 +34,7 @@ export const Main = ({ user }: { user: User }) => {
   }, [code]);
 
   return (
-    <section className="bg-[url('/images/main-bg.png')] bg-cover bg-no-repeat ">
+    <section className="bg-[url('/images/main-bg.png')] w-screen bg-cover bg-no-repeat ">
       <div className='xl:px-[300px] lg:pt-[360px] pt-[170px] max-sm:px-4 sm:px-8'>
         <h1 className='text-[62px] max-md:text-[36px] font-bold text-[#1A1A1A] text-center leading-[62px] max-md:leading-[36px] mb-8 max-md:mb-6'>
           Global Reach. African Trust. Boundless Possibilities.
