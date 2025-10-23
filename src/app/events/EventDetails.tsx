@@ -70,7 +70,7 @@ const EventDetails = ({ event }: EventProp) => {
           width={0}
           height={0}
           sizes='100vw'
-          className='w-full h-[700px] max-lg:h-[500px] max-md:h-[350px] object-cover rounded-lg'
+          className='w-full h-[700px] max-lg:h-[500px] max-md:h-[350px] object-cover lg:rounded-lg'
           priority
         />
 
@@ -82,7 +82,7 @@ const EventDetails = ({ event }: EventProp) => {
         </div>
       </div>
 
-      <div className='relative -mt-16 sm:-mt-12 mx-auto w-[90%] max-w-5xl bg-white shadow-[0_24px_24px_rgba(0,0,0,0.04)] rounded-[20px] grid grid-cols-4  gap-y-4 text-center text-orange-600 font-bold text-xl py-8'>
+      <div className='relative -mt-12 sm:-mt-24 mx-auto w-[90%] max-w-6xl bg-white shadow-[0_24px_24px_rgba(0,0,0,0.04)] rounded-[20px] grid grid-cols-4  gap-y-4 text-center text-orange-600 font-bold text-xl lg:py-15  md:py-10 py-4'>
         {[
           { label: 'Days', value: days },
           { label: 'Hours', value: hours },
@@ -110,7 +110,7 @@ const EventDetails = ({ event }: EventProp) => {
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={clsx(
-                  ' flex justify-center items-center lg:w-[170px] py-2 text-[16px] font-medium transition-colors duration-200',
+                  ' flex justify-center items-center lg:w-[178px] py-2 text-[16px] font-medium transition-colors duration-200',
                   'border-r border-gray-200 last:border-none',
                   activeTab === tab ? 'bg-orange-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
                 )}
