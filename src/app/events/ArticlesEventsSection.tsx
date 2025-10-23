@@ -40,7 +40,7 @@ export const ArticlesEventsSection = () => {
         <div className='flex items-center justify-between max-lg:justify-center mb-10'>
           <h2 className='text-3xl font-bold text-[#1D1D1F] sm:mb-4 text-left max-lg::text-center'>Latest events</h2>
           <Link
-            href='/news'
+            href='/events'
             className='max-lg:hidden cursor-pointer flex items-center gap-2 w-fit text-[16px] rounded-[100px] font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-3'
           >
             Explore more events
@@ -146,7 +146,7 @@ export const ArticlesEventsSection = () => {
       </div>
       <div className='max-lg:px-4'>
         <Link
-          href='/news'
+          href='/events'
           className=' mt-8 lg:hidden max-lg:justify-center cursor-pointer max-sm:w-full flex items-center  gap-2 text-[16px] rounded-[100px] font-semibold text-white bg-orange-600 hover:bg-orange-700 px-4 py-3'
         >
           Explore more events

@@ -149,7 +149,10 @@ export const DirectoryComponent = () => {
         <input
           type='text'
           value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={(e) => {
+            e.preventDefault();
+            setSearchValue(e.target.value);
+          }}
           placeholder='Search for company by...'
           className='placeholder:text-[#6B7280] w-full max-w-[800px] px-4 py-2.5 mb-6 rounded-[100px] border border-[#F1F3F7] bg-white text-[16px] shadow-[0px_1px_14px_rgba(25,33,61,0.08)] focus:outline-none hover:border-orange-600 focus:border-orange-600 transition-colors'
         />
