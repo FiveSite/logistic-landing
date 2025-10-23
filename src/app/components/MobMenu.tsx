@@ -16,7 +16,19 @@ import { nextAxios } from '@/utils/axios-next';
 import ArrowIcon from '../../../public/icons/chevron-down.svg';
 import LogoutIcon from '../../../public/icons/logout-icon.svg';
 
-export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) => {
+export const MobMenu = ({
+  onClose,
+  user,
+  onOpenLogin,
+  onOpenMember,
+  onOpenCongrats,
+}: {
+  onClose: () => void;
+  user: User;
+  onOpenLogin: () => void;
+  onOpenMember: () => void;
+  onOpenCongrats: () => void;
+}) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
@@ -45,7 +57,7 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
   };
 
   return (
-    <div className='fixed inset-0 z-20 flex justify-end bg-black/20'>
+    <div className='fixed inset-0 z-20 flex justify-end bg-black/20 ' onClick={onClose}>
       <div
         className='bg-white h-[100dvh] overflow-y-auto w-[334px] flex flex-col justify-between'
         onClick={(e) => e.stopPropagation()}
@@ -172,7 +184,8 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                setIsMemberModalOpen(true);
+                onOpenMember();
+                onClose();
               }}
               className='w-full h-[52px] flex items-center justify-center text-white bg-orange-600 rounded-[100px]'
             >
@@ -181,7 +194,8 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                setIsLoginModalOpen(true);
+                onOpenLogin();
+                onClose();
               }}
               className='w-full h-[52px] flex items-center justify-center text-orange-600 rounded-[100px] bg-[rgba(255,77,0,0.1)]'
             >
@@ -190,88 +204,6 @@ export const MobMenu = ({ onClose, user }: { onClose: () => void; user: User }) 
           </div>
         )}
       </div>
-
-      {isLoginModalOpen && (
-        <ModalComponent
-          title='Welcome Back'
-          description='Please log in to continue'
-          isOpen={isLoginModalOpen}
-          handleClose={() => {
-            setIsLoginModalOpen(false);
-            onClose();
-          }}
-        >
-          <LoginForm
-            onChange={() => {
-              setIsLoginModalOpen(false);
-              setIsForgotPasswordModalOpen(true);
-            }}
-            onClose={() => {
-              setIsLoginModalOpen(false);
-              onClose();
-            }}
-            onBecomeMember={() => {
-              setIsLoginModalOpen(false);
-              setIsMemberModalOpen(true);
-            }}
-          />
-        </ModalComponent>
-      )}
-
-      {isForgotPasswordModalOpen && (
-        <ModalComponent
-          title='Forgot your password?'
-          description='Enter your email to get a reset link'
-          isOpen={isForgotPasswordModalOpen}
-          handleClose={() => {
-            setIsForgotPasswordModalOpen(false);
-            onClose();
-          }}
-        >
-          <ForgotPassword
-            onChange={() => {
-              setIsForgotPasswordModalOpen(false);
-              setIsLoginModalOpen(true);
-            }}
-            onClose={() => {
-              setIsForgotPasswordModalOpen(false);
-              onClose();
-            }}
-            onSuccess={() => {
-              setIsForgotPasswordModalOpen(false);
-              setIsForgotPasswordSuccessOpen(true);
-              onClose();
-            }}
-          />
-        </ModalComponent>
-      )}
-
-      {isMemberModalOpen && (
-        <MemberDialog
-          isOpen={isMemberModalOpen}
-          handleClose={() => {
-            setIsMemberModalOpen(false);
-            onClose();
-          }}
-          onChange={() => {
-            setIsMemberModalOpen(false);
-            setIsLoginModalOpen(true);
-          }}
-          onSuccess={() => {
-            setIsMemberModalOpen(false);
-            setIsCongratsOpen(true);
-            onClose();
-          }}
-        />
-      )}
-
-      {isCongratsOpen && <CongratulationDialog isOpen={isCongratsOpen} handleClose={() => setIsCongratsOpen(false)} />}
-      {isForgotPasswordSuccessOpen && (
-        <ForgotPasswordSuccessDialog
-          isOpen={isForgotPasswordSuccessOpen}
-          handleClose={() => setIsForgotPasswordSuccessOpen(false)}
-        />
-      )}
     </div>
   );
 };

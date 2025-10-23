@@ -122,42 +122,18 @@ const EventDetails = ({ event }: EventProp) => {
         </div>
 
         <div className='lg:hidden mx-auto flex gap-1.5  overflow-x-auto rounded-full border border-gray-200 bg-white p-2 max-w-[444px] h-[54px] mb-8'>
-          <button
-            onClick={() => setActiveTab('Overview')}
-            className={clsx(
-              'cursor-pointer px-5 py-2 text-sm font-medium rounded-full transition hover:bg-orange-600 hover:text-white',
-              activeTab === 'Overview' && 'bg-orange-600 text-white rounded-full transition'
-            )}
-          >
-            Overview
-          </button>
-          <button
-            onClick={() => setActiveTab('Schedule')}
-            className={clsx(
-              'cursor-pointer px-5 py-2 text-sm font-medium rounded-full transition hover:bg-orange-600 hover:text-white',
-              activeTab === 'Schedule' && 'bg-orange-600 text-white rounded-full transition'
-            )}
-          >
-            Schedule
-          </button>
-          <button
-            onClick={() => setActiveTab('Speakers')}
-            className={clsx(
-              'cursor-pointer px-5 py-2 text-sm font-medium rounded-full transition hover:bg-orange-600 hover:text-white',
-              activeTab === 'Speakers' && 'bg-orange-600 text-white rounded-full transition'
-            )}
-          >
-            Speakers
-          </button>
-          <button
-            onClick={() => setActiveTab('Registration')}
-            className={clsx(
-              'cursor-pointer px-5 py-2 text-sm font-medium rounded-full transition hover:bg-orange-600 hover:text-white',
-              activeTab === 'Registration' && 'bg-orange-600 text-white rounded-full transition'
-            )}
-          >
-            Registration
-          </button>
+          {tabs.map((tab, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveTab(tab)}
+              className={clsx(
+                'cursor-pointer px-5 py-2 text-sm font-medium rounded-full transition hover:bg-orange-600 hover:text-white',
+                activeTab === tab && 'bg-orange-600 text-white rounded-full transition'
+              )}
+            >
+              {tab}
+            </button>
+          ))}
         </div>
 
         {renderContent(activeTab)}

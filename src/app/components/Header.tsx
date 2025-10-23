@@ -10,9 +10,21 @@ import { DirectoryLink } from './DirectoryLink';
 import { MobMenu } from './MobMenu';
 import { useEffect, useState } from 'react';
 import { User } from '@/types';
+import { MemberDialog } from './dialog/MemberDialog';
+import { CongratulationDialog } from './dialog/CongratulationDialog';
+import { ForgotPasswordSuccessDialog } from './dialog/ForgotPasswordSuccessDialog';
+import { ModalComponent } from './Modal';
+import { ForgotPassword } from './form/ForgotPassword';
+import { LoginForm } from './form/LoginForm';
 
 export const Header = ({ user }: { user: User }) => {
   const [isMobMenuOpen, setIsMobMenuOpen] = useState(false);
+
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
+  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
+  const [isCongratsOpen, setIsCongratsOpen] = useState(false);
+  const [isForgotPasswordSuccessOpen, setIsForgotPasswordSuccessOpen] = useState(false);
 
   useEffect(() => {
     if (isMobMenuOpen) {
@@ -60,7 +72,84 @@ export const Header = ({ user }: { user: User }) => {
 
         {user ? <UserMenu user={user} /> : <AuthButtons />}
       </div>
-      {isMobMenuOpen && <MobMenu onClose={() => setIsMobMenuOpen(false)} user={user} />}
+      {isMobMenuOpen && (
+        <MobMenu
+          onClose={() => setIsMobMenuOpen(false)}
+          user={user}
+          onOpenLogin={() => setIsLoginModalOpen(true)}
+          onOpenMember={() => setIsMemberModalOpen(true)}
+          onOpenCongrats={() => setIsCongratsOpen(true)}
+        />
+      )}
+
+      {isLoginModalOpen && (
+        <ModalComponent
+          title='Welcome Back'
+          description='Please log in to continue'
+          isOpen={isLoginModalOpen}
+          handleClose={() => setIsLoginModalOpen(false)}
+        >
+          <LoginForm
+            onChange={() => {
+              setIsLoginModalOpen(false);
+              setIsForgotPasswordModalOpen(true);
+            }}
+            onClose={() => {
+              setIsLoginModalOpen(false);
+            }}
+            onBecomeMember={() => {
+              setIsLoginModalOpen(false);
+              setIsMemberModalOpen(true);
+            }}
+          />
+        </ModalComponent>
+      )}
+
+      {isForgotPasswordModalOpen && (
+        <ModalComponent
+          title='Forgot your password?'
+          description='Enter your email to get a reset link'
+          isOpen={isForgotPasswordModalOpen}
+          handleClose={() => setIsForgotPasswordModalOpen(false)}
+        >
+          <ForgotPassword
+            onChange={() => {
+              setIsForgotPasswordModalOpen(false);
+              setIsLoginModalOpen(true);
+            }}
+            onClose={() => {
+              setIsForgotPasswordModalOpen(false);
+            }}
+            onSuccess={() => {
+              setIsForgotPasswordModalOpen(false);
+              setIsForgotPasswordSuccessOpen(true);
+            }}
+          />
+        </ModalComponent>
+      )}
+
+      {isMemberModalOpen && (
+        <MemberDialog
+          isOpen={isMemberModalOpen}
+          handleClose={() => setIsMemberModalOpen(false)}
+          onChange={() => {
+            setIsMemberModalOpen(false);
+            setIsLoginModalOpen(true);
+          }}
+          onSuccess={() => {
+            setIsMemberModalOpen(false);
+            setIsCongratsOpen(true);
+          }}
+        />
+      )}
+
+      {isCongratsOpen && <CongratulationDialog isOpen={isCongratsOpen} handleClose={() => setIsCongratsOpen(false)} />}
+      {isForgotPasswordSuccessOpen && (
+        <ForgotPasswordSuccessDialog
+          isOpen={isForgotPasswordSuccessOpen}
+          handleClose={() => setIsForgotPasswordSuccessOpen(false)}
+        />
+      )}
     </div>
   );
 };
