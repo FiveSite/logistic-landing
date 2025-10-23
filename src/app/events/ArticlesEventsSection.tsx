@@ -131,12 +131,13 @@ export const ArticlesEventsSection = () => {
                     {item.location}
                   </div>
 
-                  <h1
+                  <Link
+                    href={`/events/${item.documentId}`}
                     className='hover:underline text-[30px] leading-tight max-sm:text-[24px] font-semibold mb-8
                   line-clamp-3'
                   >
                     {item.title}
-                  </h1>
+                  </Link>
                   <p className='text-[16px] line-clamp-2'>{item.description}</p>
                 </div>
               </div>

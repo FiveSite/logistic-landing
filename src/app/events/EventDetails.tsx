@@ -103,23 +103,61 @@ const EventDetails = ({ event }: EventProp) => {
       </div>
 
       <div className='px-[160px] max-xl:px-20 max-lg:px-10 max-md:px-4 max-w-7xl mx-auto pt-[100px] max-sm:pt-10 pb-[50px] max-lg:pb-10'>
-        <div className='w-full overflow-x-auto scrollbar-hide mb-10'>
-          <div className='flex justify-start gap-3 min-w-max px-4'>
-            {tabs.map((tab) => (
+        <div className='flex justify-center w-full mb-10 max-sm:mb-6 max-lg:hidden'>
+          <div className='flex border border-gray-200 rounded-full overflow-hidden'>
+            {tabs.map((tab, index) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={clsx(
-                  'whitespace-nowrap py-2 px-6 text-[16px] font-medium rounded-full border transition-colors duration-200',
-                  activeTab === tab
-                    ? 'bg-orange-600 text-white border-orange-600'
-                    : 'border-gray-200 text-gray-600 hover:bg-orange-100'
+                  ' flex justify-center items-center lg:w-[170px] py-2 text-[16px] font-medium transition-colors duration-200',
+                  'border-r border-gray-200 last:border-none',
+                  activeTab === tab ? 'bg-orange-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
                 )}
               >
                 {tab}
               </button>
             ))}
           </div>
+        </div>
+
+        <div className='lg:hidden mx-auto flex gap-1.5  overflow-x-auto rounded-full border border-gray-200 bg-white p-2 max-w-[444px] h-[54px] mb-8'>
+          <button
+            onClick={() => setActiveTab('Overview')}
+            className={clsx(
+              'cursor-pointer px-5 py-2 text-sm font-medium rounded-full transition hover:bg-orange-600 hover:text-white',
+              activeTab === 'Overview' && 'bg-orange-600 text-white rounded-full transition'
+            )}
+          >
+            Overview
+          </button>
+          <button
+            onClick={() => setActiveTab('Schedule')}
+            className={clsx(
+              'cursor-pointer px-5 py-2 text-sm font-medium rounded-full transition hover:bg-orange-600 hover:text-white',
+              activeTab === 'Schedule' && 'bg-orange-600 text-white rounded-full transition'
+            )}
+          >
+            Schedule
+          </button>
+          <button
+            onClick={() => setActiveTab('Speakers')}
+            className={clsx(
+              'cursor-pointer px-5 py-2 text-sm font-medium rounded-full transition hover:bg-orange-600 hover:text-white',
+              activeTab === 'Speakers' && 'bg-orange-600 text-white rounded-full transition'
+            )}
+          >
+            Speakers
+          </button>
+          <button
+            onClick={() => setActiveTab('Registration')}
+            className={clsx(
+              'cursor-pointer px-5 py-2 text-sm font-medium rounded-full transition hover:bg-orange-600 hover:text-white',
+              activeTab === 'Registration' && 'bg-orange-600 text-white rounded-full transition'
+            )}
+          >
+            Registration
+          </button>
         </div>
 
         {renderContent(activeTab)}
@@ -130,3 +168,20 @@ const EventDetails = ({ event }: EventProp) => {
 };
 
 export default EventDetails;
+
+{
+  /* <div className='flex flex-wrap justify-center gap-2 mb-10'>
+          {tabs.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={clsx(
+                'cursor-pointer py-2 px-6 text-[16px] font-medium border rounded-full transition-colors duration-200',
+                activeTab === tab ? 'bg-orange-600 text-white border-orange-600' : 'border-gray-200 hover:bg-orange-100'
+              )}
+            >
+              {tab}
+            </button>
+          ))}
+        </div> */
+}

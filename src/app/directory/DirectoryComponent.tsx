@@ -147,11 +147,10 @@ export const DirectoryComponent = () => {
     <div className='flex gap-6 lg:px-[80px] px-4 py-[60px] max-lg:pt-[90px] pt-[160px]'>
       <div className='flex-1'>
         <input
-          type='text'
+          type='search'
           value={searchValue}
           onChange={(e) => {
-            e.preventDefault();
-            setSearchValue(e.target.value);
+            setSearchValue(e.currentTarget.value);
           }}
           placeholder='Search for company by...'
           className='placeholder:text-[#6B7280] w-full max-w-[800px] px-4 py-2.5 mb-6 rounded-[100px] border border-[#F1F3F7] bg-white text-[16px] shadow-[0px_1px_14px_rgba(25,33,61,0.08)] focus:outline-none hover:border-orange-600 focus:border-orange-600 transition-colors'

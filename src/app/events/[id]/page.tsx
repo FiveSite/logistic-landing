@@ -6,7 +6,7 @@ const CardEventsDetails = async ({ params }: { params: Promise<{ id: string }> }
 
   const data = await getOneEvent(id);
 
-  return <div className='pb-[50px] max-lg:pb-10'>{data && <EventDetails event={data} />}</div>;
+  return <div className='pb-[50px] max-lg:pb-10 bg-[#F6F6F6]'>{data && <EventDetails event={data} />}</div>;
 };
 
 export default CardEventsDetails;
