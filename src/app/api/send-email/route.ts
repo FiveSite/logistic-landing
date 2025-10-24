@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
             ${message.replace(/\n/g, '<br>')}
           </div>
         `;
-        subject = `New message from ${name}`;
+        subject = `New message from Support Form from ${name}`;
         replyTo = { email, name };
         break;
 
@@ -90,9 +90,7 @@ export async function POST(request: NextRequest) {
           <p><strong>Employees:</strong> ${employees}</p>
           <p><strong>Branch Offices:</strong> ${branchOffices}</p>
           <p><strong>Branch Locations:</strong> ${branchLocations}</p>
-          <p><strong>References:</strong> ${references}</p>
-    
-        `;
+          <p><strong>References:</strong> ${references}</p>`;
 
         subject = `Membership request from  ${name}`;
         replyTo = { email, name };
@@ -104,8 +102,8 @@ export async function POST(request: NextRequest) {
         }
 
         htmlContent = `<p>Company: <strong>${company}</strong></p>
-        <p>Message: <strong>${message}</strong></p>
-        <p>Email: <strong>${email}</strong></p>`;
+        <p>Email: <strong>${email}</strong></p>
+        <p>Message: <strong>${message}</strong></p>`;
 
         subject = `Deleting request from ${company}`;
         replyTo = { email, name };

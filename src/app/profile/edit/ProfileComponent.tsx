@@ -11,6 +11,7 @@ import { updateCompanyMember } from '@/services/api';
 import { SwitchComponent } from '@/app/components/Switch';
 import clsx from 'clsx';
 import { User } from '@/types';
+import { DeleteMemberDialog } from '@/app/components/dialog/DeleteMemberDialog';
 
 const navItems = [
   { name: 'Company details', active: true, id: 'companyDetails' },
@@ -28,6 +29,7 @@ export const ProfileComponent = ({ user }: { user: User }) => {
 
   const [isChangeModalOpen, setIsChangeModalOpen] = useState(false);
   const [isSuccessPasswordModalOpen, setIsSuccessPasswordModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState<string | null>(user?.companyLogo?.url ?? null);
 
@@ -35,9 +37,8 @@ export const ProfileComponent = ({ user }: { user: User }) => {
   const [uploadLogoError, setUploadLogoError] = useState<string | null>(null);
 
   const [isInvoicingDetailsEnabled, setIsInvoicingDetailsEnabled] = useState(user?.showInvoicingDetails);
-  console.log('isInvoicingDetailsEnabled', isInvoicingDetailsEnabled);
+
   const [isBankDetailsEnabled, setIsBankDetailsEnabled] = useState(user?.showBankDetails);
-  console.log('isBankDetailsEnabled', isBankDetailsEnabled);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -745,7 +746,10 @@ export const ProfileComponent = ({ user }: { user: User }) => {
                 If you delete your account, you will lose the data associated with it.
               </p>
             </div>
-            <p className='text-[16px] p-1 font-semibold text-orange-600 hover:text-orange-700 cursor-pointer'>
+            <p
+              onClick={() => setIsDeleteModalOpen(true)}
+              className='text-[16px] p-1 font-semibold text-orange-600 hover:text-orange-700 cursor-pointer'
+            >
               Delete account
             </p>
           </div>
@@ -776,6 +780,15 @@ export const ProfileComponent = ({ user }: { user: User }) => {
           description='Your password has been changed successfully.'
           isOpen={isSuccessPasswordModalOpen}
           handleClose={() => setIsSuccessPasswordModalOpen(false)}
+        />
+      )}
+      {isDeleteModalOpen && (
+        <DeleteMemberDialog
+          isOpen={isDeleteModalOpen}
+          handleClose={() => {
+            setIsDeleteModalOpen(false);
+          }}
+          user={user}
         />
       )}
     </div>
