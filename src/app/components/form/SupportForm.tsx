@@ -2,6 +2,7 @@ import { Field, Formik, Form, ErrorMessage } from 'formik';
 import ArrowRightIcon from '../../../../public/icons/arrow-right.svg';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useState } from 'react';
 
 const validationSchema = Yup.object().shape({
   company: Yup.string().required('Company is required'),
@@ -20,12 +21,23 @@ type SupportFormValues = {
 };
 
 export const SupportForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
   const handleSubmit = async (values: SupportFormValues) => {
+    setIsSubmitting(true);
+    setMessage(null);
+
     try {
       const data = { ...values, form: 'Support' };
       await axios.post('/api/send-email', data);
+
+      setMessage({ type: 'success', text: 'Your message has been sent successfully.' });
     } catch (error) {
+      setMessage({ type: 'error', text: 'Network error. Please try again.' });
       console.log(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -39,6 +51,23 @@ export const SupportForm = () => {
         validationSchema={validationSchema}
       >
         <Form className='space-y-4'>
+          {message && (
+            <div
+              className={`p-3 rounded-md text-sm relative  ${
+                message.type === 'success'
+                  ? 'bg-green-100 text-green-700 border border-green-200'
+                  : 'bg-red-100 text-red-700 border border-red-200'
+              }`}
+            >
+              {message.text}
+              <button
+                className={'absolute top-3 right-2 ' + (message.type === 'success' ? 'text-green-700' : 'text-red-700')}
+                onClick={() => setMessage(null)}
+              >
+                &times;
+              </button>
+            </div>
+          )}
           <div className='flex max-sm:flex-col max-sm:gap-4 gap-8'>
             <div className='sm:w-1/2 relative'>
               <label className='block text-sm font-medium  mb-1'>
@@ -131,7 +160,7 @@ export const SupportForm = () => {
             type='submit'
             className=' max-sm:w-full flex justify-center cursor-pointer gap-2 items-center bg-orange-600 text-white py-2 px-4 rounded-[100px] hover:bg-orange-700 transition-all duration-300'
           >
-            Send message
+            {isSubmitting ? 'Sending...' : 'Send message'}
             <div className='flex items-center justify-center w-4 h-4'>
               <ArrowRightIcon className='stroke-white' />
             </div>

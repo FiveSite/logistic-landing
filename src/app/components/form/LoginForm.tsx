@@ -30,6 +30,7 @@ export const LoginForm = ({
   const router = useRouter();
   const handleSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
+    setMessage(null);
 
     try {
       const data = await signIn(values.email, values.password);
