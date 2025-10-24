@@ -25,6 +25,8 @@ export const LoginForm = ({
   onBecomeMember: () => void;
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
   const router = useRouter();
   const handleSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
@@ -46,7 +48,9 @@ export const LoginForm = ({
         }
       }
     } catch (error) {
-      console.error('Error:', error);
+      const message = error instanceof Error ? error.message : 'Network error. Please try again.';
+
+      setMessage({ type: 'error', text: message });
     } finally {
       setIsSubmitting(false);
     }
@@ -61,6 +65,25 @@ export const LoginForm = ({
       >
         {() => (
           <Form className='flex flex-col gap-4 max-w-md mx-auto'>
+            {message && (
+              <div
+                className={`p-3 rounded-md text-sm relative  ${
+                  message.type === 'success'
+                    ? 'bg-green-100 text-green-700 border border-green-200'
+                    : 'bg-red-100 text-red-700 border border-red-200'
+                }`}
+              >
+                {message.text}
+                <button
+                  className={
+                    'absolute top-3 right-2 ' + (message.type === 'success' ? 'text-green-700' : 'text-red-700')
+                  }
+                  onClick={() => setMessage(null)}
+                >
+                  &times;
+                </button>
+              </div>
+            )}
             {/* Email */}
             <div className='relative'>
               <label htmlFor='email' className='block text-sm  mb-1 '>

@@ -30,13 +30,16 @@ export const ChangePasswordForm = ({ onClose, onSuccess }: { onClose: () => void
 
     try {
       const res = await nextAxios.post('/api/auth/change-password', values);
-      console.log('Password changed successfully:', res);
+
       router.refresh();
 
       onClose();
       onSuccess();
-    } catch (err) {
-      console.error('Error changing password:', err);
+    } catch (error) {
+      console.log('err', error);
+      const message = error instanceof Error ? error.message : 'Network error. Please try again.';
+
+      setMessage({ type: 'error', text: message });
     } finally {
       setIsSubmitting(false);
     }
@@ -53,13 +56,21 @@ export const ChangePasswordForm = ({ onClose, onSuccess }: { onClose: () => void
           <Form className='flex flex-col gap-4 max-w-md mx-auto'>
             {message && (
               <div
-                className={`p-3 rounded-md text-sm ${
+                className={`p-3 rounded-md text-sm relative  ${
                   message.type === 'success'
                     ? 'bg-green-100 text-green-700 border border-green-200'
                     : 'bg-red-100 text-red-700 border border-red-200'
                 }`}
               >
                 {message.text}
+                <button
+                  className={
+                    'absolute top-3 right-2 ' + (message.type === 'success' ? 'text-green-700' : 'text-red-700')
+                  }
+                  onClick={() => setMessage(null)}
+                >
+                  &times;
+                </button>
               </div>
             )}
 
