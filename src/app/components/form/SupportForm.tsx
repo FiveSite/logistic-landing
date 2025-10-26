@@ -2,7 +2,7 @@ import { Field, Formik, Form, ErrorMessage } from 'formik';
 import ArrowRightIcon from '../../../../public/icons/arrow-right.svg';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const validationSchema = Yup.object().shape({
   company: Yup.string().required('Company is required'),
@@ -24,7 +24,7 @@ export const SupportForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  const handleSubmit = async (values: SupportFormValues) => {
+  const handleSubmit = async (values: SupportFormValues, { resetForm }: { resetForm: () => void }) => {
     setIsSubmitting(true);
     setMessage(null);
 
@@ -33,13 +33,21 @@ export const SupportForm = () => {
       await axios.post('/api/send-email', data);
 
       setMessage({ type: 'success', text: 'Your message has been sent successfully.' });
+      resetForm();
     } catch (error) {
       setMessage({ type: 'error', text: 'Network error. Please try again.' });
-      console.log(error);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (message) {
+      setTimeout(() => {
+        setMessage(null);
+      }, 3000);
+    }
+  }, [message]);
 
   return (
     <div className='max-w-2xl max-sm:w-full p-8 max-sm:px-4 bg-[#F6F6F6] rounded-[20px]'>

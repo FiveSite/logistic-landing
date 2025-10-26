@@ -22,19 +22,19 @@ const navItems = [
 ];
 
 export const ProfileComponent = ({ user }: { user: User }) => {
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   const router = useRouter();
 
   const [isChangeModalOpen, setIsChangeModalOpen] = useState(false);
-  const [isSuccessPasswordModalOpen, setIsSuccessPasswordModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState<string | null>(user?.companyLogo?.url ?? null);
 
   const [isUploadingLogo, setIsUploadingLogo] = useState(false);
-  const [uploadLogoError, setUploadLogoError] = useState<string | null>(null);
 
   const [isInvoicingDetailsEnabled, setIsInvoicingDetailsEnabled] = useState(user?.showInvoicingDetails);
 
@@ -84,6 +84,8 @@ export const ProfileComponent = ({ user }: { user: User }) => {
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
     values: typeof initialValues
   ) => {
+    setMessage(null);
+
     const { name, value } = e.target;
     try {
       await updateMember(user.id.toString(), { [name]: value });
@@ -91,7 +93,9 @@ export const ProfileComponent = ({ user }: { user: User }) => {
       router.refresh();
 
       const member = await updateCompanyMember(user.documentId, { [name]: value });
+      if (member) setMessage({ type: 'success', text: 'Field updated successfully' });
     } catch (err) {
+      setMessage({ type: 'error', text: 'Failed to update field' });
       console.error(`Failed to update field ${name}:`, err);
     }
   };
@@ -100,7 +104,6 @@ export const ProfileComponent = ({ user }: { user: User }) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    setUploadLogoError(null);
     setIsUploadingLogo(true);
 
     try {
@@ -111,12 +114,13 @@ export const ProfileComponent = ({ user }: { user: User }) => {
       await updateMember(user.id.toString(), { companyLogo: id });
 
       router.refresh();
-      await updateCompanyMember(user.documentId, { companyLogo: id });
+      const member = await updateCompanyMember(user.documentId, { companyLogo: id });
+
+      if (member) setMessage({ type: 'success', text: 'Logo updated successfully' });
 
       setSelectedImage(fullUrl);
     } catch (error) {
-      console.error('Failed to upload company logo:', error);
-      setUploadLogoError('Failed to upload company logo');
+      setMessage({ type: 'error', text: 'Failed to update logo' });
     } finally {
       router.refresh();
       setIsUploadingLogo(false);
@@ -134,8 +138,9 @@ export const ProfileComponent = ({ user }: { user: User }) => {
       await updateMember(user.id.toString(), { [field]: String(newValue) });
       await updateCompanyMember(user.documentId, { [field]: String(newValue) });
       router.refresh();
+      setMessage({ type: 'success', text: 'Field updated successfully' });
     } catch (error) {
-      console.error(`Failed to update ${field}:`, error);
+      setMessage({ type: 'error', text: 'Failed to update field' });
     }
   };
 
@@ -171,8 +176,33 @@ export const ProfileComponent = ({ user }: { user: User }) => {
     }
   };
 
+  useEffect(() => {
+    if (message) {
+      setTimeout(() => {
+        setMessage(null);
+      }, 3000);
+    }
+  }, [message]);
+
   return (
-    <div className='pt-[160px] px-10 max-sm:px-4 flex pb-[160px]'>
+    <div className='relative pt-[160px] px-10 max-sm:px-4 flex pb-[160px]'>
+      {message && (
+        <div
+          className={`p-3 rounded-md text-sm fixed top-20 right-10 max-sm:top-10 max-sm:right-4  w-[300px] lg:w-[400px] z-20 ${
+            message.type === 'success'
+              ? 'bg-green-100 text-green-700 border border-green-200'
+              : 'bg-red-100 text-red-700 border border-red-200'
+          }`}
+        >
+          {message.text}
+          <button
+            className={'absolute top-3 right-2 ' + (message.type === 'success' ? 'text-green-700' : 'text-red-700')}
+            onClick={() => setMessage(null)}
+          >
+            &times;
+          </button>
+        </div>
+      )}
       <aside className='w-64 p-8 max-lg:hidden'>
         <h2 className='text-[30px] font-semibold mb-7'>Profile</h2>
         <nav>
@@ -769,18 +799,11 @@ export const ProfileComponent = ({ user }: { user: User }) => {
             }}
             onSuccess={() => {
               setIsChangeModalOpen(false);
-              setIsSuccessPasswordModalOpen(true);
+              setMessage({ type: 'success', text: 'Password has been changed successfully' });
             }}
+            onError={() => setMessage({ type: 'error', text: 'Network error. Please try again.' })}
           />
         </ModalComponent>
-      )}
-      {isSuccessPasswordModalOpen && (
-        <ModalComponent
-          title='Password changed'
-          description='Your password has been changed successfully.'
-          isOpen={isSuccessPasswordModalOpen}
-          handleClose={() => setIsSuccessPasswordModalOpen(false)}
-        />
       )}
       {isDeleteModalOpen && (
         <DeleteMemberDialog
@@ -789,6 +812,7 @@ export const ProfileComponent = ({ user }: { user: User }) => {
             setIsDeleteModalOpen(false);
           }}
           user={user}
+          setMessage={setMessage}
         />
       )}
     </div>

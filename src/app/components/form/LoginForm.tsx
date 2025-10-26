@@ -1,9 +1,10 @@
 'use client';
 
 import { signIn } from '@/services/auth';
+import axios from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 
 interface FormValues {
@@ -36,13 +37,17 @@ export const LoginForm = ({
       const data = await signIn(values.email, values.password);
 
       if (data) {
-        const res = await fetch('/api/auth/set-cookie', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token: data.jwt }),
-        });
-
-        if (res.ok) {
+        const res = await axios.post(
+          '/api/auth/set-cookie',
+          { token: data.jwt },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        console.log('res', res);
+        if (res) {
           onClose();
           router.push('/directory');
           router.refresh();
@@ -56,6 +61,14 @@ export const LoginForm = ({
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (message) {
+      setTimeout(() => {
+        setMessage(null);
+      }, 3000);
+    }
+  }, [message]);
 
   return (
     <div className='pt-6'>

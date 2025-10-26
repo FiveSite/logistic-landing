@@ -19,27 +19,29 @@ const validationSchema = Yup.object().shape({
     .oneOf([Yup.ref('password')], 'Please re-enter the same password.')
     .required('Required'),
 });
-export const ChangePasswordForm = ({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) => {
+export const ChangePasswordForm = ({
+  onClose,
+  onSuccess,
+  onError,
+}: {
+  onClose: () => void;
+  onSuccess: () => void;
+  onError: () => void;
+}) => {
   const router = useRouter();
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
-    setMessage(null);
 
     try {
-      const res = await nextAxios.post('/api/auth/change-password', values);
-
+      await nextAxios.post('/api/auth/change-password', values);
       router.refresh();
 
       onClose();
       onSuccess();
     } catch (error) {
-      console.log('err', error);
-      const message = error instanceof Error ? error.message : 'Network error. Please try again.';
-
-      setMessage({ type: 'error', text: message });
+      onError();
     } finally {
       setIsSubmitting(false);
     }
@@ -54,26 +56,6 @@ export const ChangePasswordForm = ({ onClose, onSuccess }: { onClose: () => void
       >
         {() => (
           <Form className='flex flex-col gap-4 max-w-md mx-auto'>
-            {message && (
-              <div
-                className={`p-3 rounded-md text-sm relative  ${
-                  message.type === 'success'
-                    ? 'bg-green-100 text-green-700 border border-green-200'
-                    : 'bg-red-100 text-red-700 border border-red-200'
-                }`}
-              >
-                {message.text}
-                <button
-                  className={
-                    'absolute top-3 right-2 ' + (message.type === 'success' ? 'text-green-700' : 'text-red-700')
-                  }
-                  onClick={() => setMessage(null)}
-                >
-                  &times;
-                </button>
-              </div>
-            )}
-
             <div className='relative'>
               <label htmlFor='newPassword' className='block text-sm  mb-1'>
                 Current password <span className='text-red-500'>*</span>

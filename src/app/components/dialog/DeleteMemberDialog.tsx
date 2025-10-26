@@ -5,15 +5,21 @@ import iconAnimation from '../../deleting.json';
 import Lottie from 'lottie-react';
 import axios from 'axios';
 import { User } from '@/types';
+import { useState } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
   handleClose: () => void;
   user: User;
+  setMessage: (message: { type: 'success' | 'error'; text: string }) => void;
 }
 
-export const DeleteMemberDialog = ({ isOpen, handleClose, user }: ModalProps) => {
+export const DeleteMemberDialog = ({ isOpen, handleClose, user, setMessage }: ModalProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSendRequest = async () => {
+    setIsLoading(true);
+
     try {
       const data = {
         email: user.email,
@@ -22,9 +28,12 @@ export const DeleteMemberDialog = ({ isOpen, handleClose, user }: ModalProps) =>
         form: 'Deleting',
       };
       await axios.post('/api/send-email', data);
+      setMessage({ type: 'success', text: 'Request has been sent successfully' });
       handleClose();
     } catch (error) {
-      console.log(error);
+      setMessage({ type: 'error', text: 'Network error. Please try again.' });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -32,7 +41,7 @@ export const DeleteMemberDialog = ({ isOpen, handleClose, user }: ModalProps) =>
     <div>
       <Modal open={isOpen} onClose={handleClose} className='flex items-center justify-center'>
         <div className='bg-white p-10 max-sm:px-4 rounded-lg flex flex-col  max-w-[538px] w-full overflow-hidden'>
-          <div className='w-[346px] h-auto mx-auto'>
+          <div className='w-[150px] h-auto mx-auto mb-10'>
             <Lottie animationData={iconAnimation} loop={true} />
           </div>
           <h2 className='text-[30px] leading-[30px] font-bold mb-6 text-center text-orange-600'>Delete Account</h2>
@@ -44,7 +53,7 @@ export const DeleteMemberDialog = ({ isOpen, handleClose, user }: ModalProps) =>
               onClick={handleSendRequest}
               className='flex items-center justify-center gap-1 cursor-pointer  w-full text-white py-2 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition'
             >
-              Send request
+              {isLoading ? 'Sending...' : ' Send request'}
             </button>
             <button
               onClick={handleClose}

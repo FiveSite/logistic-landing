@@ -24,9 +24,7 @@ export const ForgotPassword = ({
       await axiosInstance.post('api/auth/forgot-password', { email: values.email });
 
       onSuccess();
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   return (
