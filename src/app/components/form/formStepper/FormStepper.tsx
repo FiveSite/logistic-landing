@@ -10,7 +10,7 @@ import { FormikErrors, FormikTouched } from 'formik';
 import * as yup from 'yup';
 import { addMember, fetchCountriesList } from '@/services/api';
 import { MemberSignUpFormValues } from '@/types';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 export const initialValues: MemberSignUpFormValues = {
   company: '',
@@ -85,6 +85,7 @@ export const FormStepper = ({
   onSuccess: () => void;
 }) => {
   const [countryData, setCountryData] = useState<Country[] | []>([]);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const { activeStep, nextStepHandler } = useContext(MemberSignUpContext);
 
@@ -128,7 +129,6 @@ export const FormStepper = ({
   };
 
   const handleSubmitClickHandler = async (values: MemberSignUpFormValues) => {
-    // console.log('values', values);
     if (activeStep < 3) {
       nextStepHandler(activeStep + 1);
     } else {
@@ -140,9 +140,9 @@ export const FormStepper = ({
           companyLogo: null,
           banerLogo: null,
         });
-        // console.log('res', res);
+        console.log('res', res);
 
-        if (res.data) {
+        if (res) {
           onSuccess();
           handleClose();
 
@@ -150,7 +150,11 @@ export const FormStepper = ({
           await axios.post('/api/send-email', data);
         }
       } catch (error) {
-        // console.error('Error:', error);
+        if (error instanceof Error) {
+          if (error.message == '400') {
+            setMessage({ type: 'error', text: 'This email or company already exists' });
+          } else setMessage({ type: 'error', text: 'Network error. Please try again.' });
+        }
       }
     }
   };
@@ -174,6 +178,14 @@ export const FormStepper = ({
     getCountriesList();
   }, []);
 
+  useEffect(() => {
+    if (message) {
+      setTimeout(() => {
+        setMessage(null);
+      }, 3000);
+    }
+  }, [message]);
+
   return (
     <>
       <Formik
@@ -186,6 +198,25 @@ export const FormStepper = ({
       >
         {({ validateForm, setTouched, isValid, isSubmitting, errors, touched, values }) => (
           <Form>
+            {message && (
+              <div
+                className={`p-3 rounded-md text-sm relative  ${
+                  message.type === 'success'
+                    ? 'bg-green-100 text-green-700 border border-green-200'
+                    : 'bg-red-100 text-red-700 border border-red-200'
+                }`}
+              >
+                {message.text}
+                <button
+                  className={
+                    'absolute top-3 right-2 ' + (message.type === 'success' ? 'text-green-700' : 'text-red-700')
+                  }
+                  onClick={() => setMessage(null)}
+                >
+                  &times;
+                </button>
+              </div>
+            )}
             {formData}
 
             <div className='flex max-sm:flex-col max-sm:gap-4 justify-between items-center mt-6 max:lg:pb-6'>

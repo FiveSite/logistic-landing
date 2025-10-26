@@ -1,22 +1,29 @@
 import { News, Event, Team, Benefit, Country, MemberData } from '@/types';
 import { axiosInstance } from '@/utils/axios';
 import { nextAxios } from '@/utils/axios-next';
-
+import { AxiosError } from 'axios';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const countries = 'https://countriesnow.space/api/v0.1/countries';
 
 export const addMember = async (data: MemberData) => {
   try {
-    const res = await fetch(`${API_URL}/api/members`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ data }),
-    });
-    return await res.json();
+    const res = await axiosInstance.post(
+      '/api/members',
+      { data },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return res.data;
   } catch (error) {
-    console.error('Error adding member:', error);
+    console.log('error', error);
+    if (error instanceof AxiosError) {
+      const message = error.response?.data?.error?.status || 'Request failed';
+      console.log('mess', message);
+      throw new Error(message);
+    }
   }
 };
 

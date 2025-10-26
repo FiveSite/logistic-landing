@@ -22,16 +22,15 @@ export const FormikMultiSelect = ({ name, label }: FormikMultiSelectProps) => {
     <FormControl fullWidth size='small'>
       <InputLabel>{label}</InputLabel>
       <Select
-        multiple
+        // multiple
         value={field.value || []}
         onChange={handleChange}
         input={
           <OutlinedInput
             label={label}
             sx={{
-              //borderRadius: '100px',
               bgcolor: '#fff',
-              // height: '50px',
+
               '& .MuiOutlinedInput-notchedOutline': {
                 borderColor: '#e5e7eb',
               },

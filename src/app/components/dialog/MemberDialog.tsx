@@ -57,7 +57,7 @@ export const MemberDialog = ({ isOpen, handleClose, onChange, onSuccess }: Modal
             {/* form */}
             <div className='flex-1 p-10 max-sm:px-4'>
               <h2 className='text-[30px] font-bold text-orange-600 mb-2'>{articles[activeStep]}</h2>
-              <p className='text-[16px] mb-10 max-sm:mb-6'>Provide general details about your company</p>
+              <p className='text-[16px] mb-6 '>Provide general details about your company</p>
 
               <FormStepper handleClose={handleClose} onChange={onChange} onSuccess={onSuccess} />
             </div>
