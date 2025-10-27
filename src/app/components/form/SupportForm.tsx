@@ -5,11 +5,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const validationSchema = Yup.object().shape({
-  company: Yup.string().required('Company is required'),
-  name: Yup.string().required('Name is required'),
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  phone: Yup.string().required('Phone number is required'),
-  message: Yup.string().required('Message is required'),
+  company: Yup.string().trim().required('Company is required'),
+  name: Yup.string().trim().required('Name is required'),
+  email: Yup.string().trim().email('Invalid email').required('Email is required'),
+  phone: Yup.string().trim().required('Phone number is required'),
+  message: Yup.string().trim().required('Message is required'),
 });
 
 type SupportFormValues = {

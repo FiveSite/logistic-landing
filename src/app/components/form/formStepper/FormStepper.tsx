@@ -40,39 +40,39 @@ export const initialValues: MemberSignUpFormValues = {
 
 // Step 1: Company info
 export const step1Schema = yup.object().shape({
-  company: yup.string().required('Company is required'),
-  phone: yup.string().required('Phone is required'),
-  website: yup.string().url('Invalid URL').required('Website is required'),
-  address: yup.string().required('Address is required'),
+  company: yup.string().trim().required('Company is required'),
+  phone: yup.string().trim().required('Phone is required'),
+  website: yup.string().trim().url('Invalid URL').required('Website is required'),
+  address: yup.string().trim().required('Address is required'),
   country: yup.string().required('Country is required'),
   city: yup.string().required('City is required'),
-  linkedin: yup.string().url('Invalid URL').required('Linkedin is required'),
+  linkedin: yup.string().trim().url('Invalid URL').required('Linkedin is required'),
 });
 
 // Step 2: Contact info
 export const step2Schema = yup.object().shape({
-  contactName: yup.string().required('Contact name is required'),
-  contactPosition: yup.string().required('Position is required'),
-  contactEmail: yup.string().email('Invalid email').required('Email is required'),
-  contactNumber: yup.string().required('Contact number is required'),
+  contactName: yup.string().trim().required('Contact name is required'),
+  contactPosition: yup.string().trim().required('Position is required'),
+  contactEmail: yup.string().trim().email('Invalid email').required('Email is required'),
+  contactNumber: yup.string().trim().required('Contact number is required'),
 });
 
 // Step 3: Business info
 export const step3Schema = yup.object().shape({
   startBusinessDate: yup.string().required('Start date is required'),
-  markets: yup.string().required('Markets are required'),
-  activities: yup.string().required('Activities are required'),
+  markets: yup.string().trim().required('Markets are required'),
+  activities: yup.string().trim().required('Activities are required'),
   services: yup.array().min(1, 'At least one service is required').required('Services are required'),
-  profile: yup.string().required('Profile is required'),
+  profile: yup.string().trim().required('Profile is required'),
 });
 
 // Step 4: Extra info
 export const step4Schema = yup.object().shape({
-  annualTurnover: yup.string().required('Turnover is required'),
-  employees: yup.string().required('Employees is required'),
-  branchOffices: yup.string().required('Branch offices is required'),
-  branchLocations: yup.string().required('Branch locations is required'),
-  references: yup.string().required('References are required'),
+  annualTurnover: yup.string().trim().required('Turnover is required'),
+  employees: yup.string().trim().required('Employees is required'),
+  branchOffices: yup.string().trim().required('Branch offices is required'),
+  branchLocations: yup.string().trim().required('Branch locations is required'),
+  references: yup.string().trim().required('References are required'),
 });
 
 export const FormStepper = ({

@@ -25,6 +25,7 @@ body {
   color: var(--foreground);
   font-family: Roboto, sans-serif;
   color-scheme: light !important;
+  overflow-x: hidden;
 }
 
 /* Адаптивне масштабування SVG */

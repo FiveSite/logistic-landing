@@ -45,7 +45,7 @@ export const DirectoryComponent = () => {
 
   const options = countryData.map((item) => {
     return {
-      value: item.iso2,
+      value: item.country,
       label: item.country,
     };
   });
@@ -130,7 +130,7 @@ export const DirectoryComponent = () => {
           servicesValue: selectedServices.value,
           searchValue,
         });
-        console.log('res', res);
+
         setMembers(res.data);
         setTotalPages(res.meta.pagination.pageCount);
         setIsLoading(false);
@@ -220,7 +220,7 @@ export const DirectoryComponent = () => {
                   </div>
                   <div className='flex items-center text-[16px] mb-6 max-sm:mb-4'>
                     <LocationIcon className='w-5 h-5' />
-                    {company.city}, {countryMap[company.country]} - {company.address}
+                    {company.city}, {company.country} - {company.address}
                   </div>
                   <p className='text-[16px] line-clamp-2 lg:pr-30'>{company.profile}</p>
                   <div className='flex flex-wrap gap-2 mt-6  max-sm:mt-4'>

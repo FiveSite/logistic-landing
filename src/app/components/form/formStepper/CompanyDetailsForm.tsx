@@ -19,7 +19,6 @@ export const CompanyDetailsForm = ({ data }: CountryDataProp) => {
   // Отримуємо міста для цієї країни
   const cities = selectedCountry ? selectedCountry.cities.map((city) => ({ value: city, label: city })) : [];
 
-  console.log('cities', cities);
   return (
     <>
       <div className='grid grid-cols-2 max-md:grid-cols-1 max-md:gap-4 gap-6'>
@@ -77,7 +76,7 @@ export const CompanyDetailsForm = ({ data }: CountryDataProp) => {
             <option value=''>Select country</option>
             {data.map((c) => {
               const key = c.iso2 || c.country;
-              const value = c.iso2 || c.country;
+              const value = c.country;
               return (
                 <option key={key} value={value}>
                   {c.country}

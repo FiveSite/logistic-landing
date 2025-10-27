@@ -11,7 +11,7 @@ interface FormValues {
 }
 
 const currentSchema = yup.object().shape({
-  email: yup.string().email('Invalid email').required('Email is required'),
+  email: yup.string().trim().email('Invalid email').required('Email is required'),
 });
 export const ForgotPassword = ({
   onClose,

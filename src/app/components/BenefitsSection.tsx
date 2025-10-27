@@ -1,22 +1,8 @@
-'use client';
-import { fetchBenefits } from '@/services/api';
 import { Benefit } from '@/types';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-export const Benefits = () => {
-  const [benefits, setBenefits] = useState<Benefit[]>([]);
-
-  const getData = async () => {
-    const data = await fetchBenefits();
-    setBenefits(data);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
+export const BenefitsSection = ({ benefits }: { benefits: Benefit[] }) => {
   return (
     <section className='bg-[#F6F6F6] lg:py-40 lg:pt-[200px] py-20 w-full '>
       <div className='bg-[url("/images/about-decor.png")] bg-no-repeat bg-cover'>

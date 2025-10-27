@@ -1,51 +1,22 @@
 'use client';
 import { countryMap } from '@/constants';
-import { fetchMembersList, fetchMembersList2 } from '@/services/api';
-
+import { countCountries } from '@/utils/map';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import WorldMap from 'react-svg-worldmap';
 
 // Функція для підбору кольору
 const getColor = (count: number) => {
-  if (count < 1) return '#ffffff'; // light
-  if (count <= 2) return '#FFC2A6'; // orangered
+  if (count < 1) return '#ffffff';
+  if (count <= 2) return '#FFC2A6';
   if (count <= 3) return '#FF6A33';
-  return '#FF4500'; // intenced
+  return '#FF4500';
 };
 
-const countCountries = (data: { country: string }[]) => {
-  const map = new Map<string, number>();
-
-  for (const item of data) {
-    map.set(item.country, (map.get(item.country) || 0) + 1);
-  }
-
-  return Array.from(map.entries()).map(([country, count]) => ({
-    country,
-    name: countryMap[country],
-    count,
-  }));
-};
-
-export const World = () => {
-  const [data, setData] = useState<{ country: string; name: string; count: number }[]>([]);
-
-  const getMembers = async () => {
-    try {
-      const { data } = await fetchMembersList2();
-      setData(countCountries(data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getMembers();
-  }, []);
+export const WorldSection = ({ countries }: { countries: { country: string; name: string; count: number }[] }) => {
+  const data = countCountries(countries);
 
   const mapData = data.map((c) => ({
-    country: c.country.toLowerCase(), // react-svg-worldmap очікує lower-case ISO-код
+    country: countryMap[c.country].toLowerCase(), // react-svg-worldmap очікує lower-case ISO-код
     value: c.count,
   }));
 
@@ -98,7 +69,7 @@ export const World = () => {
                   className='flex items-center gap-2 max-sm:border max-sm:rounded-[8px] max-sm:py-2 max-sm:px-4 max-sm:border-gray-200 max-sm:bg-white'
                 >
                   <Image
-                    src={`https://flagcdn.com/w40/${country.country.toLowerCase()}.png`}
+                    src={`https://flagcdn.com/w40/${country.name.toLowerCase()}.png`}
                     alt={country.name}
                     width={16}
                     height={16}
@@ -106,7 +77,7 @@ export const World = () => {
                     loading='lazy'
                     unoptimized
                   />
-                  <span className='text-[16px] font-semibold'>{country.name}</span>
+                  <span className='text-[16px] font-semibold'>{country.country}</span>
                 </li>
               ))}
           </ul>

@@ -130,7 +130,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
                   <LocationIcon className='' />
                 </div>
                 <p className='text-sm font-semibold'>
-                  {user.address} - {user.city}, {countryMap[user.country]}
+                  {user.address} - {user.city}, {user.country}
                 </p>
               </div>
               <div className='sm:hidden flex items-center gap-8'>

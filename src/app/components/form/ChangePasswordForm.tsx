@@ -13,9 +13,10 @@ interface FormValues {
 }
 
 const validationSchema = Yup.object().shape({
-  currentPassword: Yup.string().required('Required'),
-  password: Yup.string().min(6, 'Password must be at least 6 characters').required('Required'),
+  currentPassword: Yup.string().trim().required('Required'),
+  password: Yup.string().trim().min(6, 'Password must be at least 6 characters').required('Required'),
   passwordConfirmation: Yup.string()
+    .trim()
     .oneOf([Yup.ref('password')], 'Please re-enter the same password.')
     .required('Required'),
 });
