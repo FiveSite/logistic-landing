@@ -3,7 +3,7 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { axiosInstance } from '@/utils/axios';
 
 interface FormValues {
@@ -40,24 +40,30 @@ export const ResetPasswordForm = ({
     setMessage(null);
 
     try {
-      const res = await axiosInstance.post('api/auth/reset-password', {
+      await axiosInstance.post('api/auth/reset-password', {
         code,
         password: values.newPassword,
         passwordConfirmation: values.repeatPassword,
       });
 
-      setMessage({ type: 'success', text: 'Password reset successfully!' });
       setTimeout(() => {
         router.push('/');
         onSuccess();
       }, 1500);
     } catch (error) {
-      console.log('err', error);
-      setMessage({ type: 'error', text: 'Network error. Please try again.' });
+      setMessage({ type: 'error', text: 'Failed to reset password' });
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (message) {
+      setTimeout(() => {
+        setMessage(null);
+      }, 3000);
+    }
+  }, [message]);
 
   return (
     <div className='pt-6'>
@@ -68,6 +74,25 @@ export const ResetPasswordForm = ({
       >
         {() => (
           <Form className='flex flex-col gap-4 max-w-md mx-auto'>
+            {message && (
+              <div
+                className={`p-3 rounded-md text-sm relative  ${
+                  message.type === 'success'
+                    ? 'bg-green-100 text-green-700 border border-green-200'
+                    : 'bg-red-100 text-red-700 border border-red-200'
+                }`}
+              >
+                {message.text}
+                <button
+                  className={
+                    'absolute top-3 right-2 ' + (message.type === 'success' ? 'text-green-700' : 'text-red-700')
+                  }
+                  onClick={() => setMessage(null)}
+                >
+                  &times;
+                </button>
+              </div>
+            )}
             {/* New password */}
             <div className='relative'>
               <label htmlFor='newPassword' className='block text-sm  mb-1'>

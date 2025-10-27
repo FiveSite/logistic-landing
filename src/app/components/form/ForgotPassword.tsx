@@ -1,7 +1,10 @@
+'use client';
+
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import ArrowLeftIcon from '../../../../public/icons/arrow-left.svg';
 import * as yup from 'yup';
 import { axiosInstance } from '@/utils/axios';
+import { useEffect, useState } from 'react';
 
 interface FormValues {
   email: string;
@@ -19,13 +22,32 @@ export const ForgotPassword = ({
   onChange: () => void;
   onSuccess: () => void;
 }) => {
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (values: FormValues) => {
+    setMessage(null);
+    setIsSubmitting(true);
+
     try {
       await axiosInstance.post('api/auth/forgot-password', { email: values.email });
 
       onSuccess();
-    } catch (err) {}
+    } catch (err) {
+      console.log('err', err);
+      setMessage({ type: 'error', text: 'Failed to send email' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  useEffect(() => {
+    if (message) {
+      setTimeout(() => {
+        setMessage(null);
+      }, 3000);
+    }
+  }, [message]);
 
   return (
     <div className='pt-6'>
@@ -34,8 +56,27 @@ export const ForgotPassword = ({
         onSubmit={(values) => handleSubmit(values)}
         validationSchema={currentSchema}
       >
-        {({ isSubmitting }) => (
+        {({}) => (
           <Form className='flex flex-col gap-4 max-w-md mx-auto'>
+            {message && (
+              <div
+                className={`p-3 rounded-md text-sm relative  ${
+                  message.type === 'success'
+                    ? 'bg-green-100 text-green-700 border border-green-200'
+                    : 'bg-red-100 text-red-700 border border-red-200'
+                }`}
+              >
+                {message.text}
+                <button
+                  className={
+                    'absolute top-3 right-2 ' + (message.type === 'success' ? 'text-green-700' : 'text-red-700')
+                  }
+                  onClick={() => setMessage(null)}
+                >
+                  &times;
+                </button>
+              </div>
+            )}
             {/* Email */}
             <div className='relative'>
               <label htmlFor='email' className='block text-sm  mb-1'>
@@ -60,7 +101,7 @@ export const ForgotPassword = ({
               type='submit'
               className='cursor-pointer mt-4 mb-2 w-full text-white py-2 px-4 rounded-[100px] bg-orange-600 hover:bg-orange-700 transition-all ease-in-out duration-300'
             >
-              Send email
+              {isSubmitting ? 'Sending...' : ' Send email'}
             </button>
 
             <div className='h-[1px] w-full bg-[#E1E4ED]'></div>
