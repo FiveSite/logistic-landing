@@ -1,7 +1,8 @@
 import ArrowRightIcon from '../../../public/icons/arrow-right.svg';
 import Link from 'next/link';
 
-export const PhotoSection = () => {
+export const PhotoSection = ({ consultationData }: { consultationData: { title: string; afterTitle: string }[] }) => {
+  console.log('consData', consultationData);
   return (
     <section className='bg-[#F6F6F6] sm:px-10 w-full lg:pt-[120px] pt-20'>
       <div className="relative sm:h-[400px] w-full bg-no-repeat bg-cover bg-center sm:rounded-[20px] overflow-hidden sm:bg-[url('/images/lorry-bg.png')] bg-[url('/images/lorry-bg-min.png')] ">
@@ -9,12 +10,9 @@ export const PhotoSection = () => {
 
         <div className='sm:absolute top-25 left-0 h-full w-full z-20 flex flex-col justify-start lg:px-20 px-6 max-sm:py-40'>
           <h2 className='text-white text-[34px] leading-[34px] font-semibold max-w-[500px] mb-6'>
-            Move Your Business Forward With Logistics You Can Trust
+            {consultationData[0].title}
           </h2>
-          <p className='text-white text-[16px] max-w-[500px] sm:mb-8 mb-6'>
-            Fast, reliable, and transparent delivery solutions tailored to your needs. From warehouse to destination, we
-            make every mile count.
-          </p>
+          <p className='text-white text-[16px] max-w-[500px] sm:mb-8 mb-6'>{consultationData[0].afterTitle}</p>
 
           <Link
             href='/about#contact-us'

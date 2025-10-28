@@ -5,6 +5,16 @@ import { AxiosError } from 'axios';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const countries = 'https://countriesnow.space/api/v0.1/countries';
 
+export const fetchConsultationSectionText = async () => {
+  try {
+    const res = await axiosInstance.get('/api/consultation-sections?populate=*');
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching:', error);
+    return { data: [], meta: { pagination: {} } };
+  }
+};
+
 export const fetchContactSection = async () => {
   try {
     const res = await axiosInstance.get('/api/contact-infos?populate=*');

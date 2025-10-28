@@ -20,8 +20,6 @@ export interface AboutData {
 export const AboutComponent = ({ contactData, aboutData }: { contactData: ContactData[]; aboutData: AboutData }) => {
   const [benefits, setBenefits] = useState<Benefit[]>([]);
 
-  console.log('aboutData', aboutData);
-
   const getData = async () => {
     const data = await fetchBenefits();
     setBenefits(data);
