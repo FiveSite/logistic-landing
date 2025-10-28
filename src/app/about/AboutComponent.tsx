@@ -13,7 +13,11 @@ interface ContactData {
   id: number;
 }
 
-export const AboutComponent = ({ contactData, aboutData }: { contactData: ContactData[]; aboutData: any }) => {
+export interface AboutData {
+  text: BlocksContent;
+}
+
+export const AboutComponent = ({ contactData, aboutData }: { contactData: ContactData[]; aboutData: AboutData }) => {
   const [benefits, setBenefits] = useState<Benefit[]>([]);
 
   console.log('aboutData', aboutData);
@@ -43,12 +47,12 @@ export const AboutComponent = ({ contactData, aboutData }: { contactData: Contac
 
             <div className='flex flex-col gap-7 lg:pt-[82px] pt-8'>
               <BlocksRenderer
-                content={aboutData as BlocksContent}
+                content={aboutData.text as BlocksContent}
                 blocks={{
                   heading: ({ children, level }) => {
                     return <p className='text-[16px] indent-4 font-[500]'>{children}</p>;
                   },
-                  paragraph: ({ children }) => <p className='text-[16px]  font-[500]'>{children}</p>,
+                  paragraph: ({ children }) => <p className='text-[16px] font-[500]'>{children}</p>,
                 }}
               />
               {/* <p className='text-[16px] indent-4 font-[500]'>

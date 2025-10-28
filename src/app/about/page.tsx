@@ -7,7 +7,7 @@ const AboutPage = async () => {
 
   return (
     <div>
-      <AboutComponent contactData={contactData[0].content} aboutData={aboutData[0].text} />
+      <AboutComponent contactData={contactData[0].content} aboutData={aboutData[0]} />
     </div>
   );
 };
