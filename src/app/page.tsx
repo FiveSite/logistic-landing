@@ -7,17 +7,15 @@ import { MainComponent } from './components/MainComponent';
 import { fetchBenefits, fetchConsultationSectionText, fetchFaqSectionText, fetchMembersList2 } from '@/services/api';
 
 export default async function Home() {
-  const data = await fetchBenefits();
-
-  const { data: countryData } = await fetchMembersList2();
-
+  const { data: benefits } = await fetchBenefits();
   const { data: faqData } = await fetchFaqSectionText();
+  const { data: countryData } = await fetchMembersList2();
   const { data: consultationData } = await fetchConsultationSectionText();
 
   return (
     <main className='flex flex-col items-center '>
       <MainComponent />
-      <BenefitsSection benefits={data} />
+      <BenefitsSection benefits={benefits} />
       <WorldSection countries={countryData} />
       <PhotoSection consultationData={consultationData} />
       <ArticlesSection />

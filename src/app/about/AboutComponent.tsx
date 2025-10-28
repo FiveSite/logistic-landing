@@ -1,10 +1,8 @@
 'use client';
 import Image from 'next/image';
 import { SupportForm } from '../components/form/SupportForm';
-import { useEffect, useState } from 'react';
-import { Benefit } from '@/types';
-import { fetchBenefits } from '@/services/api';
 import { BlocksRenderer, type BlocksContent } from '@strapi/blocks-react-renderer';
+import { Benefit } from '@/types';
 
 interface ContactData {
   email: string;
@@ -17,17 +15,16 @@ export interface AboutData {
   text: BlocksContent;
 }
 
-export const AboutComponent = ({ contactData, aboutData }: { contactData: ContactData[]; aboutData: AboutData }) => {
-  const [benefits, setBenefits] = useState<Benefit[]>([]);
-
-  const getData = async () => {
-    const data = await fetchBenefits();
-    setBenefits(data);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+export const AboutComponent = ({
+  contactData,
+  aboutData,
+  benefits,
+}: {
+  contactData: ContactData[];
+  aboutData: AboutData;
+  benefits: Benefit[];
+}) => {
+  console.log('ben', benefits);
 
   return (
     <>
@@ -53,33 +50,6 @@ export const AboutComponent = ({ contactData, aboutData }: { contactData: Contac
                   paragraph: ({ children }) => <p className='text-[16px] font-[500]'>{children}</p>,
                 }}
               />
-              {/* <p className='text-[16px] indent-4 font-[500]'>
-                African Alliance Network is a premier logistics network dedicated to connecting vetted African freight
-                forwarders with trusted global logistics partners. We empower our members to unlock the vast potential
-                of Africa’s rapidly growing markets by providing seamless, reliable, and transparent logistics solutions
-                tailored to their clients’ needs.
-              </p>
-              <p className='text-[16px] font-[500]'>
-                At African Alliance, collaboration is at the heart of what we do. Our members work hand in hand,
-                safeguarding each other’s business interests and building long-term partnerships rooted in trust and
-                professionalism. Beyond logistics, we are committed to creating a secure and dependable global
-                environment that our members can rely on—enabling them to deliver customized, end-to-end solutions
-                across Africa and beyond.
-              </p>
-              <p className='text-[16px] font-[500]'>
-                Backed by a{' '}
-                <span className='text-orange-600'>
-                  leadership team with over 25 years of experience in logistics for large multinationals
-                </span>
-                , the African Alliance Network is built on a deep understanding of the complexities of the African
-                trade. Having always been based in and focused on Africa, our management brings first-hand expertise,
-                local knowledge, and global perspective to every partnership.
-              </p>
-              <p className='text-[16px] font-[500]'>
-                By uniting global reach with African trust, we break down barriers, strengthen trade connections, a nd
-                open up boundless opportunities for freight forwarders and logistics companies worldwide. Join us in
-                shaping the future of logistics in Africa and driving growth on a truly global scale.
-              </p> */}
             </div>
           </div>
 
@@ -93,7 +63,7 @@ export const AboutComponent = ({ contactData, aboutData }: { contactData: Contac
               <div className='w-full xl:w-1/2 relative h-[300px] sm:h-[400px] xl:h-[600px]'>
                 {/* <div className='w-full xl:w-1/2 relative h-[300px] sm:h-[400px] xl:h-full flex-1 items-stretch'> */}
                 <Image
-                  src={benefits[1]?.photo?.url || ''}
+                  src={benefits[2]?.photo?.url || ''}
                   alt='img'
                   fill
                   className='object-cover w-full h-full rounded-t-[24px] xl:rounded-l-[24px] xl:rounded-tr-none'
@@ -167,7 +137,7 @@ export const AboutComponent = ({ contactData, aboutData }: { contactData: Contac
               {/* Image */}
               <div className='w-full xl:w-1/2 relative h-[300px] sm:h-[400px] xl:h-[400px]'>
                 <Image
-                  src={benefits[2]?.photo?.url || ''}
+                  src={benefits[1]?.photo?.url || ''}
                   alt='img'
                   fill
                   className='object-cover w-full h-full rounded-t-[24px] xl:rounded-l-[24px] xl:rounded-tr-none'

@@ -1,9 +1,20 @@
-import { News, Event, Team, Benefit, Country, MemberData } from '@/types';
+import { News, Event, Team, Country, MemberData } from '@/types';
 import { axiosInstance } from '@/utils/axios';
 import { nextAxios } from '@/utils/axios-next';
 import { AxiosError } from 'axios';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const countries = 'https://countriesnow.space/api/v0.1/countries';
+
+export async function fetchBenefits() {
+  try {
+    const res = await axiosInstance.get('/api/benefits?populate=*');
+
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching benefits:', error);
+    return [];
+  }
+}
 
 export const fetchConsultationSectionText = async () => {
   try {
@@ -226,17 +237,6 @@ export async function fetchTeam(): Promise<Team[]> {
     return data.data;
   } catch (error) {
     console.error('Error fetching team:', error);
-    return [];
-  }
-}
-
-export async function fetchBenefits(): Promise<Benefit[]> {
-  try {
-    const res = await fetch(`${API_URL}/api/benefits?populate=*`);
-    const data = await res.json();
-    return data.data;
-  } catch (error) {
-    console.error('Error fetching benefits:', error);
     return [];
   }
 }

@@ -1,3 +1,5 @@
+'use client';
+
 import { Field, Formik, Form, ErrorMessage } from 'formik';
 import ArrowRightIcon from '../../../../public/icons/arrow-right.svg';
 import * as Yup from 'yup';
