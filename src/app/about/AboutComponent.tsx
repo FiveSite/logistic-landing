@@ -4,6 +4,7 @@ import { SupportForm } from '../components/form/SupportForm';
 import { useEffect, useState } from 'react';
 import { Benefit } from '@/types';
 import { fetchBenefits } from '@/services/api';
+import { BlocksRenderer, type BlocksContent } from '@strapi/blocks-react-renderer';
 
 interface ContactData {
   email: string;
@@ -12,8 +13,10 @@ interface ContactData {
   id: number;
 }
 
-export const AboutComponent = ({ contactData }: { contactData: ContactData[] }) => {
+export const AboutComponent = ({ contactData, aboutData }: { contactData: ContactData[]; aboutData: any }) => {
   const [benefits, setBenefits] = useState<Benefit[]>([]);
+
+  console.log('aboutData', aboutData);
 
   const getData = async () => {
     const data = await fetchBenefits();
@@ -39,7 +42,16 @@ export const AboutComponent = ({ contactData }: { contactData: ContactData[] }) 
             <Image src='/images/about-caption.svg' alt='solution' width={193} height={82} className='' />
 
             <div className='flex flex-col gap-7 lg:pt-[82px] pt-8'>
-              <p className='text-[16px] indent-4 font-[500]'>
+              <BlocksRenderer
+                content={aboutData as BlocksContent}
+                blocks={{
+                  heading: ({ children, level }) => {
+                    return <p className='text-[16px] indent-4 font-[500]'>{children}</p>;
+                  },
+                  paragraph: ({ children }) => <p className='text-[16px]  font-[500]'>{children}</p>,
+                }}
+              />
+              {/* <p className='text-[16px] indent-4 font-[500]'>
                 African Alliance Network is a premier logistics network dedicated to connecting vetted African freight
                 forwarders with trusted global logistics partners. We empower our members to unlock the vast potential
                 of Africa’s rapidly growing markets by providing seamless, reliable, and transparent logistics solutions
@@ -65,7 +77,7 @@ export const AboutComponent = ({ contactData }: { contactData: ContactData[] }) 
                 By uniting global reach with African trust, we break down barriers, strengthen trade connections, a nd
                 open up boundless opportunities for freight forwarders and logistics companies worldwide. Join us in
                 shaping the future of logistics in Africa and driving growth on a truly global scale.
-              </p>
+              </p> */}
             </div>
           </div>
 
