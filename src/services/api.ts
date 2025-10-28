@@ -5,6 +5,44 @@ import { AxiosError } from 'axios';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const countries = 'https://countriesnow.space/api/v0.1/countries';
 
+export const fetchContactSection = async () => {
+  try {
+    const res = await axiosInstance.get('/api/contact-infos?populate=*');
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching:', error);
+    return { data: [], meta: { pagination: {} } };
+  }
+};
+export const fetchAboutSectionText = async () => {
+  try {
+    const res = await axiosInstance.get('/api/company-histories?populate=*');
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching:', error);
+    return { data: [], meta: { pagination: {} } };
+  }
+};
+export const fetchFaqSectionText = async () => {
+  try {
+    const res = await axiosInstance.get('/api/faqs?populate=*');
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching:', error);
+    return { data: [], meta: { pagination: {} } };
+  }
+};
+
+export const fetchMainSectionText = async () => {
+  try {
+    const res = await axiosInstance.get('/api/main-sections?populate=*');
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching:', error);
+    return { data: [], meta: { pagination: {} } };
+  }
+};
+
 export const addMember = async (data: MemberData) => {
   try {
     const res = await axiosInstance.post(

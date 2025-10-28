@@ -5,42 +5,42 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import PlusIcon from '../../../public/icons/plus.svg';
 import CloseIcon from '../../../public/icons/close-icon.svg';
 
-const supportData = [
-  {
-    id: 0,
-    title: 'How does African Alliance promote trust among members?',
-    description:
-      '- We ensure trust through strict compliance checks, continuous monitoring, and circulation of risk alerts. Members are expected to uphold the same professional and ethical standards.',
-  },
-  {
-    id: 1,
-    title: 'Can I collaborate with global companies directly through the network?',
-    description:
-      '- Yes. African Alliance Network is built to connect African freight forwarders with trusted global logistics partners. As a member, you can directly collaborate with international companies within the network, creating opportunities to expand your services, access new markets, and build long-term global partnerships.',
-  },
-  {
-    id: 2,
-    title: 'Can I apply if my company is new?',
-    description:
-      '- We welcome growing logistics companies! However, to ensure reliability and trust within our network, member companies must have at least two years of operational experience with verifiable financials. Once your business meets these criteria, we’ll be glad to have you join the African Alliance Network.',
-  },
-  {
-    id: 3,
-    title: 'Do you offer assistance with cross-border logistics?',
-    description:
-      '- Yes. Through our vetted members across Africa and worldwide, we provide seamless cross-border logistics solutions. Our network ensures smooth customs clearance, reliable transport, and end-to-end delivery for your clients.',
-  },
-  {
-    id: 4,
-    title: 'Is the network focused on air, sea, or land freight?',
-    description: '- We cover all modes of transport (air, sea, land), with members specializing in different areas.',
-  },
-];
+// const supportData = [
+//   {
+//     id: 0,
+//     title: 'How does African Alliance promote trust among members?',
+//     description:
+//       '- We ensure trust through strict compliance checks, continuous monitoring, and circulation of risk alerts. Members are expected to uphold the same professional and ethical standards.',
+//   },
+//   {
+//     id: 1,
+//     title: 'Can I collaborate with global companies directly through the network?',
+//     description:
+//       '- Yes. African Alliance Network is built to connect African freight forwarders with trusted global logistics partners. As a member, you can directly collaborate with international companies within the network, creating opportunities to expand your services, access new markets, and build long-term global partnerships.',
+//   },
+//   {
+//     id: 2,
+//     title: 'Can I apply if my company is new?',
+//     description:
+//       '- We welcome growing logistics companies! However, to ensure reliability and trust within our network, member companies must have at least two years of operational experience with verifiable financials. Once your business meets these criteria, we’ll be glad to have you join the African Alliance Network.',
+//   },
+//   {
+//     id: 3,
+//     title: 'Do you offer assistance with cross-border logistics?',
+//     description:
+//       '- Yes. Through our vetted members across Africa and worldwide, we provide seamless cross-border logistics solutions. Our network ensures smooth customs clearance, reliable transport, and end-to-end delivery for your clients.',
+//   },
+//   {
+//     id: 4,
+//     title: 'Is the network focused on air, sea, or land freight?',
+//     description: '- We cover all modes of transport (air, sea, land), with members specializing in different areas.',
+//   },
+// ];
 
-export const FaQ = () => {
+export const FaQ = ({ faqData }: { faqData: { title: string; body: string }[] }) => {
   // const [activeTab, setActiveTab] = useState('General');
-  const [expanded, setExpanded] = useState<number | false>(false);
-  const handleChange = (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+  const [expanded, setExpanded] = useState<string | false>(false);
+  const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
 
@@ -89,36 +89,37 @@ export const FaQ = () => {
         </button>
       </div> */}
       <div className='max-w-[600px]'>
-        {supportData.map((data) => {
-          return (
-            <Accordion
-              key={data.id}
-              expanded={expanded === data.id}
-              onChange={handleChange(data.id)}
-              disableGutters
-              elevation={0}
-              square
-              className='mb-4 rounded-[20px] overflow-hidden border border-gray-200 bg-white/30 backdrop-blur-[20px]'
-            >
-              <AccordionSummary
-                expandIcon={
-                  expanded === data.id ? (
-                    <CloseIcon style={{ fill: 'black' }} />
-                  ) : (
-                    <PlusIcon style={{ stroke: 'black' }} />
-                  )
-                }
-                aria-controls={data.title}
-                id={data.title}
+        {faqData &&
+          faqData.map((data) => {
+            return (
+              <Accordion
+                key={data.title}
+                expanded={expanded === data.title}
+                onChange={handleChange(data.title)}
+                disableGutters
+                elevation={0}
+                square
+                className='mb-4 rounded-[20px] overflow-hidden border border-gray-200 bg-white/30 backdrop-blur-[20px]'
               >
-                <p className='text-[16px] font-semibold'>{data.title}</p>
-              </AccordionSummary>
-              <AccordionDetails>
-                <p className='text-[14px]'>{data.description}</p>
-              </AccordionDetails>
-            </Accordion>
-          );
-        })}
+                <AccordionSummary
+                  expandIcon={
+                    expanded === data.title ? (
+                      <CloseIcon style={{ fill: 'black' }} />
+                    ) : (
+                      <PlusIcon style={{ stroke: 'black' }} />
+                    )
+                  }
+                  aria-controls={data.title}
+                  id={data.title}
+                >
+                  <p className='text-[16px] font-semibold'>{data.title}</p>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <p className='text-[14px]'>{data.body}</p>
+                </AccordionDetails>
+              </Accordion>
+            );
+          })}
       </div>
     </>
   );

@@ -77,7 +77,9 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
                     loading='lazy'
                     unoptimized
                   />
-                  <span className='text-[16px] font-semibold'>{country.country}</span>
+                  <span className='text-[16px] font-semibold'>
+                    {country.country} ({country.count})
+                  </span>
                 </li>
               ))}
           </ul>

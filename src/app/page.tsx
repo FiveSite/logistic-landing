@@ -4,12 +4,14 @@ import { WorldSection } from './components/WorldSection';
 import { PhotoSection } from './components/PhotoSection';
 import ArticlesSection from './components/ArticlesSection';
 import { MainComponent } from './components/MainComponent';
-import { fetchBenefits, fetchMembersList2 } from '@/services/api';
+import { fetchBenefits, fetchFaqSectionText, fetchMembersList2 } from '@/services/api';
 
 export default async function Home() {
   const data = await fetchBenefits();
 
   const { data: countryData } = await fetchMembersList2();
+
+  const { data: faqData } = await fetchFaqSectionText();
 
   return (
     <main className='flex flex-col items-center '>
@@ -18,7 +20,7 @@ export default async function Home() {
       <WorldSection countries={countryData} />
       <PhotoSection />
       <ArticlesSection />
-      <FaqSection />
+      <FaqSection faqData={faqData[0].content} />
     </main>
   );
 }
