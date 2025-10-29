@@ -1,7 +1,6 @@
 'use client';
 import Image from 'next/image';
 import { SupportForm } from '../components/form/SupportForm';
-import { BlocksRenderer, type BlocksContent } from '@strapi/blocks-react-renderer';
 import { Benefit } from '@/types';
 
 interface ContactData {
@@ -11,21 +10,19 @@ interface ContactData {
   id: number;
 }
 
-export interface AboutData {
-  text: BlocksContent;
-}
-
 export const AboutComponent = ({
   contactData,
   aboutData,
   benefits,
 }: {
   contactData: ContactData[];
-  aboutData: AboutData;
+  aboutData: {
+    id: number;
+    description: string;
+  };
   benefits: Benefit[];
 }) => {
   console.log('ben', benefits);
-
   return (
     <>
       <section>
@@ -40,28 +37,16 @@ export const AboutComponent = ({
           <div className=' flex max-lg:flex-col items-center lg:items-start sm:px-[60px] px-0'>
             <Image src='/images/about-caption.svg' alt='solution' width={193} height={82} className='' />
 
-            <div className='flex flex-col gap-7 lg:pt-[82px] pt-8'>
-              <BlocksRenderer
-                content={aboutData.text as BlocksContent}
-                blocks={{
-                  heading: ({ children, level }) => {
-                    return <p className='text-[16px] indent-4 font-[500]'>{children}</p>;
-                  },
-                  paragraph: ({ children }) => <p className='text-[16px] font-[500]'>{children}</p>,
-                }}
-              />
-            </div>
+            <div className='lg:pt-[90px] pt-8' dangerouslySetInnerHTML={{ __html: aboutData.description }} />
           </div>
 
           <div className='max-sm:px-0 px-4 pt-[80px] pb-[80px] sm:px-6 md:px-10 xl:px-[60px] max-w-7xl mx-auto space-y-10'>
-            {/* Block 1 - Financial Protection */}
+            {/* block1*/}
             <div
               id='financial-protection'
               className='bg-[#F7F7F7] rounded-[24px] overflow-hidden flex flex-col xl:flex-row items-center'
             >
-              {/* Image */}
               <div className='w-full xl:w-1/2 relative h-[300px] sm:h-[400px] xl:h-[600px]'>
-                {/* <div className='w-full xl:w-1/2 relative h-[300px] sm:h-[400px] xl:h-full flex-1 items-stretch'> */}
                 <Image
                   src={benefits[2]?.photo?.url || ''}
                   alt='img'
@@ -71,39 +56,20 @@ export const AboutComponent = ({
                 />
               </div>
 
-              {/* Content */}
               <div className='w-full xl:w-1/2 p-4 sm:p-6 md:p-10 space-y-4 text-left flex-1'>
                 <h3 className='text-[24px] sm:text-[28px] md:text-[34px] leading-[1] font-semibold mb-4 md:mb-8'>
-                  Financial Protection & Assurance
+                  {benefits[2]?.title}
                 </h3>
-                <p className='text-[14px] sm:text-[16px] leading-relaxed'>
-                  At African Alliance, we ensure that our valued partners conduct business with maximum security and
-                  confidence. To safeguard our network, we provide financial protection protocols that help minimize
-                  potential losses arising from transactions with qualified{' '}
-                  <span className='text-orange-600'>Active Paid Members</span>. This assurance allows our members to
-                  focus on growing their business with peace of mind.
-                </p>
-                <div className='flex items-start gap-4'>
-                  <Image src='/images/sign.png' alt='img' width={24} height={24} className='flex-shrink-0' />
-                  <p className='text-[14px] sm:text-[16px] leading-relaxed italic font-semibold'>
-                    In addition, African Alliance has established its own dedicated{' '}
-                    <span className='text-orange-600'>Financial Protection Fund</span>, covering claims of up to{' '}
-                    <span className='text-orange-600'>USD 100,000</span>. Unlike traditional insurance-based schemes,
-                    this fund is fully managed by African Alliance to give members greater trust and reassurance. It
-                    reflects our team’s commitment to transparency, accountability, and providing genuine peace of mind
-                    when working with fellow members within the network.
-                  </p>
-                </div>
+
+                <div className='' dangerouslySetInnerHTML={{ __html: benefits[2]?.text }} />
               </div>
             </div>
 
-            {/* Block 2 - Membership Standards */}
+            {/* block2*/}
             <div
               id='membership-standards'
-              // className='bg-[#F7F7F7] rounded-[24px] overflow-hidden flex flex-col md:flex-row-reverse items-center'
               className='bg-[#F7F7F7] rounded-[24px] overflow-hidden flex flex-col xl:flex-row-reverse items-center'
             >
-              {/* Image */}
               <div className='w-full xl:w-1/2 relative h-[300px] sm:h-[400px] xl:h-[400px]'>
                 <Image
                   src={benefits[0]?.photo?.url || ''}
@@ -114,27 +80,19 @@ export const AboutComponent = ({
                 />
               </div>
 
-              {/* Content */}
               <div className='w-full xl:w-1/2 p-4 sm:p-6 md:p-10 space-y-4 text-left flex-1'>
                 <h3 className='text-[24px] sm:text-[28px] md:text-[34px] leading-[1] font-semibold mb-4 md:mb-8'>
-                  Strict Membership Standards
+                  {benefits[0]?.title}
                 </h3>
-                <p className='text-[14px] sm:text-[16px] leading-relaxed'>
-                  Every member undergoes a strict enrolment and compliance process, supported by our experienced
-                  administration and compliance teams. Each application is carefully reviewed, with thorough financial,
-                  managerial, and reputational checks conducted before granting membership. Only those who meet our
-                  standards are recognized as <span className='text-orange-600'>Active Paid Members</span> of the
-                  African Alliance Network.
-                </p>
+                <div className='' dangerouslySetInnerHTML={{ __html: benefits[0]?.text }} />
               </div>
             </div>
 
-            {/* Block 3 - Risk Management */}
+            {/* blok3 */}
             <div
               id='risk-management'
               className='bg-[#F7F7F7] rounded-[24px] overflow-hidden flex flex-col xl:flex-row items-center'
             >
-              {/* Image */}
               <div className='w-full xl:w-1/2 relative h-[300px] sm:h-[400px] xl:h-[400px]'>
                 <Image
                   src={benefits[1]?.photo?.url || ''}
@@ -145,21 +103,11 @@ export const AboutComponent = ({
                 />
               </div>
 
-              {/* Content */}
               <div className='w-full xl:w-1/2 p-4 sm:p-6 md:p-10 space-y-4 text-left flex-1'>
                 <h3 className='text-[24px] sm:text-[28px] md:text-[34px] leading-[1] font-semibold mb-4 md:mb-8'>
-                  Ongoing Risk Management
+                  {benefits[1]?.title}
                 </h3>
-                <p className='text-[14px] sm:text-[16px] leading-relaxed'>
-                  To further strengthen financial security, African Alliance regularly circulates warning alerts and
-                  blacklist details across the network. These proactive measures help raise awareness, mitigate risks,
-                  and foster a culture of trust and responsibility among members.
-                </p>
-                <p className='text-[15px] sm:text-[16px] leading-relaxed'>
-                  Through this strong framework of compliance, monitoring, and protection, African Alliance ensures a
-                  reliable and transparent environment where freight forwarders and logistics companies can confidently
-                  build long-term partnerships.
-                </p>
+                <div className='' dangerouslySetInnerHTML={{ __html: benefits[1]?.text }} />
               </div>
             </div>
           </div>

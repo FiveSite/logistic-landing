@@ -39,7 +39,7 @@ export interface Benefit {
   id: number;
   title: string;
   description: string;
-
+  text: string;
   photo: Media | null;
   documentId: string;
 }
