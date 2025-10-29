@@ -38,7 +38,7 @@ export const BenefitsSection = ({ benefits }: { benefits: Benefit[] }) => {
                   </div>
 
                   <Link
-                    href='/about#membership-standards'
+                    href='/about#risk-management'
                     className='mt-0 group-hover:mt-4 lg:ml-auto lg:w-max w-full hidden justify-center group-hover:flex  transition-all duration-800 delay-200 text-white text-sm sm:text-base bg-orange-600 hover:bg-orange-700 px-6 py-2 sm:px-7 sm:py-3 rounded-full'
                   >
                     Read more
@@ -68,7 +68,7 @@ export const BenefitsSection = ({ benefits }: { benefits: Benefit[] }) => {
                   </div>
 
                   <Link
-                    href={'/about#risk-management'}
+                    href={'/about#membership-standards'}
                     className='mt-0 group-hover:mt-4 lg:ml-auto lg:w-max w-full hidden justify-center group-hover:flex  transition-all duration-800 delay-200 text-white text-sm sm:text-base bg-orange-600 hover:bg-orange-700 px-6 py-2 sm:px-7 sm:py-3 rounded-full'
                   >
                     Read more

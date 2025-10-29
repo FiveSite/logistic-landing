@@ -44,19 +44,19 @@ export const AboutComponent = ({
             {/* block1*/}
             <div
               id='financial-protection'
-              className='bg-[#F7F7F7] rounded-[24px] overflow-hidden flex flex-col xl:flex-row items-center'
+              className='bg-[#F7F7F7] rounded-[24px] overflow-hidden flex flex-col xl:grid xl:grid-cols-2 items-center '
             >
-              <div className='w-full xl:w-1/2 relative h-[300px] sm:h-[400px] xl:h-[600px]'>
+              <div className='w-full  relative h-[300px] sm:h-[400px] xl:h-full'>
                 <Image
                   src={benefits[2]?.photo?.url || ''}
                   alt='img'
                   fill
-                  className='object-cover w-full h-full rounded-t-[24px] xl:rounded-l-[24px] xl:rounded-tr-none'
+                  className='object-cover w-full h-full rounded-t-[24px] xl:rounded-l-[24px] xl:rounded-tr-none '
                   priority
                 />
               </div>
 
-              <div className='w-full xl:w-1/2 p-4 sm:p-6 md:p-10 space-y-4 text-left flex-1'>
+              <div className='w-full xl:h-full  p-4 sm:p-6 md:p-10 space-y-4 text-left flex-1'>
                 <h3 className='text-[24px] sm:text-[28px] md:text-[34px] leading-[1] font-semibold mb-4 md:mb-8'>
                   {benefits[2]?.title}
                 </h3>
@@ -67,46 +67,48 @@ export const AboutComponent = ({
 
             {/* block2*/}
             <div
-              id='membership-standards'
-              className='bg-[#F7F7F7] rounded-[24px] overflow-hidden flex flex-col xl:flex-row-reverse items-center'
+              id='risk-management'
+              className='bg-[#F7F7F7] rounded-[24px] overflow-hidden flex flex-col xl:grid xl:grid-cols-2 items-center '
             >
-              <div className='w-full xl:w-1/2 relative h-[300px] sm:h-[400px] xl:h-[400px]'>
+              <div className='w-full  relative h-[300px] sm:h-[400px] xl:h-full order-1 xl:order-2'>
                 <Image
                   src={benefits[0]?.photo?.url || ''}
                   alt='img'
                   fill
-                  className='object-cover w-full h-full rounded-t-[24px] xl:rounded-l-none xl:rounded-tr-none'
+                  className='object-cover w-full h-full rounded-t-[24px]  xl:rounded-l-none '
                   priority
                 />
               </div>
 
-              <div className='w-full xl:w-1/2 p-4 sm:p-6 md:p-10 space-y-4 text-left flex-1'>
+              <div className='w-full xl:h-full  p-4 sm:p-6 md:p-10 space-y-4 text-left flex-1 order-2 xl:order-1'>
                 <h3 className='text-[24px] sm:text-[28px] md:text-[34px] leading-[1] font-semibold mb-4 md:mb-8'>
                   {benefits[0]?.title}
                 </h3>
+
                 <div className='' dangerouslySetInnerHTML={{ __html: benefits[0]?.text }} />
               </div>
             </div>
 
             {/* blok3 */}
             <div
-              id='risk-management'
-              className='bg-[#F7F7F7] rounded-[24px] overflow-hidden flex flex-col xl:flex-row items-center'
+              id='membership-standards'
+              className='bg-[#F7F7F7] rounded-[24px] overflow-hidden flex flex-col xl:grid xl:grid-cols-2 items-center '
             >
-              <div className='w-full xl:w-1/2 relative h-[300px] sm:h-[400px] xl:h-[400px]'>
+              <div className='w-full  relative h-[300px] sm:h-[400px] xl:h-full'>
                 <Image
                   src={benefits[1]?.photo?.url || ''}
                   alt='img'
                   fill
-                  className='object-cover w-full h-full rounded-t-[24px] xl:rounded-l-[24px] xl:rounded-tr-none'
+                  className='object-cover w-full h-full rounded-t-[24px] xl:rounded-l-[24px] xl:rounded-tr-none '
                   priority
                 />
               </div>
 
-              <div className='w-full xl:w-1/2 p-4 sm:p-6 md:p-10 space-y-4 text-left flex-1'>
+              <div className='w-full xl:h-full  p-4 sm:p-6 md:p-10 space-y-4 text-left flex-1'>
                 <h3 className='text-[24px] sm:text-[28px] md:text-[34px] leading-[1] font-semibold mb-4 md:mb-8'>
                   {benefits[1]?.title}
                 </h3>
+
                 <div className='' dangerouslySetInnerHTML={{ __html: benefits[1]?.text }} />
               </div>
             </div>
