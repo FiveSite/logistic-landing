@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Field, ErrorMessage, useFormikContext } from 'formik';
 
 export interface Country {
@@ -91,13 +92,19 @@ export const CompanyDetailsForm = ({ data }: CountryDataProp) => {
           />
         </div>
         <div className='mt-4 relative'>
-          <label className='block text-sm font-medium mb-1'>
+          <label className={clsx('block text-sm font-medium mb-1', !values.country && 'text-gray-400')}>
             City <span className=' text-red-500'>*</span>
           </label>
           <Field
+            disabled={!values.country}
             as='select'
             name='city'
-            className='w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
+            className={`
+    w-full border border-gray-200 rounded-[8px] px-3 py-2 text-sm
+    focus:outline-none focus:ring-1 focus:ring-orange-500
+    disabled:bg-gray-50 
+    ${!values.country ? 'text-gray-400' : 'text-gray-700'}
+  `}
           >
             <option value=''>Select city</option>
             {cities.map((c) => {

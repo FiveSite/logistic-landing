@@ -1,4 +1,3 @@
-'use client';
 import Image from 'next/image';
 import { SupportForm } from '../components/form/SupportForm';
 import { Benefit } from '@/types';
@@ -22,7 +21,6 @@ export const AboutComponent = ({
   };
   benefits: Benefit[];
 }) => {
-  console.log('ben', benefits);
   return (
     <>
       <section>

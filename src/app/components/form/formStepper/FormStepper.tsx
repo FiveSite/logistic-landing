@@ -140,14 +140,13 @@ export const FormStepper = ({
           companyLogo: null,
           banerLogo: null,
         });
-        console.log('res', res);
 
         if (res) {
-          onSuccess();
-          handleClose();
-
           const data = { ...values, form: 'Member' };
           await axios.post('/api/send-email', data);
+
+          onSuccess();
+          handleClose();
         }
       } catch (error) {
         if (error instanceof Error) {

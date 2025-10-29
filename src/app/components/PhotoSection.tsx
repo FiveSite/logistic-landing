@@ -7,8 +7,6 @@ export const PhotoSection = ({
 }: {
   consultationData: { title: string; afterTitle: string; image: Media }[];
 }) => {
-  console.log('conData', consultationData);
-
   return (
     <section className='bg-[#F6F6F6] sm:px-10 w-full lg:pt-[120px] pt-20'>
       <div
