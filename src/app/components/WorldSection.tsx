@@ -7,7 +7,9 @@ import Tooltip from '@mui/material/Tooltip';
 import { useEffect, useState } from 'react';
 
 export const WorldSection = ({ countries }: { countries: { country: string; name: string; count: number }[] }) => {
-  const [mapScale, setMapScale] = useState(100);
+  const [openTooltip, setOpenTooltip] = useState<string | null>(null);
+  const [mapScale, setMapScale] = useState(90);
+  const [mapMargin, setMapMargin] = useState(20);
 
   const data = countCountries(countries);
 
@@ -28,14 +30,16 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
     const handleResize = () => {
       const width = window.innerWidth;
 
-      let newScale;
       if (width < 640) {
-        newScale = 110;
+        setMapScale(125);
+        setMapMargin(30);
+      } else if (width < 1024) {
+        setMapScale(90);
+        setMapMargin(20);
       } else {
-        newScale = 90;
+        setMapScale(90);
+        setMapMargin(10);
       }
-
-      setMapScale(newScale);
     };
 
     handleResize();
@@ -62,7 +66,7 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
             projection='geoMercator'
             projectionConfig={{
               scale: mapScale,
-              center: [0, 10],
+              center: [0, mapMargin],
             }}
           >
             <Geographies className='w-full h-full' geography={'/features.json'}>
@@ -97,16 +101,24 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
 
                   return (
                     <Tooltip
-                      key={geo.rsmKey} // Ключ тут потрібен для ітерації
+                      key={geo.rsmKey}
+                      // Ключ тут потрібен для ітерації
                       title={tooltipTitle}
                       placement='top'
                       arrow
+                      // ✅ КЕРУВАННЯ ВІДКРИТТЯМ/ЗАКРИТТЯМ
+                      open={openTooltip === geo.rsmKey} // Відкрито, якщо ID відповідає
+                      onClose={() => setOpenTooltip(null)} // Закриваємо при кліку/тапі поза
+                      onOpen={() => setOpenTooltip(geo.rsmKey)} // Відкриваємо при наведенні
+                      // ✅ ДОДАТКОВІ ПРОПСИ ДЛЯ КЛІКУ
+                      disableFocusListener // Вимикає відкриття по фокусу
+                      disableTouchListener={false} // Дозволяє тач-жести (але нам потрібен onClick)
                       PopperProps={{
                         modifiers: [
                           {
                             name: 'offset',
                             options: {
-                              offset: [0, -20],
+                              offset: [0, -10],
                             },
                           },
                         ],
@@ -116,6 +128,7 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
                         <Geography
                           key={geo.rsmKey}
                           geography={geo}
+                          onClick={() => setOpenTooltip(openTooltip === geo.rsmKey ? null : geo.rsmKey)}
                           style={{
                             default: {
                               fill: getColor(count),
@@ -146,7 +159,7 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
           </ComposableMap>
         </div>
 
-        <div className=' bg-white max-sm:bg-white/70 rounded-[20px] p-10 max-sm:p-4 relative mt-[-80px] max-md:mt-[-40px]'>
+        <div className=' bg-white max-sm:bg-white/70 rounded-[20px] p-10 max-sm:p-4 relative mt-[-80px] max-sm:mt-[-10px]'>
           <h3 className='max-sm:text-center font-semibold pb-6 border-b border-dotted border-gray-200 text-[26px] max-sm:text-[24px] leading-none'>
             Already work with <span className=' text-orange-600 text-[26px]font-semibold'>{data.length} countries</span>
           </h3>
