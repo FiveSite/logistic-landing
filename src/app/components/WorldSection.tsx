@@ -4,12 +4,14 @@ import { countCountries } from '@/utils/map';
 import Image from 'next/image';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import Tooltip from '@mui/material/Tooltip';
+import { useEffect, useState } from 'react';
 
 export const WorldSection = ({ countries }: { countries: { country: string; name: string; count: number }[] }) => {
+  const [mapScale, setMapScale] = useState(100);
+
   const data = countCountries(countries);
 
   const mapData = data.map((c) => ({
-    // Зберігаємо ISO-код для пошуку.
     id: c.country,
     country: countryMap[c.country].toLowerCase(),
     count: c.count,
@@ -22,7 +24,25 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
     return '#FF4500';
   };
 
-  // ВИДАЛЯЄМО: стани tooltipContent, countryCode та tooltipRef, оскільки вони не потрібні
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+
+      let newScale;
+      if (width < 640) {
+        newScale = 110;
+      } else {
+        newScale = 90;
+      }
+
+      setMapScale(newScale);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <section className='relative w-full px-4 md:px-10 bg-[#F6F6F6] overflow-hidden'>
@@ -31,20 +51,21 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
 
         <h2 className='text-center text-3xl font-bold text-[#1D1D1F] mb-4'>Where we work</h2>
 
-        <p className='text-center max-w-[600px] mx-auto text-[#1A1A1A] mb-10'>
+        <p className='text-center max-w-[600px] mx-auto text-[#1A1A1A] max-sm:mb-6'>
           Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore.
         </p>
 
         {/* Карта */}
-        <div className='max-h-[800px] max-lg:max-h-[800px] overflow-hidden mx-auto'>
+        <div className='max-h-[800px] overflow-hidden mx-auto'>
           <ComposableMap
-            className='max-h-[900px] max-lg:max-h-[800px] mx-auto'
+            className='max-h-[900px]  mx-auto'
             projection='geoMercator'
             projectionConfig={{
-              scale: 100,
+              scale: mapScale,
+              center: [0, 10],
             }}
           >
-            <Geographies geography={'/features.json'}>
+            <Geographies className='w-full h-full' geography={'/features.json'}>
               {({ geographies }) =>
                 geographies.map((geo) => {
                   const currentCountryData = mapData.find((d) => d.id === geo.properties.name);
@@ -75,29 +96,24 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
                   );
 
                   return (
-                    // 2. ОБГОРТАЄМО КОМПОНЕНТ GEOGRAPHY В MUI TOOLTIP
-                    // Оскільки Tooltip очікує єдиний елемент DOM, використовуємо <g> для обгортки SVG-елемента
                     <Tooltip
                       key={geo.rsmKey} // Ключ тут потрібен для ітерації
                       title={tooltipTitle}
                       placement='top'
                       arrow
-                      // Налаштування для стилізації тултіпу
                       PopperProps={{
                         modifiers: [
                           {
                             name: 'offset',
                             options: {
-                              offset: [0, -10], // Зсув тултіпу
+                              offset: [0, -20],
                             },
                           },
                         ],
                       }}
                     >
-                      {/* <g> служить єдиним кореневим елементом, який очікує MUI Tooltip */}
                       <g>
                         <Geography
-                          // Видалено всі onMouseEnter/onMouseLeave та data-tooltip-id
                           key={geo.rsmKey}
                           geography={geo}
                           style={{
@@ -108,7 +124,7 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
                               outline: 'none',
                             },
                             hover: {
-                              fill: 'getColor(count)', // Жовтий hover для кращої інтерактивності
+                              fill: 'getColor(count)',
                               stroke: '#666666',
                               outline: 'none',
                               strokeWidth: 1,
