@@ -1,3 +1,4 @@
+'use client';
 import { Benefit } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,8 +21,12 @@ export const BenefitCard = ({
       onClick={onClick}
     >
       <div
-        className={`relative w-full h-[325px] sm:h-[365px] transition-all duration-800 
-          ${isOpen ? 'h-[260px] sm:h-[260px]' : 'group-hover:h-[260px] sm:group-hover:h-[260px]'}
+        className={`relative w-full transition-all duration-800 
+          ${
+            isOpen
+              ? 'h-[260px] sm:h-[260px]' // Стилі при КЛІКУ
+              : 'h-[325px] sm:h-[365px] group-hover:h-[260px] sm:group-hover:h-[260px]' // Стилі при ЗАКРИТОМУ СТАНІ (і hover)
+          }
         `}
       >
         <Image
@@ -37,17 +42,11 @@ export const BenefitCard = ({
         <h3 className='font-semibold text-[24px] sm:text-[34px] leading-tight mb-4'>{benefit?.title}</h3>
 
         <div
-          className={`relative overflow-hidden transition-all duration-800 ease-in-out lg:max-h-[56px] max-h-[46px] 
-            ${isOpen ? 'max-h-[300px]' : 'group-hover:max-h-[300px]'}
+          className={`relative overflow-hidden transition-all duration-800 ease-in-out 
+            ${isOpen ? 'max-h-[300px]' : 'lg:max-h-[53px] max-h-[44px] group-hover:max-h-[300px]'}
           `}
         >
           <p className='text-sm lg:text-base'>{benefit?.description}</p>
-
-          <div
-            className={`absolute bottom-0 left-0 w-full h-6 bg-gradient-to-t from-white to-transparent transition-opacity duration-800 pointer-events-none 
-              ${isOpen ? 'opacity-0' : 'group-hover:opacity-0'}
-            `}
-          />
         </div>
 
         <Link
@@ -55,8 +54,8 @@ export const BenefitCard = ({
           className={`mt-0 transition-all duration-800 delay-200 text-white text-sm sm:text-base bg-orange-600 hover:bg-orange-700 px-6 py-2 sm:px-7 sm:py-3 rounded-full 
             ${
               isOpen
-                ? 'mt-4 lg:ml-auto lg:w-max w-full flex justify-center'
-                : 'group-hover:mt-4 lg:ml-auto lg:w-max w-full hidden justify-center group-hover:flex'
+                ? 'mt-4 lg:ml-auto lg:w-max w-full flex justify-center' // Стилі при КЛІКУ (Показати)
+                : 'lg:ml-auto lg:w-max w-full hidden justify-center group-hover:flex group-hover:mt-4' // Стилі при ЗАКРИТОМУ СТАНІ (Сховати, але показати при hover)
             }
           `}
         >
