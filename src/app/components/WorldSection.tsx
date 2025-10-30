@@ -36,9 +36,9 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
         </p>
 
         {/* Карта */}
-        <div className='max-h-[800px] max-lg:max-h-[700px] overflow-hidden mx-auto'>
+        <div className='max-h-[800px] max-lg:max-h-[800px] overflow-hidden mx-auto'>
           <ComposableMap
-            className='max-h-[900px] max-lg:max-h-[700px] mx-auto'
+            className='max-h-[900px] max-lg:max-h-[800px] mx-auto'
             projection='geoMercator'
             projectionConfig={{
               scale: 100,
