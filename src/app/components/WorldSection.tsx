@@ -158,7 +158,7 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
           <h3 className='max-sm:text-center font-semibold pb-6 border-b border-dotted border-gray-200 text-[26px] max-sm:text-[24px] leading-none'>
             Already work with <span className=' text-orange-600 text-[26px]font-semibold'>{data.length} countries</span>
           </h3>
-          <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm pt-6 max-h-[140px] max-sm:max-h-[400px] overflow-y-auto'>
+          <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm pt-6 max-h-[140px] max-sm:max-h-[178px] overflow-y-auto'>
             {data.length > 0 &&
               data.map((country) => (
                 <li
