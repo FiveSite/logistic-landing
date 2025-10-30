@@ -181,6 +181,7 @@ export const countryMap: Record<string, string> = {
   'Russian Federation': 'RU',
   Rwanda: 'RW',
   Russia: 'RU',
+  'Democratic Republic of Congo': 'CD',
   'Saint Barthélemy': 'BL',
   'Saint Helena, Ascension and Tristan da Cunha': 'SH',
   'Saint Kitts and Nevis': 'KN',
