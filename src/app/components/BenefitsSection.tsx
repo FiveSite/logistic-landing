@@ -8,7 +8,6 @@ export const BenefitsSection = ({ benefits }: { benefits: Benefit[] }) => {
       <div className='bg-[url("/images/about-decor.png")] bg-no-repeat bg-cover'>
         {benefits.length > 0 && (
           <div className='mx-auto flex flex-col lg:flex-row gap-8 lg:gap-[120px] px-4 md:px-10 xl:px-[180px] max-w-[1430px]'>
-            {/* Left Block */}
             <div className='flex-1'>
               <h2 className='lg:mt-[-80px] text-[clamp(32px,5vw,60px)] leading-tight font-bold text-orange-600 mb-6 max-lg:text-center'>
                 Membership <br className='hidden lg:block' /> benefits

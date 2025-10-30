@@ -70,7 +70,11 @@ export const Header = ({ user }: { user: User }) => {
           <NewsButton />
         </nav>
 
-        {user ? <UserMenu user={user} /> : <AuthButtons />}
+        {user ? (
+          <UserMenu user={user} />
+        ) : (
+          <AuthButtons onOpenLogin={() => setIsLoginModalOpen(true)} onOpenMember={() => setIsMemberModalOpen(true)} />
+        )}
       </div>
       {isMobMenuOpen && (
         <MobMenu
