@@ -3,12 +3,7 @@ import { countryMap } from '@/constants';
 import { countCountries } from '@/utils/map';
 import Image from 'next/image';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
-
-// ✅ НОВИЙ ІМПОРТ MUI
 import Tooltip from '@mui/material/Tooltip';
-// Видаляємо: import { useRef, useState } from 'react';
-// Видаляємо: import { Tooltip, ITooltip } from 'react-tooltip';
-// Видаляємо: import type { ITooltip } from 'react-tooltip';
 
 export const WorldSection = ({ countries }: { countries: { country: string; name: string; count: number }[] }) => {
   const data = countCountries(countries);
@@ -61,7 +56,6 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
                   const tooltipTitle = (
                     <div style={{ display: 'flex', alignItems: 'center', padding: '4px' }}>
                       {isoCode && (
-                        // Використовуємо звичайний <img> для сумісності з MUI Tooltip
                         <img
                           src={`https://flagcdn.com/w20/${isoCode}.png`}
                           alt={`Flag of ${countryName}`}
