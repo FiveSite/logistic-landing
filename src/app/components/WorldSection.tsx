@@ -13,9 +13,24 @@ const getColor = (count: number) => {
   return '#FF4500';
 };
 
+const getDarkerColor = (count: number) => {
+  // Для порожніх даних залишаємо білий колір
+  if (count < 1) return '#EAEAEA';
+
+  // Базовий: #FFC2A6 (Світло-оранжевий) -> Темніший: #FF9B66
+  if (count <= 2) return '#FF9B66';
+
+  // Базовий: #FF6A33 (Середній оранжевий) -> Темніший: #E65C2E
+  if (count <= 3) return '#E65C2E';
+
+  // Базовий: #FF4500 (Насичений оранжевий) -> Темніший: #CC3700
+  // Це найвищий рівень, тому затемнюємо максимально
+  return '#CC3700';
+};
+
 export const WorldSection = ({ countries }: { countries: { country: string; name: string; count: number }[] }) => {
   const [openTooltip, setOpenTooltip] = useState<string | null>(null);
-  const [mapScale, setMapScale] = useState(90);
+  const [mapScale, setMapScale] = useState(100);
   const [mapMargin, setMapMargin] = useState(20);
 
   const data = countCountries(countries);
@@ -67,6 +82,37 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
               center: [0, mapMargin],
             }}
           >
+            <defs>
+              {/* Фільтр, який створює тінь: зміщення по X/Y та розмиття */}
+              <filter id='map-shadow' x='-50%' y='-50%' width='200%' height='200%'>
+                {/* Розмиття (blur) */}
+                <feGaussianBlur in='SourceAlpha' stdDeviation='2' result='blur' />
+
+                {/* Зміщення тіні (drop shadow) */}
+                <feOffset in='blur' dx='2' dy='2' result='offsetBlur' />
+
+                {/* Колір тіні та прозорість */}
+                <feFlood floodColor='#000000' floodOpacity='0.3' result='shadowColor' />
+
+                {/* Комбінуємо тінь та фігуру */}
+                <feComposite in='shadowColor' in2='offsetBlur' operator='in' result='shadow' />
+                <feMerge>
+                  <feMergeNode in='shadow' />
+                  <feMergeNode in='SourceGraphic' /> {/* Оригінальна графіка (країна) */}
+                </feMerge>
+              </filter>
+
+              <filter id='map-shadow-hover' x='-50%' y='-50%' width='200%' height='200%'>
+                <feGaussianBlur in='SourceAlpha' stdDeviation='4' result='blur' /> {/* Більше розмиття */}
+                <feOffset in='blur' dx='4' dy='4' result='offsetBlur' /> {/* Більше зміщення */}
+                <feFlood floodColor='#000000' floodOpacity='0.4' result='shadowColor' />
+                <feComposite in='shadowColor' in2='offsetBlur' operator='in' result='shadow' />
+                <feMerge>
+                  <feMergeNode in='shadow' />
+                  <feMergeNode in='SourceGraphic' />
+                </feMerge>
+              </filter>
+            </defs>
             <Geographies className='w-full h-full' geography={'/features.json'}>
               {({ geographies }) =>
                 geographies.map((geo) => {
@@ -127,21 +173,27 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
                           style={{
                             default: {
                               fill: getColor(count),
-                              stroke: '#808080',
+                              filter: 'url(#map-shadow)',
+                              stroke: '#666666',
                               strokeWidth: 0.5,
                               outline: 'none',
+                              transition: 'all 250ms',
                             },
                             hover: {
-                              fill: 'getColor(count)',
+                              fill: getDarkerColor(count),
+                              filter: 'url(#map-shadow-hover)',
                               stroke: '#666666',
                               outline: 'none',
-                              strokeWidth: 1,
+                              strokeWidth: 1.5,
+                              transition: 'all 250ms',
                             },
                             pressed: {
-                              fill: getColor(count) || '#C1C1C1',
+                              fill: getDarkerColor(count) || '#C1C1C1',
+                              filter: 'url(#map-shadow-hover)',
                               stroke: '#666666',
                               outline: 'none',
-                              strokeWidth: 1,
+                              strokeWidth: 1.5,
+                              transition: 'all 250ms',
                             },
                           }}
                         />
@@ -158,7 +210,7 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
           <h3 className='max-sm:text-center font-semibold pb-6 border-b border-dotted border-gray-200 text-[26px] max-sm:text-[24px] leading-none'>
             Already work with <span className=' text-orange-600 text-[26px]font-semibold'>{data.length} countries</span>
           </h3>
-          <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm pt-6 max-h-[140px] max-sm:max-h-[178px] overflow-y-auto'>
+          <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm pt-6 max-h-[140px] max-sm:max-h-[242px] overflow-y-auto'>
             {data.length > 0 &&
               data.map((country) => (
                 <li
