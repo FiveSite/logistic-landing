@@ -1,7 +1,6 @@
 'use client';
 
 import { Benefit } from '@/types';
-
 import { useState } from 'react';
 import { BenefitCard } from './BenefitCard';
 
@@ -9,7 +8,7 @@ export const BenefitsSection = ({ benefits }: { benefits: Benefit[] }) => {
   const [openCardId, setOpenCardId] = useState<number | null>(null);
 
   const toggleCardClick = (id: number) => {
-    setOpenCardId(openCardId === id ? null : id);
+    setOpenCardId((prevState) => (prevState === id ? null : id));
   };
 
   return (
