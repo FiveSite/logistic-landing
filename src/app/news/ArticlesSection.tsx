@@ -108,8 +108,8 @@ export const ArticlesNewsSection = () => {
                   src={item.photo?.url || ''}
                   alt='solution'
                   width={544}
-                  height={553}
-                  className='max-sm:rounded-b-none'
+                  height={354}
+                  className='max-sm:rounded-b-none rounded-[8px] h-[354px] object-cover'
                 />
 
                 <div className='max-sm:bg-white max-sm:p-4 sm:mt-4 rounded-b-[8px] h-[246px]'>

@@ -30,8 +30,8 @@ const EventCard = ({ title, description, startDate, endDate, location, photo, do
             src={photo?.url ?? ''}
             alt={title}
             width={585}
-            height={343}
-            className='object-cover w-full h-full max-sm:w-[343px] sm:w-[585px] max-sm:h-[354px] rounded-[8px] max-lg:rounded-b-none'
+            height={354}
+            className='object-cover w-full  max-sm:w-[343px] sm:w-[585px] h-[354px] rounded-[8px] max-lg:rounded-b-none'
           />
         ) : (
           <div className='text-gray-400 text-xl'>🖼️</div>

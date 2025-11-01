@@ -177,7 +177,7 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
                               stroke: '#666666',
                               strokeWidth: 0.5,
                               outline: 'none',
-                              transition: 'all 250ms',
+                              transition: 'all 150ms',
                             },
                             hover: {
                               fill: getDarkerColor(count),
@@ -185,7 +185,7 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
                               stroke: '#666666',
                               outline: 'none',
                               strokeWidth: 1.5,
-                              transition: 'all 250ms',
+                              transition: 'all 150ms',
                             },
                             pressed: {
                               fill: getDarkerColor(count) || '#C1C1C1',
@@ -193,7 +193,7 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
                               stroke: '#666666',
                               outline: 'none',
                               strokeWidth: 1.5,
-                              transition: 'all 250ms',
+                              transition: 'all 150ms',
                             },
                           }}
                         />
@@ -206,7 +206,7 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
           </ComposableMap>
         </div>
 
-        <div className=' bg-white max-sm:bg-white/70 rounded-[20px] p-10 max-sm:p-4 relative mt-[-80px] max-sm:mt-[-10px]'>
+        <div className=' bg-white max-sm:bg-white/40 rounded-[20px] p-10 max-sm:p-4 relative mt-[-80px] max-sm:mt-[-10px]'>
           <h3 className='max-sm:text-center font-semibold pb-6 border-b border-dotted border-gray-200 text-[26px] max-sm:text-[24px] leading-none'>
             Already work with <span className=' text-orange-600 text-[26px]font-semibold'>{data.length} countries</span>
           </h3>

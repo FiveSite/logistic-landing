@@ -41,6 +41,7 @@ export const EventOverview = ({ event }: EventProp) => {
       </div>
 
       {/* Карта */}
+
       <GoogleMapEmbed address={event.location} />
 
       {event.content &&

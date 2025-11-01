@@ -102,7 +102,7 @@ const EventDetails = ({ event }: EventProp) => {
         ))}
       </div>
 
-      <div className='px-[160px] max-xl:px-20 max-lg:px-10 max-md:px-4 max-w-7xl mx-auto pt-[100px] max-sm:pt-10 pb-[50px] max-lg:pb-10'>
+      <div className='px-[100px] max-xl:px-20 max-lg:px-10 max-md:px-4 max-w-7xl mx-auto pt-[100px] max-sm:pt-10 pb-[50px] max-lg:pb-10'>
         <div className='flex justify-center w-full mb-10 max-sm:mb-6 max-lg:hidden'>
           <div className='flex border border-gray-200 rounded-full overflow-hidden'>
             {tabs.map((tab, index) => (

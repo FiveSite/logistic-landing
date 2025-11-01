@@ -28,7 +28,7 @@ const NewsCard = ({ title, description, date, category, photo, documentId }: New
             alt={title}
             width={585}
             height={343}
-            className='object-cover w-full h-full max-sm:w-[343px] sm:w-[585px] max-sm:h-[354px] rounded-[8px] max-lg:rounded-b-none'
+            className='object-cover w-full h-[354px] max-sm:w-[343px] sm:w-[585px]  rounded-[8px] max-lg:rounded-b-none'
           />
         ) : (
           <div className='text-gray-400 text-xl'>🖼️</div>
