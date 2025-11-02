@@ -23,9 +23,7 @@ export const ArticlesNewsSection = () => {
     try {
       const data = await fetchNews();
       setData(data);
-    } catch (error) {
-      console.error('Error fetching news:', error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -112,7 +110,7 @@ export const ArticlesNewsSection = () => {
                   className='max-sm:rounded-b-none rounded-[8px] h-[354px] object-cover'
                 />
 
-                <div className='max-sm:bg-white max-sm:p-4 sm:mt-4 rounded-b-[8px] h-[246px]'>
+                <div className='max-sm:bg-white max-sm:p-4 sm:mt-4 rounded-b-[8px] max-h-[246px]'>
                   <div className='text-[16px]  flex items-center gap-2 mb-5'>
                     <div className='flex items-center gap-2'>
                       <CalendarIcon className='w-4 h-4' />
@@ -126,7 +124,7 @@ export const ArticlesNewsSection = () => {
                   </div>
                   <Link
                     href={`/news/${item.documentId}`}
-                    className='hover:underline   text-[30px] leading-tight max-sm:text-[24px] font-semibold mb-8 line-clamp-3'
+                    className='hover:underline text-[30px] leading-tight max-sm:text-[24px] font-semibold mb-8  line-clamp-2 max-lg:h-[60px] h-[75px]'
                   >
                     {item.title}
                   </Link>

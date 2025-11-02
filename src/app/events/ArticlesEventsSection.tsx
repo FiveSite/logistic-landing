@@ -113,7 +113,7 @@ export const ArticlesEventsSection = () => {
                   className='max-sm:rounded-b-none rounded-[8px] h-[354px] object-cover'
                 />
 
-                <div className='max-sm:bg-white max-sm:p-4 sm:mt-4 rounded-b-[8px] h-[280px]'>
+                <div className='max-sm:bg-white max-sm:p-4 sm:mt-4 rounded-b-[8px] max-h-[280px]'>
                   <div className='text-[16px] flex items-center gap-2 mb-5'>
                     <div className='flex items-center gap-2'>
                       <CalendarIcon className='w-4 h-4 stroke-orange-600' />
@@ -134,7 +134,7 @@ export const ArticlesEventsSection = () => {
                   <Link
                     href={`/events/${item.documentId}`}
                     className='hover:underline text-[30px] leading-tight max-sm:text-[24px] font-semibold mb-8
-                  line-clamp-3'
+                   line-clamp-2 max-lg:h-[60px] h-[75px]'
                   >
                     {item.title}
                   </Link>

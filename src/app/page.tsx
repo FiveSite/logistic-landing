@@ -28,13 +28,13 @@ export default async function Home() {
   const { data: consultationData } = await fetchConsultationSectionText();
 
   return (
-    <main className='flex flex-col items-center '>
+    <div className='flex flex-col items-center '>
       <Main user={user} data={data} />
       <BenefitsSection benefits={benefits} />
       <WorldSection countries={countryData} />
       <PhotoSection consultationData={consultationData} />
       <ArticlesSection />
       <FaqSection faqData={faqData[0].content} />
-    </main>
+    </div>
   );
 }

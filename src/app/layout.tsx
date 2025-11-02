@@ -31,12 +31,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang='en'>
-      <body className={clsx(geistSans.variable, geistMono.variable, 'antialiased')}>
+      <body className={clsx(geistSans.variable, geistMono.variable, 'antialiased min-h-screen flex flex-col')}>
         <div className='absolute px-10 max-lg:px-0 lg:top-8 top-0 w-full'>
           <Header user={user} />
         </div>
 
-        {children}
+        <main className='flex-grow'>{children}</main>
 
         <Footer />
       </body>

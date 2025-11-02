@@ -7,7 +7,7 @@ import { fetchCountriesList, fetchMembersList } from '@/services/api';
 import { Country } from '../components/form/formStepper/CompanyDetailsForm';
 
 import { SelectComponent } from '../components/SelectComponent';
-import { countryMap, services } from '@/constants';
+import { services } from '@/constants';
 import { useRouter } from 'next/navigation';
 import { PaginationComponent } from '../components/Pagination';
 import { User } from '@/types';
@@ -77,7 +77,6 @@ export const DirectoryComponent = () => {
       }));
       setCountryData(normalized);
     } catch (e) {
-      console.log(e);
       setCountryData([]);
     }
   };
@@ -144,8 +143,8 @@ export const DirectoryComponent = () => {
   }, [page, selectedCity, selectedConpany, selectedCountry, selectedServices, searchValue]);
 
   return (
-    <div className='flex gap-6 lg:px-[80px] px-4 py-[60px] max-lg:pt-[90px] pt-[160px]'>
-      <div className='flex-1'>
+    <div className='flex flex-col gap-6 lg:px-[80px] px-4 py-[60px] max-lg:pt-[90px] pt-[160px] min-h-[calc(100vh-260px)]'>
+      <div className='flex flex-col flex-grow'>
         <input
           type='search'
           value={searchValue}
@@ -239,14 +238,14 @@ export const DirectoryComponent = () => {
               </div>
             ))
           ) : (
-            <div className='flex items-center justify-center min-h-[150px]'>
+            <div className='flex items-center justify-center py-8'>
               <p className='text-[16px] text-gray-500'>No members found</p>
             </div>
           )}
         </div>
-        <div className='mt-8'>
-          <PaginationComponent handleChange={handlePageClick} page={page} pageCount={totalPages} />
-        </div>
+      </div>
+      <div className='pt-8 mt-auto'>
+        <PaginationComponent handleChange={handlePageClick} page={page} pageCount={totalPages} />
       </div>
     </div>
   );
