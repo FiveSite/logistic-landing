@@ -205,7 +205,6 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
               <h2 className='text-[24px] font-semibold mb-6'>Company branches</h2>
             </div> */}
 
-            {/* Location */}
             <h2 className='text-[24px] font-semibold  mb-6'>Location</h2>
             <div className='p-6 max-sm:p-4 bg-white rounded-[24px] '>
               <div className=' mb-4'>
@@ -226,7 +225,7 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
               </div>
 
               <div>
-                <GoogleMapEmbed address={user.address} />
+                <GoogleMapEmbed address={user.address} className='w-full h-[250px] rounded-[16px]' />
               </div>
             </div>
           </div>

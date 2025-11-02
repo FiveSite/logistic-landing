@@ -11,8 +11,8 @@ interface EventProp {
 export const EventOverview = ({ event }: EventProp) => {
   return (
     <div className='space-y-6'>
+      <h2 className=' font-bold text-[30px]  max-sm:text-[24px] leading-tight mb-6 drop-shadow-md'>{event.title}</h2>
       <div className='flex items-center gap-6'>
-        {' '}
         <div className='flex items-center gap-2'>
           <CalendarIcon className='w-4 h-4 stroke-orange-600' />
           {new Date(event.startDate).toLocaleDateString('en-US', {
@@ -42,7 +42,7 @@ export const EventOverview = ({ event }: EventProp) => {
 
       {/* Карта */}
 
-      <GoogleMapEmbed address={event.location} />
+      <GoogleMapEmbed address={event.location} className='w-full h-[600px] max-sm:h-[188px] rounded-[16px]' />
 
       {event.content &&
         event.content.map(({ title, body, id }, index, array) => (

@@ -103,14 +103,14 @@ const EventDetails = ({ event }: EventProp) => {
       </div>
 
       <div className='px-[100px] max-xl:px-20 max-lg:px-10 max-md:px-4 max-w-7xl mx-auto pt-[100px] max-sm:pt-10 pb-[50px] max-lg:pb-10'>
-        <div className='flex justify-center w-full mb-10 max-sm:mb-6 max-lg:hidden'>
-          <div className='flex border border-gray-200 rounded-full overflow-hidden'>
+        <div className=' w-full mb-20 max-sm:mb-6 max-lg:hidden'>
+          <div className='grid grid-cols-4 border border-gray-200 rounded-full overflow-hidden'>
             {tabs.map((tab, index) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={clsx(
-                  ' flex justify-center items-center lg:w-[178px] py-2 text-[16px] font-medium transition-colors duration-200',
+                  ' flex justify-center items-center lg:max-w-[279px] h-9  py-2 text-[16px] font-medium transition-colors duration-200',
                   'border-r border-gray-200 last:border-none',
                   activeTab === tab ? 'bg-orange-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'
                 )}
