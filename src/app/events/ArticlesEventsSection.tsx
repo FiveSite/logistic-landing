@@ -96,6 +96,14 @@ export const ArticlesEventsSection = () => {
           }}
           speed={2000}
           breakpoints={{
+            0: {
+              slidesPerView: 1,
+              centeredSlides: false,
+            },
+            768: {
+              slidesPerView: 'auto',
+              centeredSlides: false,
+            },
             1280: {
               slidesPerView: 2,
               centeredSlides: false,
@@ -134,7 +142,7 @@ export const ArticlesEventsSection = () => {
                   <Link
                     href={`/events/${item.documentId}`}
                     className='hover:underline text-[30px] leading-tight max-sm:text-[24px] font-semibold mb-8
-                   line-clamp-2 max-lg:h-[60px] h-[75px]'
+                   line-clamp-2 max-sm:h-[60px] h-[75px]'
                   >
                     {item.title}
                   </Link>

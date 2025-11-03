@@ -50,7 +50,7 @@ export const ArticlesNewsSection = () => {
 
       <div className='max-md:px-3 relative w-full max-w-[1120px] block mx-auto pl-4'>
         {/* Navigation Buttons */}
-        <div className='flex justify-between items-center z-10 max-lg:hidden'>
+        <div className='flex justify-between items-center z-10 max-xl:hidden'>
           <button
             ref={prevRef}
             className='absolute top-1/2  left-[-40px] w-10 h-10 rounded-full bg-orange-600 flex items-center justify-center text-white hover:bg-orange-700 transition'
@@ -93,6 +93,14 @@ export const ArticlesNewsSection = () => {
           }}
           speed={2000}
           breakpoints={{
+            0: {
+              slidesPerView: 1,
+              centeredSlides: false,
+            },
+            768: {
+              slidesPerView: 'auto',
+              centeredSlides: false,
+            },
             1280: {
               slidesPerView: 2,
               centeredSlides: false,
@@ -124,7 +132,7 @@ export const ArticlesNewsSection = () => {
                   </div>
                   <Link
                     href={`/news/${item.documentId}`}
-                    className='hover:underline text-[30px] leading-tight max-sm:text-[24px] font-semibold mb-8  line-clamp-2 max-lg:h-[60px] h-[75px]'
+                    className='hover:underline text-[30px] leading-tight max-sm:text-[24px] font-semibold mb-8  line-clamp-2 max-sm:h-[60px] h-[75px]'
                   >
                     {item.title}
                   </Link>

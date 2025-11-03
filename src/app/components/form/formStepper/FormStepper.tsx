@@ -86,6 +86,7 @@ export const FormStepper = ({
 }) => {
   const [countryData, setCountryData] = useState<Country[] | []>([]);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { activeStep, nextStepHandler } = useContext(MemberSignUpContext);
 
@@ -130,6 +131,7 @@ export const FormStepper = ({
 
   const handleSubmitClickHandler = async (values: MemberSignUpFormValues) => {
     setMessage(null);
+    setIsSubmitting(true);
 
     if (activeStep < 3) {
       nextStepHandler(activeStep + 1);
@@ -144,8 +146,10 @@ export const FormStepper = ({
         });
 
         if (res) {
-          // const data = { ...values, form: 'Member' };
-          // await axios.post('/api/send-email', data);
+          const data = { ...values, form: 'Member' };
+          const res = await axios.post('/api/send-email', data);
+
+          setMessage({ type: 'success', text: 'Your message has been sent successfully.' });
 
           onSuccess();
           handleClose();
@@ -156,6 +160,8 @@ export const FormStepper = ({
             setMessage({ type: 'error', text: 'This email or company already exists' });
           } else setMessage({ type: 'error', text: 'Network error. Please try again.' });
         }
+      } finally {
+        setIsSubmitting(false);
       }
     }
   };
@@ -245,7 +251,7 @@ export const FormStepper = ({
                     disabled={isSubmitting}
                     className='cursor-pointer px-10 py-2.5 rounded-full bg-orange-600 text-white text-sm font-medium hover:bg-orange-700 '
                   >
-                    Submit
+                    {isSubmitting ? 'Submitting...' : 'Submit'}
                   </button>
                 )}
               </div>

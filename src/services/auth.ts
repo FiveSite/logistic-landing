@@ -28,7 +28,6 @@ export async function getUserFromToken(token: string) {
     });
     return res.data;
   } catch (error) {
-    console.log('Error fetching user:', error);
     return null;
   }
 }
