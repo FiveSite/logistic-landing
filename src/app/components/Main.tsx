@@ -40,9 +40,12 @@ export const Main = ({ user, data }: { user: User; data: { title: string; afterT
         alt='main-bg'
         fill
         priority
+        fetchPriority='high'
+        quality={85}
         sizes='100vw'
         className='object-cover object-center'
       />
+
       <div className='xl:px-[300px] lg:pt-[360px] pt-[170px] max-sm:px-4 sm:px-8 relative'>
         <h1 className='text-[62px] max-md:text-[36px] font-bold text-[#1A1A1A] text-center leading-[62px] max-md:leading-[36px] mb-8 max-md:mb-6'>
           {data[0].title}
