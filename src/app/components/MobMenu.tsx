@@ -92,11 +92,11 @@ export const MobMenu = ({
             </p>
             <p
               className={clsx(
-                pathname === '/news?tab=news' && 'border-b border-orange-600',
+                pathname === '/news' && 'border-b border-orange-600',
                 'h-10 text-[16px] px-2 py-3 font-medium flex gap-2'
               )}
               onClick={() => {
-                router.push('/news?tab=news');
+                router.push('news');
                 onClose();
               }}
             >
@@ -106,11 +106,11 @@ export const MobMenu = ({
 
             <p
               className={clsx(
-                pathname === '/news?tab=events' && 'border-b border-orange-600',
+                pathname === '/events' && 'border-b border-orange-600',
                 'h-10 text-[16px] px-2 py-3 font-medium flex gap-2'
               )}
               onClick={() => {
-                router.push('/news?tab=events');
+                router.push('/events');
                 onClose();
               }}
             >
