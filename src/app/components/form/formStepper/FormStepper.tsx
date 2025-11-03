@@ -142,8 +142,8 @@ export const FormStepper = ({
         });
 
         if (res) {
-          const data = { ...values, form: 'Member' };
-          await axios.post('/api/send-email', data);
+          // const data = { ...values, form: 'Member' };
+          // await axios.post('/api/send-email', data);
 
           onSuccess();
           handleClose();

@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
         break;
 
       case 'Member':
-        if (!company || !phone) {
+        if (!company) {
           return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
         }
 
