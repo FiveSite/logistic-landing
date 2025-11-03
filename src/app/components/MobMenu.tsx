@@ -3,13 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { useState } from 'react';
-import { ModalComponent } from './Modal';
-import { LoginForm } from './form/LoginForm';
-import { ForgotPassword } from './form/ForgotPassword';
-import { MemberDialog } from './dialog/MemberDialog';
-import { CongratulationDialog } from './dialog/CongratulationDialog';
-import { ForgotPasswordSuccessDialog } from './dialog/ForgotPasswordSuccessDialog';
 import { User } from '@/types';
 import { useRouter } from 'next/navigation';
 import { nextAxios } from '@/utils/axios-next';
@@ -21,7 +14,6 @@ export const MobMenu = ({
   user,
   onOpenLogin,
   onOpenMember,
-  onOpenCongrats,
 }: {
   onClose: () => void;
   user: User;
@@ -29,12 +21,6 @@ export const MobMenu = ({
   onOpenMember: () => void;
   onOpenCongrats: () => void;
 }) => {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
-  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
-  const [isCongratsOpen, setIsCongratsOpen] = useState(false);
-  const [isForgotPasswordSuccessOpen, setIsForgotPasswordSuccessOpen] = useState(false);
-
   const pathname = usePathname();
   const router = useRouter();
 
@@ -48,7 +34,7 @@ export const MobMenu = ({
 
   const handleDirectoryClick = () => {
     if (!user) {
-      setIsLoginModalOpen(true);
+      onOpenLogin();
       return;
     }
 
@@ -62,8 +48,6 @@ export const MobMenu = ({
         className='bg-white h-[100dvh] overflow-y-auto w-[334px] flex flex-col justify-between'
         onClick={(e) => e.stopPropagation()}
       >
-        {/* <div className='absolute top-0 left-0 right-0 z-20  bg-black/20'> */}
-        {/* <div className='bg-white h-[100dvh] overflow-y-auto w-[334px] flex flex-col justify-between'> */}
         <div>
           <div className='flex items-center justify-between px-6 py-4.5'>
             <Link href='/'>
