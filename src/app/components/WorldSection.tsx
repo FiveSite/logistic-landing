@@ -116,12 +116,12 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
                   const tooltipTitle = (
                     <div style={{ display: 'flex', alignItems: 'center', padding: '4px' }}>
                       {isoCode && (
-                        <img
+                        <Image
                           src={`https://flagcdn.com/w20/${isoCode}.png`}
                           alt={`Flag of ${countryName}`}
+                          width={20}
+                          height={15}
                           style={{
-                            width: '20px',
-                            height: '15px',
                             marginRight: '8px',
                             borderRadius: '2px',
                             boxShadow: '0 0 2px rgba(0,0,0,0.3)',
