@@ -129,6 +129,8 @@ export const FormStepper = ({
   };
 
   const handleSubmitClickHandler = async (values: MemberSignUpFormValues) => {
+    setMessage(null);
+
     if (activeStep < 3) {
       nextStepHandler(activeStep + 1);
     } else {
