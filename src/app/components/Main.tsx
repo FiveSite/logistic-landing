@@ -34,8 +34,16 @@ export const Main = ({ user, data }: { user: User; data: { title: string; afterT
   }, [code]);
 
   return (
-    <section className="bg-[url('/images/main-bg.png')] w-screen bg-cover bg-no-repeat ">
-      <div className='xl:px-[300px] lg:pt-[360px] pt-[170px] max-sm:px-4 sm:px-8'>
+    <section className=' w-screen relative overflow-hidden'>
+      <Image
+        src='/images/main-bg.png'
+        alt='main-bg'
+        fill
+        priority
+        sizes='100vw'
+        className='object-cover object-center'
+      />
+      <div className='xl:px-[300px] lg:pt-[360px] pt-[170px] max-sm:px-4 sm:px-8 relative'>
         <h1 className='text-[62px] max-md:text-[36px] font-bold text-[#1A1A1A] text-center leading-[62px] max-md:leading-[36px] mb-8 max-md:mb-6'>
           {data[0].title}
         </h1>
