@@ -1,7 +1,9 @@
+import { fetchEvents } from '@/services/api';
 import { EventsList } from './Events';
 import Link from 'next/link';
 
-export default function EventPage() {
+export default async function EventPage() {
+  const events = await fetchEvents();
   return (
     <div className='bg-[#F6F6F6]'>
       <div className='xl:px-[160px] md:px-10 max-md:px-4 pb-[60px] mx-auto'>
@@ -24,7 +26,7 @@ export default function EventPage() {
         <div className='h-[1px] w-full bg-gray-200 max-sm:hidden'></div>
 
         <div className='sm:mt-10'>
-          <EventsList />
+          <EventsList events={events} />
         </div>
       </div>
     </div>

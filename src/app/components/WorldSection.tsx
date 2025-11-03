@@ -64,7 +64,6 @@ export const WorldSection = ({ countries }: { countries: { country: string; name
           Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore.
         </p>
 
-        {/* Карта */}
         <div className='max-h-[800px] overflow-hidden mx-auto'>
           <ComposableMap
             className='max-h-[900px]  mx-auto'

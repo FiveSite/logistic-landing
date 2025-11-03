@@ -1,7 +1,10 @@
+import { fetchNews } from '@/services/api';
 import { NewsList } from './News';
 import Link from 'next/link';
 
-export default function NewsPage() {
+export default async function NewsPage() {
+  const news = await fetchNews();
+
   return (
     <div className='bg-[#F6F6F6]'>
       <div className='xl:px-[160px] md:px-10 max-md:px-4 pb-[60px] mx-auto'>
@@ -24,7 +27,7 @@ export default function NewsPage() {
         <div className='h-[1px] w-full bg-gray-200 max-sm:hidden'></div>
 
         <div className='sm:mt-10'>
-          <NewsList />
+          <NewsList news={news} />
         </div>
       </div>
     </div>

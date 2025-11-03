@@ -1,23 +1,7 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { fetchEvents } from '@/services/api';
 import { Event } from '@/types';
 import EventCard from './EventItem';
 
-export const EventsList = () => {
-  const [events, setEvents] = useState<Event[] | []>([]);
-
-  console.log('events', events);
-  const getEvents = async () => {
-    const events = await fetchEvents();
-    setEvents(events);
-  };
-
-  useEffect(() => {
-    getEvents();
-  }, []);
-
+export const EventsList = ({ events }: { events: Event[] }) => {
   return (
     <div className='flex flex-col max-lg:items-center gap-8 mx-auto'>
       {events.map((event) => (
