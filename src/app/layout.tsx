@@ -19,8 +19,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Logistics Landing',
-  description: 'Modern logistics SaaS platform',
+  title: 'African Alliance Logistic Network | Logistics Business Community',
+  description:
+    'Connect with other logistics professionals, grow your business, and expand your network in the logistics industry.',
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

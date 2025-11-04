@@ -5,15 +5,14 @@ export const MainBackground = () => {
   return (
     <div>
       <Head>
-        <link rel='preload' as='image' href='/images/main-bg.png' />
+        <link rel='preload' as='image' href='/images/main-bg.webp' />
       </Head>
       <Image
-        src='/images/main-bg.png'
+        src='/images/main-bg.webp'
         alt='main-bg'
         fill
         priority
         fetchPriority='high'
-        quality={80}
         sizes='100vw'
         className='object-cover object-center'
       />

@@ -8,8 +8,9 @@ export const FaqSection = ({ faqData }: { faqData: { title: string; body: string
         src='/images/solution-bg.webp'
         alt='background decoration'
         fill
+        quality={75}
+        loading='lazy'
         className='relative top-0 left-0 w-full h-full object-cover z-0 opacity-70 pointer-events-none'
-        priority
       />
       <div className='flex flex-col items-center justify-center mx-auto'>
         <FaQ faqData={faqData} />

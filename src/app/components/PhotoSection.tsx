@@ -15,7 +15,7 @@ export const PhotoSection = ({
           src={consultationData[0].image?.url || '/images/lorry-bg.png'}
           alt={consultationData[0].title || 'main-bg'}
           fill
-          quality={85}
+          quality={75}
           sizes='100vw'
           className='object-cover object-center'
         />

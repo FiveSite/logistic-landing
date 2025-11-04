@@ -50,7 +50,7 @@ export const BenefitCard = ({
           alt='Member benefits'
           layout='fill'
           objectFit='cover'
-          quality={80}
+          quality={75}
           className='w-full h-full transition-all duration-500'
         />
       </div>
