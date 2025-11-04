@@ -7,7 +7,6 @@ import clsx from 'clsx';
 import { Header } from './components/Header';
 import { cookies } from 'next/headers';
 import { getUserFromToken } from '@/services/auth';
-import Head from 'next/head';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -47,6 +46,9 @@ export const metadata: Metadata = {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
   },
+  verification: {
+    google: 'GulY-gX3wHK07vUFVq-crZf7GLvUcu7MvVCst4Ll4FY',
+  },
   openGraph: {
     title: 'African Alliance Logistics Network',
     description: 'Connect African freight forwarders and global logistics partners to grow your business.',
@@ -64,9 +66,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang='en'>
-      <Head>
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
       <body className={clsx(geistSans.variable, geistMono.variable, 'antialiased min-h-screen flex flex-col')}>
         <div className='absolute px-10 max-lg:px-0 lg:top-8 top-0 w-full'>
           <Header user={user} />
