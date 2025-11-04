@@ -14,7 +14,16 @@ export const MainBackground = () => {
         priority
         fetchPriority='high'
         sizes='100vw'
-        className='object-cover object-center'
+        className='object-cover object-center max-sm:hidden'
+      />
+      <Image
+        src='/images/main-bg-min.webp'
+        alt='main-bg'
+        fill
+        priority
+        fetchPriority='high'
+        sizes='100vw'
+        className='object-cover object-center sm:hidden'
       />
     </div>
   );

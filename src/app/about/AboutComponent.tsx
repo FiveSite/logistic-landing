@@ -24,16 +24,39 @@ export const AboutComponent = ({
   return (
     <>
       <section>
-        <div
-          className='bg-cover bg-no-repeat lg:h-[250px] h-[170px]'
-          style={{
-            backgroundImage:
-              "linear-gradient(to bottom, rgba(246,246,246,0), rgba(255,255,255,0.8)), url('/images/about-bg.png')",
-          }}
-        ></div>
-        <div className="sm:px-[100px] px-6 sm:bg-[url('/images/about-min.png')] bg-no-repeat ">
+        <div className='relative lg:h-[400px] h-[600px] overflow-hidden'>
+          <Image
+            src='/images/about-bg.webp'
+            alt='About background'
+            fill
+            priority={false}
+            quality={75}
+            sizes='100vw'
+            className='object-cover object-center max-sm:hidden'
+          />
+          <Image
+            src='/images/main-bg-min.webp'
+            alt='About background'
+            fill
+            priority={false}
+            quality={75}
+            sizes='100vw'
+            className='object-cover object-center sm:hidden'
+          />
+          <div className='absolute inset-0 bg-gradient-to-b from-[#F6F6F6]/0 to-white/80'></div>
+        </div>
+
+        <div className="sm:px-[100px] px-6 lg:bg-[url('/images/about-min.png')] bg-no-repeat lg:mt-[-150px] max-lg:mt-[-400px] relative z-10">
           <div className=' flex max-lg:flex-col items-center lg:items-start sm:px-[60px] px-0'>
-            <Image src='/images/about-caption.svg' alt='solution' width={193} height={82} className='' />
+            <Image
+              src='/images/about-caption.svg'
+              alt='solution'
+              width={193}
+              height={82}
+              className=''
+              quality={75}
+              loading='lazy'
+            />
 
             <div className='lg:pt-[90px] pt-8' dangerouslySetInnerHTML={{ __html: aboutData.description }} />
           </div>
