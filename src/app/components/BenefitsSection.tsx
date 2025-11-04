@@ -14,7 +14,7 @@ export const BenefitsSection = ({ benefits }: { benefits: Benefit[] }) => {
 
   return (
     <section className='bg-[#F6F6F6] lg:py-40 lg:pt-[200px] py-20 w-full '>
-      <div className='bg-[url("/images/about-decor.png")] bg-no-repeat w-full bg-cover'>
+      <div className='bg-[url("/images/about-decor.webp")] bg-no-repeat w-full bg-cover'>
         {benefits.length > 0 && (
           <div className='mx-auto flex flex-col lg:flex-row gap-8 lg:gap-[120px] px-4 md:px-10 xl:px-[180px] max-w-[1430px]'>
             <div className='flex-1'>
