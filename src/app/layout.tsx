@@ -42,6 +42,10 @@ export const metadata: Metadata = {
     'air freight Africa',
     'African logistics market',
   ],
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+  },
   openGraph: {
     title: 'African Alliance Logistics Network',
     description: 'Connect African freight forwarders and global logistics partners to grow your business.',
