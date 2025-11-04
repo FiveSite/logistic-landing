@@ -19,9 +19,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'African Alliance Logistic Network | Logistics Business Community',
+  title: 'African Alliance Logistics Network | Logistics Business Community',
   description:
-    'Connect with other logistics professionals, grow your business, and expand your network in the logistics industry.',
+    'Connect, grow, and expand your logistics business across Africa. Join the African Alliance Logistic Network and unlock new opportunities for your business.',
+  keywords: [
+    'African Alliance Logistics Network',
+    'Logistics Business Community',
+    'freight forwarding alliance',
+    'Africa logistics network',
+
+    'logistics professionals',
+    'logistics business growth',
+    'supply chain network',
+    'B2B logistics partners',
+    'logistics networking',
+    'freight forwarder network',
+
+    'logistics in Africa',
+    'international freight forwarding',
+    'customs brokerage services',
+    'ocean freight Africa',
+    'air freight Africa',
+    'African logistics market',
+  ],
+  openGraph: {
+    title: 'African Alliance Logistics Network',
+    description: 'Connect African freight forwarders and global logistics partners to grow your business.',
+    url: 'https://www.african-alliance.network',
+    siteName: 'African Alliance Network',
+    type: 'website',
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
