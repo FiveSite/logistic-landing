@@ -5,10 +5,10 @@ export const MainBackground = () => {
   return (
     <div>
       <Head>
-        <link rel='preload' as='image' href='/images/main-bg.webp' />
+        <link rel='preload' as='image' href='/images/main-bg.png' />
       </Head>
       <Image
-        src='/images/main-bg.webp'
+        src='/images/main-bg.png'
         alt='main-bg'
         fill
         priority
