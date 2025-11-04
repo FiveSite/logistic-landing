@@ -38,9 +38,10 @@ export const Main = ({ user, data }: { user: User; data: { title: string; afterT
     <section className=' w-screen relative overflow-hidden'>
       <MainBackground />
       <div className='xl:px-[300px] lg:pt-[360px] pt-[170px] max-sm:px-4 sm:px-8 relative'>
-        <h1 className='text-[62px] max-md:text-[36px] font-bold text-[#1A1A1A] text-center leading-[62px] max-md:leading-[36px] mb-8 max-md:mb-6'>
+        <h1 className='sr-only'>African Alliance Logistics Network: Global Partner Platform</h1>
+        <h2 className='text-[62px] max-md:text-[36px] font-bold text-[#1A1A1A] text-center leading-[62px] max-md:leading-[36px] mb-8 max-md:mb-6'>
           {data[0].title}
-        </h1>
+        </h2>
         <p className='text-[18px] max-md:text-[16px] text-[#1A1A1A] text-center mb-12'>{data[0].afterTitle}</p>
 
         <div className='relative flex justify-center gap-6 md:px-4 w-full mb-[100px] max-md:mb-10'>
