@@ -3,6 +3,7 @@
 import { Benefit } from '@/types';
 import { useState } from 'react';
 import { BenefitCard } from './BenefitCard';
+// import Image from 'next/image';
 
 export const BenefitsSection = ({ benefits }: { benefits: Benefit[] }) => {
   const [openCardId, setOpenCardId] = useState<number | null>(null);
@@ -14,6 +15,16 @@ export const BenefitsSection = ({ benefits }: { benefits: Benefit[] }) => {
   return (
     <section className='bg-[#F6F6F6] lg:py-40 lg:pt-[200px] py-20 w-full '>
       <div className='bg-[url("/images/about-decor.png")] bg-no-repeat w-full bg-cover'>
+        {/* <div className='relative w-full h-[800px]'>
+        <Image
+          src='/images/about-decor.png'
+          alt='About section decoration'
+          fill
+          priority
+          fetchPriority='high'
+          className='object-cover object-center'
+        />
+      </div> */}
         {benefits.length > 0 && (
           <div className='mx-auto flex flex-col lg:flex-row gap-8 lg:gap-[120px] px-4 md:px-10 xl:px-[180px] max-w-[1430px]'>
             <div className='flex-1'>
