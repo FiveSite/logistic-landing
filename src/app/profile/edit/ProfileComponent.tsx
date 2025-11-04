@@ -246,6 +246,8 @@ export const ProfileComponent = ({ user }: { user: User }) => {
                       width={116}
                       height={90}
                       className='w-[116px] h-[90px]  rounded-[8px]'
+                      quality={75}
+                      loading='lazy'
                     />
                   ) : (
                     <Image
@@ -254,6 +256,8 @@ export const ProfileComponent = ({ user }: { user: User }) => {
                       className='rounded-[8px]'
                       width={116}
                       height={90}
+                      quality={75}
+                      loading='lazy'
                     />
                   )}
                   <input ref={inputRef} type='file' className='hidden' onChange={(e) => handleUploadCompanyLogo(e)} />
@@ -279,6 +283,8 @@ export const ProfileComponent = ({ user }: { user: User }) => {
                         width={311}
                         height={152}
                         className='w-[311px] h-[152px]  rounded-[8px]'
+                        quality={75}
+                        loading='lazy'
                       />
                     ) : (
                       <Image
@@ -287,6 +293,8 @@ export const ProfileComponent = ({ user }: { user: User }) => {
                         width={311}
                         height={152}
                         className='w-[311px] h-[152px]  rounded-[8px]'
+                        quality={75}
+                        loading='lazy'
                       />
                     )}
                     <input ref={inputRef} type='file' className='hidden' onChange={(e) => handleUploadCompanyLogo(e)} />

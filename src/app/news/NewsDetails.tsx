@@ -58,7 +58,8 @@ export const NewsDetails = ({ news }: NewsProp) => {
           height={0}
           sizes='100vw'
           className='w-full max-h-[360px] max-sm:rounded-none rounded-[8px] '
-          priority
+          quality={75}
+          loading='lazy'
         />
       </div>
 

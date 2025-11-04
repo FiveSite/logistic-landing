@@ -29,6 +29,8 @@ const EventCard = ({ title, description, startDate, endDate, location, photo, do
           <Image
             src={photo?.url ?? ''}
             alt={title}
+            quality={75}
+            loading='lazy'
             width={585}
             height={354}
             className='object-cover w-full  max-sm:w-[343px] sm:w-[585px] h-[354px] rounded-[8px] max-lg:rounded-b-none'

@@ -26,6 +26,8 @@ const NewsCard = ({ title, description, date, category, photo, documentId }: New
           <Image
             src={photo?.url ?? ''}
             alt={title}
+            quality={75}
+            loading='lazy'
             width={585}
             height={343}
             className='object-cover w-full h-[354px] max-sm:w-[343px] sm:w-[585px]  rounded-[8px] max-lg:rounded-b-none'

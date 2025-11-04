@@ -118,6 +118,8 @@ export const ArticlesEventsSection = () => {
                   alt='solution'
                   width={544}
                   height={354}
+                  quality={75}
+                  loading='lazy'
                   className='max-sm:rounded-b-none rounded-[8px] h-[354px] object-cover'
                 />
 

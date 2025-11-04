@@ -113,6 +113,8 @@ export const ArticlesNewsSection = () => {
                 <Image
                   src={item.photo?.url || ''}
                   alt='solution'
+                  quality={75}
+                  loading='lazy'
                   width={544}
                   height={354}
                   className='max-sm:rounded-b-none rounded-[8px] h-[354px] object-cover'

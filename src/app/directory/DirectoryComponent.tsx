@@ -191,6 +191,8 @@ export const DirectoryComponent = () => {
                     <Image
                       src={company.companyLogo?.url ?? ''}
                       alt='image'
+                      quality={75}
+                      loading='lazy'
                       width={167}
                       height={167}
                       className='h-[167px] max-sm:w-[335px] max-sm:h-[335px] w-[167px]  object-cover rounded-[8px] cursor-pointer'
@@ -204,6 +206,8 @@ export const DirectoryComponent = () => {
                       height={167}
                       className='h-[167px] max-sm:w-[335px] max-sm:h-[335px] cursor-pointer'
                       onClick={() => router.push(`/directory/${company.documentId}`)}
+                      quality={75}
+                      loading='lazy'
                     />
                   )}
                 </div>

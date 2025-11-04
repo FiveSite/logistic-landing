@@ -48,9 +48,10 @@ export const AboutComponent = ({
                 <Image
                   src={benefits[2]?.photo?.url || ''}
                   alt='img'
+                  quality={75}
+                  loading='lazy'
                   fill
                   className='object-cover w-full h-full rounded-t-[24px] xl:rounded-l-[24px] xl:rounded-tr-none '
-                  priority
                 />
               </div>
 
@@ -74,7 +75,8 @@ export const AboutComponent = ({
                   alt='img'
                   fill
                   className='object-cover w-full h-full rounded-t-[24px]  xl:rounded-l-none '
-                  priority
+                  quality={75}
+                  loading='lazy'
                 />
               </div>
 
@@ -98,7 +100,8 @@ export const AboutComponent = ({
                   alt='img'
                   fill
                   className='object-cover w-full h-full rounded-t-[24px] xl:rounded-l-[24px] xl:rounded-tr-none '
-                  priority
+                  quality={75}
+                  loading='lazy'
                 />
               </div>
 

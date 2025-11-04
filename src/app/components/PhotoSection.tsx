@@ -16,6 +16,7 @@ export const PhotoSection = ({
           alt={consultationData[0].title || 'main-bg'}
           fill
           quality={75}
+          loading='lazy'
           sizes='100vw'
           className='object-cover object-center'
         />

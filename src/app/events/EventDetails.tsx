@@ -71,7 +71,8 @@ const EventDetails = ({ event }: EventProp) => {
           height={0}
           sizes='100vw'
           className='w-full h-[700px] max-lg:h-[500px] max-md:h-[350px] object-cover lg:rounded-lg'
-          priority
+          quality={75}
+          loading='lazy'
         />
 
         <div className='absolute inset-0 flex flex-col justify-center items-center text-center px-4'>

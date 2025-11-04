@@ -62,7 +62,8 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
               layout='fill'
               objectFit='cover'
               className='object-cover w-full h-[400px]'
-              priority
+              quality={75}
+              loading='lazy'
             />
 
             {isEditMode && (
@@ -110,6 +111,8 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
                 width={116}
                 height={90}
                 className='h-[90px] w-[116px] rounded-[8px] m-0 max-sm:w-[311px] max-sm:h-[311px]'
+                quality={75}
+                loading='lazy'
               />
             ) : (
               <Image
@@ -118,6 +121,8 @@ export const CompanyProfileComponent = ({ user, isEditMode = false }: { user: Us
                 width={90}
                 height={90}
                 className='h-[90px] w-[116px] rounded-[8px] m-0 max-sm:w-[311px] max-sm:h-[311px]'
+                quality={75}
+                loading='lazy'
               />
             )}
             <div className=''>
