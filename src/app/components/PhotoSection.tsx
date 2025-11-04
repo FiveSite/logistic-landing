@@ -1,6 +1,7 @@
 import { Media } from '@/types';
 import ArrowRightIcon from '../../../public/icons/arrow-right.svg';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const PhotoSection = ({
   consultationData,
@@ -8,11 +9,17 @@ export const PhotoSection = ({
   consultationData: { title: string; afterTitle: string; image: Media }[];
 }) => {
   return (
-    <section className='bg-[#F6F6F6] sm:px-10 w-full lg:pt-[120px] pt-20'>
-      <div
-        className='relative sm:h-[400px] h-[680px] w-full bg-no-repeat bg-cover bg-center sm:rounded-[20px] overflow-hidden'
-        style={{ backgroundImage: `url('${consultationData[0].image?.url}')` || `url('/images/lorry-bg.png')` }}
-      >
+    <section className='relative bg-[#F6F6F6] sm:px-10 w-full lg:pt-[120px] pt-20'>
+      <div className='relative sm:h-[400px] h-[680px] w-full sm:rounded-[20px] overflow-hidden'>
+        <Image
+          src={consultationData[0].image?.url || '/images/lorry-bg.png'}
+          alt={consultationData[0].title || 'main-bg'}
+          fill
+          quality={85}
+          sizes='100vw'
+          className='object-cover object-center'
+        />
+
         <div className='absolute inset-0 bg-black/40 z-10 sm:rounded-[20px] pointer-events-none' />
 
         <div className='absolute inset-0 z-20 flex flex-col  justify-center lg:px-20 px-6 max-sm:py-20 sm:py-20'>
