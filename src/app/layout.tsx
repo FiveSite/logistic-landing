@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import { Header } from './components/Header';
 import { cookies } from 'next/headers';
 import { getUserFromToken } from '@/services/auth';
+import Head from 'next/head';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -63,6 +64,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang='en'>
+      <Head>
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
       <body className={clsx(geistSans.variable, geistMono.variable, 'antialiased min-h-screen flex flex-col')}>
         <div className='absolute px-10 max-lg:px-0 lg:top-8 top-0 w-full'>
           <Header user={user} />
