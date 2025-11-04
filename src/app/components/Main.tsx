@@ -12,6 +12,7 @@ import { CongratulationDialog } from './dialog/CongratulationDialog';
 import { ForgotPassword } from './form/ForgotPassword';
 import { ForgotPasswordSuccessDialog } from './dialog/ForgotPasswordSuccessDialog';
 import { User } from '@/types';
+import { MainBackground } from './MainBackground';
 
 export const Main = ({ user, data }: { user: User; data: { title: string; afterTitle: string }[] }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,17 +36,7 @@ export const Main = ({ user, data }: { user: User; data: { title: string; afterT
 
   return (
     <section className=' w-screen relative overflow-hidden'>
-      <Image
-        src='/images/main-bg.png'
-        alt='main-bg'
-        fill
-        priority
-        fetchPriority='high'
-        quality={85}
-        sizes='100vw'
-        className='object-cover object-center'
-      />
-
+      <MainBackground />
       <div className='xl:px-[300px] lg:pt-[360px] pt-[170px] max-sm:px-4 sm:px-8 relative'>
         <h1 className='text-[62px] max-md:text-[36px] font-bold text-[#1A1A1A] text-center leading-[62px] max-md:leading-[36px] mb-8 max-md:mb-6'>
           {data[0].title}
