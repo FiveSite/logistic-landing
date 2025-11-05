@@ -13,13 +13,14 @@ type NewCardProps = {
   category: string;
   photo?: Media | null;
   documentId: string;
+  slug: string;
 };
 
-const NewsCard = ({ title, description, date, category, photo, documentId }: NewCardProps) => {
+const NewsCard = ({ title, description, date, category, photo, documentId, slug }: NewCardProps) => {
   return (
     <div className='flex gap-6.5  max-lg:gap-0 items-center  max-lg:flex-col max-w-[343px] sm:max-w-[585px] lg:max-w-full'>
       <Link
-        href={`/news/${documentId}`}
+        href={`/news/${slug}`}
         className='sm:max-w-[585px] bg-gray-100 flex items-center justify-center rounded-[8px]  max-lg:rounded-b-none shrink-0'
       >
         {photo ? (
@@ -50,7 +51,7 @@ const NewsCard = ({ title, description, date, category, photo, documentId }: New
           </div>
         </div>
         <Link
-          href={`/news/${documentId}`}
+          href={`/news/${slug}`}
           className='text-[30px] leading-none max-md:text-[24px] font-semibold mb-8 hover:underline'
         >
           {title}

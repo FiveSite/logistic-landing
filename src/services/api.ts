@@ -197,16 +197,30 @@ export async function fetchNews(): Promise<News[]> {
   }
 }
 
-export async function getOneNews(id: string): Promise<News | null> {
+export async function getOneNews(slug: string): Promise<News | null> {
   try {
-    const res = await fetch(`${API_URL}/api/news/${id}?populate=*`);
+    const res = await fetch(`${API_URL}/api/news?filters[slug][$eq]=${slug}&populate=*`);
     const data = await res.json();
-    return data.data;
+
+    if (!data.data || data.data.length === 0) return null;
+
+    return data.data[0];
   } catch (error) {
-    console.error('Error fetching new:', error);
+    console.error('Error fetching news:', error);
     return null;
   }
 }
+
+// export async function getOneNews(id: string): Promise<News | null> {
+//   try {
+//     const res = await fetch(`${API_URL}/api/news/${id}?populate=*`);
+//     const data = await res.json();
+//     return data.data;
+//   } catch (error) {
+//     console.error('Error fetching new:', error);
+//     return null;
+//   }
+// }
 
 export async function fetchEvents(): Promise<Event[]> {
   try {
@@ -219,16 +233,30 @@ export async function fetchEvents(): Promise<Event[]> {
   }
 }
 
-export async function getOneEvent(id: string): Promise<Event | null> {
+export async function getOneEvent(slug: string): Promise<Event | null> {
   try {
-    const res = await fetch(`${API_URL}/api/events/${id}?populate=*`);
+    const res = await fetch(`${API_URL}/api/events?filters[slug][$eq]=${slug}&populate=*`);
     const data = await res.json();
-    return data.data;
+
+    if (!data.data || data.data.length === 0) return null;
+
+    return data.data[0];
   } catch (error) {
-    console.error('Error fetching new:', error);
+    console.error('Error fetching event:', error);
     return null;
   }
 }
+
+// export async function getOneEvent(id: string): Promise<Event | null> {
+//   try {
+//     const res = await fetch(`${API_URL}/api/events/?filters[slug][$eq]=${id}&populate=*`);
+//     const data = await res.json();
+//     return data.data;
+//   } catch (error) {
+//     console.error('Error fetching new:', error);
+//     return null;
+//   }
+// }
 
 export async function fetchTeam(): Promise<Team[]> {
   try {

@@ -13,6 +13,7 @@ export const NewsList = ({ news }: { news: News[] }) => {
           category={article.category}
           photo={article.photo}
           documentId={article.documentId}
+          slug={article.slug}
         />
       ))}
     </div>

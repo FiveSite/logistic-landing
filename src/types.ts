@@ -10,6 +10,7 @@ export interface Event {
   startDate: string;
   endDate: string;
   location: string;
+  slug: string;
 
   photo: Media;
   documentId: string;
@@ -24,6 +25,7 @@ export interface News {
   photo: Media | null;
   documentId: string;
   content?: Content[];
+  slug: string;
 }
 
 export interface Team {

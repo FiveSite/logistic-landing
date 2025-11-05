@@ -13,16 +13,17 @@ type NewEventProps = {
   startDate: string;
   endDate: string;
   location: string;
+  slug: string;
 
   photo?: Media | null;
   documentId: string;
 };
 
-const EventCard = ({ title, description, startDate, endDate, location, photo, documentId }: NewEventProps) => {
+const EventCard = ({ title, description, startDate, endDate, location, photo, documentId, slug }: NewEventProps) => {
   return (
     <div className='flex gap-6.5  max-lg:gap-0 items-center  max-lg:flex-col max-w-[343px] sm:max-w-[585px] lg:max-w-full'>
       <Link
-        href={`/events/${documentId}`}
+        href={`/events/${slug}`}
         className='sm:max-w-[585px] bg-gray-100 flex items-center justify-center rounded-[8px]  max-lg:rounded-b-none shrink-0'
       >
         {photo ? (
@@ -42,7 +43,7 @@ const EventCard = ({ title, description, startDate, endDate, location, photo, do
 
       <div className='flex flex-col max-lg:bg-white max-lg:p-4 rounded-b-[8px]'>
         <Link
-          href={`/events/${documentId}`}
+          href={`/events/${slug}`}
           className='text-[30px] leading-none max-sm:text-[24px222222] font-semibold mb-6 hover:underline'
         >
           {title}

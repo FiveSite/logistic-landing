@@ -14,6 +14,7 @@ export const EventsList = ({ events }: { events: Event[] }) => {
           location={event.location}
           photo={event.photo}
           documentId={event.documentId}
+          slug={event.slug}
         />
       ))}
     </div>
