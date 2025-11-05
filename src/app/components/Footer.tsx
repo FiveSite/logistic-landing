@@ -41,21 +41,31 @@ export const Footer = async () => {
         </nav>
 
         <div className='flex items-center gap-4 mt-8 md:hidden'>
-          <Link href='/'>
-            <Image src='/icons/youtube.svg' alt='facebook' width={24} height={24} />
-          </Link>
-          <Link href='/'>
-            <Image src='/icons/facebook.svg' alt='facebook' width={24} height={24} />
-          </Link>
-          <Link href='/'>
-            <Image src='/icons/twitter.svg' alt='facebook' width={24} height={24} />
-          </Link>
-          <Link href='/'>
-            <Image src='/icons/instagram.svg' alt='facebook' width={24} height={24} />
-          </Link>
-          <Link href='/'>
-            <Image src='/icons/linkedin.svg' alt='facebook' width={24} height={24} />
-          </Link>
+          {socialMedias[0]?.youtube && (
+            <Link href={socialMedias[0]?.youtube || '/'} target='_blank' rel='noopener noreferrer'>
+              <Image src='/icons/youtube.svg' alt='youtube' width={24} height={24} />
+            </Link>
+          )}
+          {socialMedias[0]?.facebook && (
+            <Link href={socialMedias[0]?.facebook || '/'} target='_blank' rel='noopener noreferrer'>
+              <Image src='/icons/facebook.svg' alt='facebook' width={24} height={24} />
+            </Link>
+          )}
+          {socialMedias[0]?.twitter && (
+            <Link href={socialMedias[0]?.twitter || '/'} target='_blank' rel='noopener noreferrer'>
+              <Image src='/icons/twitter.svg' alt='twitter' width={24} height={24} />
+            </Link>
+          )}
+          {socialMedias[0]?.instagram && (
+            <Link href={socialMedias[0]?.instagram || '/'} target='_blank' rel='noopener noreferrer'>
+              <Image src='/icons/instagram.svg' alt='instagram' width={24} height={24} />
+            </Link>
+          )}
+          {socialMedias[0]?.linkedin && (
+            <Link href={socialMedias[0]?.linkedin || '/'} target='_blank' rel='noopener noreferrer'>
+              <Image src='/icons/linkedin.svg' alt='linkedin' width={24} height={24} />
+            </Link>
+          )}
         </div>
       </div>
       <div className='bg-gradient-to-r from-[#C1C7CD00] via-[#C1C7CD] to-[#C1C7CD00] h-1 w-full mb-12 max-lg:mb-4'></div>

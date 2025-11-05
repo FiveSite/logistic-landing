@@ -8,7 +8,7 @@ export const FaqSection = ({ faqData }: { faqData: { title: string; body: string
         src='/images/solution-bg.webp'
         alt='background decoration'
         fill
-        quality={75}
+        quality={70}
         loading='lazy'
         className='relative top-0 left-0 w-full h-full object-cover z-0 opacity-70 pointer-events-none'
       />
