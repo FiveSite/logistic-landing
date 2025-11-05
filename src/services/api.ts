@@ -5,13 +5,22 @@ import { AxiosError } from 'axios';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const countries = 'https://countriesnow.space/api/v0.1/countries';
 
+export async function fetchSocialMedia() {
+  try {
+    const res = await axiosInstance.get('/api/social-medias?populate=*');
+
+    return res.data;
+  } catch (error) {
+    return [];
+  }
+}
+
 export async function fetchBenefits() {
   try {
     const res = await axiosInstance.get('/api/benefits?populate=*');
 
     return res.data;
   } catch (error) {
-    console.error('Error fetching benefits:', error);
     return [];
   }
 }
@@ -21,7 +30,6 @@ export const fetchConsultationSectionText = async () => {
     const res = await axiosInstance.get('/api/consultation-sections?populate=*');
     return res.data;
   } catch (error) {
-    console.error('Error fetching:', error);
     return { data: [], meta: { pagination: {} } };
   }
 };
@@ -31,7 +39,6 @@ export const fetchContactSection = async () => {
     const res = await axiosInstance.get('/api/contact-infos?populate=*');
     return res.data;
   } catch (error) {
-    console.error('Error fetching:', error);
     return { data: [], meta: { pagination: {} } };
   }
 };

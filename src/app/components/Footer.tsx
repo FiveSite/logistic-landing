@@ -3,13 +3,17 @@ import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 import { DirectoryLink } from './DirectoryLink';
+import { fetchSocialMedia } from '@/services/api';
 
 export const Footer = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
 
   const user = await getUserFromToken(token ?? '');
-  console.log('user', user);
+
+  const { data: socialMedias } = await fetchSocialMedia();
+
+  console.log('socialMedias', socialMedias);
 
   return (
     <div className='bg-[#1A1A1A] text-white px-20 py-12 max-lg:py-8 max-md:px-3 max-md:py-8'>
@@ -26,9 +30,6 @@ export const Footer = async () => {
           </Link>
 
           <DirectoryLink user={user} isFooter />
-          {/* <Link href='/directory' className='px-2 py-3 text-[16px] font-medium'>
-            Company Directory
-          </Link> */}
 
           <Link href='/news?tab=news' className='px-2 py-3 text-[16px] font-medium hover:text-orange-400'>
             News
@@ -37,10 +38,6 @@ export const Footer = async () => {
           <Link href='/news?tab=events' className='px-2 py-3 text-[16px] font-medium hover:text-orange-400'>
             Events
           </Link>
-
-          {/* <Link href='/contacts' className='px-2 py-3 text-[16px] font-medium'>
-            Contacts & Support
-          </Link> */}
         </nav>
 
         <div className='flex items-center gap-4 mt-8 md:hidden'>
@@ -70,21 +67,31 @@ export const Footer = async () => {
           </Link>
         </div>
         <div className='flex items-center gap-4 max-md:hidden'>
-          <Link href='/'>
-            <Image src='/icons/youtube.svg' alt='facebook' width={24} height={24} />
-          </Link>
-          <Link href='/'>
-            <Image src='/icons/facebook.svg' alt='facebook' width={24} height={24} />
-          </Link>
-          <Link href='/'>
-            <Image src='/icons/twitter.svg' alt='facebook' width={24} height={24} />
-          </Link>
-          <Link href='/'>
-            <Image src='/icons/instagram.svg' alt='facebook' width={24} height={24} />
-          </Link>
-          <Link href='/'>
-            <Image src='/icons/linkedin.svg' alt='facebook' width={24} height={24} />
-          </Link>
+          {socialMedias[0]?.youtube && (
+            <Link href={socialMedias[0]?.youtube || '/'} target='_blank' rel='noopener noreferrer'>
+              <Image src='/icons/youtube.svg' alt='youtube' width={24} height={24} />
+            </Link>
+          )}
+          {socialMedias[0]?.facebook && (
+            <Link href={socialMedias[0]?.facebook || '/'} target='_blank' rel='noopener noreferrer'>
+              <Image src='/icons/facebook.svg' alt='facebook' width={24} height={24} />
+            </Link>
+          )}
+          {socialMedias[0]?.twitter && (
+            <Link href={socialMedias[0]?.twitter || '/'} target='_blank' rel='noopener noreferrer'>
+              <Image src='/icons/twitter.svg' alt='twitter' width={24} height={24} />
+            </Link>
+          )}
+          {socialMedias[0]?.instagram && (
+            <Link href={socialMedias[0]?.instagram || '/'} target='_blank' rel='noopener noreferrer'>
+              <Image src='/icons/instagram.svg' alt='instagram' width={24} height={24} />
+            </Link>
+          )}
+          {socialMedias[0]?.linkedin && (
+            <Link href={socialMedias[0]?.linkedin || '/'} target='_blank' rel='noopener noreferrer'>
+              <Image src='/icons/linkedin.svg' alt='linkedin' width={24} height={24} />
+            </Link>
+          )}
         </div>
       </div>
     </div>
