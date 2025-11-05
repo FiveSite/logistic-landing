@@ -27,6 +27,7 @@ export const metadata: Metadata = {
     'Logistics Business Community',
     'freight forwarding alliance',
     'Africa logistics network',
+    'Africa logistic',
 
     'logistics professionals',
     'logistics business growth',

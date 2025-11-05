@@ -144,6 +144,9 @@ export const DirectoryComponent = () => {
 
   return (
     <div className='flex flex-col gap-6 lg:px-[80px] px-4 py-[60px] max-lg:pt-[90px] pt-[160px] min-h-[calc(100vh-260px)]'>
+      <h1 className='sr-only'>
+        Official Directory: Search and Connect with Trusted African Freight Forwarding Partners
+      </h1>
       <div className='flex flex-col flex-grow'>
         <input
           type='search'

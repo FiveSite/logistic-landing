@@ -61,6 +61,8 @@ export const AboutComponent = ({
             <div className='lg:pt-[90px] pt-8' dangerouslySetInnerHTML={{ __html: aboutData.description }} />
           </div>
 
+          <h1 className='sr-only'>African Alliance Logistics Network: Mission, History, and Membership Benefits</h1>
+
           <div className='max-sm:px-0 px-4 pt-[80px] pb-[80px] sm:px-6 md:px-10 xl:px-[60px] max-w-7xl mx-auto space-y-10'>
             {/* block1*/}
             <div
