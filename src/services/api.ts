@@ -7,7 +7,7 @@ const countries = 'https://countriesnow.space/api/v0.1/countries';
 
 export async function fetchSocialMedia() {
   try {
-    const res = await axiosInstance.get('/api/social-medias?populate=*');
+    const res = await axiosInstance.get('/api/social-media?populate=*');
 
     return res.data;
   } catch (error) {

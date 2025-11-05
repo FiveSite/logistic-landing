@@ -41,28 +41,28 @@ export const Footer = async () => {
         </nav>
 
         <div className='flex items-center gap-4 mt-8 md:hidden'>
-          {socialMedias[0]?.youtube && (
-            <Link href={socialMedias[0]?.youtube || '/'} target='_blank' rel='noopener noreferrer'>
+          {socialMedias?.youtube && (
+            <Link href={socialMedias?.youtube || '/'} target='_blank' rel='noopener noreferrer'>
               <Image src='/icons/youtube.svg' alt='youtube' width={24} height={24} />
             </Link>
           )}
-          {socialMedias[0]?.facebook && (
-            <Link href={socialMedias[0]?.facebook || '/'} target='_blank' rel='noopener noreferrer'>
+          {socialMedias?.facebook && (
+            <Link href={socialMedias?.facebook || '/'} target='_blank' rel='noopener noreferrer'>
               <Image src='/icons/facebook.svg' alt='facebook' width={24} height={24} />
             </Link>
           )}
-          {socialMedias[0]?.twitter && (
-            <Link href={socialMedias[0]?.twitter || '/'} target='_blank' rel='noopener noreferrer'>
+          {socialMedias?.twitter && (
+            <Link href={socialMedias?.twitter || '/'} target='_blank' rel='noopener noreferrer'>
               <Image src='/icons/twitter.svg' alt='twitter' width={24} height={24} />
             </Link>
           )}
-          {socialMedias[0]?.instagram && (
-            <Link href={socialMedias[0]?.instagram || '/'} target='_blank' rel='noopener noreferrer'>
+          {socialMedias?.instagram && (
+            <Link href={socialMedias?.instagram || '/'} target='_blank' rel='noopener noreferrer'>
               <Image src='/icons/instagram.svg' alt='instagram' width={24} height={24} />
             </Link>
           )}
-          {socialMedias[0]?.linkedin && (
-            <Link href={socialMedias[0]?.linkedin || '/'} target='_blank' rel='noopener noreferrer'>
+          {socialMedias?.linkedin && (
+            <Link href={socialMedias?.linkedin || '/'} target='_blank' rel='noopener noreferrer'>
               <Image src='/icons/linkedin.svg' alt='linkedin' width={24} height={24} />
             </Link>
           )}
@@ -77,28 +77,28 @@ export const Footer = async () => {
           </Link>
         </div>
         <div className='flex items-center gap-4 max-md:hidden'>
-          {socialMedias[0]?.youtube && (
-            <Link href={socialMedias[0]?.youtube || '/'} target='_blank' rel='noopener noreferrer'>
+          {socialMedias?.youtube && (
+            <Link href={socialMedias?.youtube || '/'} target='_blank' rel='noopener noreferrer'>
               <Image src='/icons/youtube.svg' alt='youtube' width={24} height={24} />
             </Link>
           )}
-          {socialMedias[0]?.facebook && (
-            <Link href={socialMedias[0]?.facebook || '/'} target='_blank' rel='noopener noreferrer'>
+          {socialMedias?.facebook && (
+            <Link href={socialMedias?.facebook || '/'} target='_blank' rel='noopener noreferrer'>
               <Image src='/icons/facebook.svg' alt='facebook' width={24} height={24} />
             </Link>
           )}
-          {socialMedias[0]?.twitter && (
-            <Link href={socialMedias[0]?.twitter || '/'} target='_blank' rel='noopener noreferrer'>
+          {socialMedias?.twitter && (
+            <Link href={socialMedias?.twitter || '/'} target='_blank' rel='noopener noreferrer'>
               <Image src='/icons/twitter.svg' alt='twitter' width={24} height={24} />
             </Link>
           )}
-          {socialMedias[0]?.instagram && (
-            <Link href={socialMedias[0]?.instagram || '/'} target='_blank' rel='noopener noreferrer'>
+          {socialMedias?.instagram && (
+            <Link href={socialMedias?.instagram || '/'} target='_blank' rel='noopener noreferrer'>
               <Image src='/icons/instagram.svg' alt='instagram' width={24} height={24} />
             </Link>
           )}
-          {socialMedias[0]?.linkedin && (
-            <Link href={socialMedias[0]?.linkedin || '/'} target='_blank' rel='noopener noreferrer'>
+          {socialMedias?.linkedin && (
+            <Link href={socialMedias?.linkedin || '/'} target='_blank' rel='noopener noreferrer'>
               <Image src='/icons/linkedin.svg' alt='linkedin' width={24} height={24} />
             </Link>
           )}
