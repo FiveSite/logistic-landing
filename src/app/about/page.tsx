@@ -15,7 +15,7 @@ const AboutPage = async () => {
 
   return (
     <div>
-      <AboutComponent contactData={contactData[0].content} aboutData={aboutData[0]} benefits={benefits} />
+      <AboutComponent contactData={contactData.content} aboutData={aboutData} benefits={benefits} />
     </div>
   );
 };

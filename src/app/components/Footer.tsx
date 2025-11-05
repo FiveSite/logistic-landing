@@ -13,8 +13,6 @@ export const Footer = async () => {
 
   const { data: socialMedias } = await fetchSocialMedia();
 
-  console.log('socialMedias', socialMedias);
-
   return (
     <div className='bg-[#1A1A1A] text-white px-20 py-12 max-lg:py-8 max-md:px-3 max-md:py-8'>
       <div className='flex items-center justify-between max-lg:flex-col h-10 max-lg:h-fit mb-12 max-lg:mb-8'>

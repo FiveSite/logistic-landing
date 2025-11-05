@@ -27,7 +27,7 @@ export async function fetchBenefits() {
 
 export const fetchConsultationSectionText = async () => {
   try {
-    const res = await axiosInstance.get('/api/consultation-sections?populate=*');
+    const res = await axiosInstance.get('/api/consultation-section?populate=*');
     return res.data;
   } catch (error) {
     return { data: [], meta: { pagination: {} } };
@@ -36,7 +36,7 @@ export const fetchConsultationSectionText = async () => {
 
 export const fetchContactSection = async () => {
   try {
-    const res = await axiosInstance.get('/api/contact-infos?populate=*');
+    const res = await axiosInstance.get('/api/contact-info?populate=*');
     return res.data;
   } catch (error) {
     return { data: [], meta: { pagination: {} } };
@@ -44,7 +44,7 @@ export const fetchContactSection = async () => {
 };
 export const fetchAboutSectionText = async () => {
   try {
-    const res = await axiosInstance.get('/api/company-histories?populate=*');
+    const res = await axiosInstance.get('/api/company-history?populate=*');
     return res.data;
   } catch (error) {
     console.error('Error fetching:', error);
@@ -53,7 +53,7 @@ export const fetchAboutSectionText = async () => {
 };
 export const fetchFaqSectionText = async () => {
   try {
-    const res = await axiosInstance.get('/api/faqs?populate=*');
+    const res = await axiosInstance.get('/api/faq?populate=*');
     return res.data;
   } catch (error) {
     console.error('Error fetching:', error);
@@ -63,7 +63,7 @@ export const fetchFaqSectionText = async () => {
 
 export const fetchMainSectionText = async () => {
   try {
-    const res = await axiosInstance.get('/api/main-sections?populate=*');
+    const res = await axiosInstance.get('/api/main-section?populate=*');
     return res.data;
   } catch (error) {
     console.error('Error fetching:', error);

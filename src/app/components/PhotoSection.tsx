@@ -6,14 +6,14 @@ import Image from 'next/image';
 export const PhotoSection = ({
   consultationData,
 }: {
-  consultationData: { title: string; afterTitle: string; image: Media }[];
+  consultationData: { title: string; afterTitle: string; image: Media };
 }) => {
   return (
     <section className='relative bg-[#F6F6F6] sm:px-10 w-full lg:pt-[120px] pt-20'>
       <div className='relative sm:h-[400px] h-[680px] w-full sm:rounded-[20px] overflow-hidden'>
         <Image
-          src={consultationData[0].image?.url || '/images/lorry-bg.png'}
-          alt={consultationData[0].title || 'main-bg'}
+          src={consultationData.image?.url || '/images/lorry-bg.png'}
+          alt={consultationData.title || 'main-bg'}
           fill
           quality={75}
           loading='lazy'
@@ -25,9 +25,9 @@ export const PhotoSection = ({
 
         <div className='absolute inset-0 z-20 flex flex-col  justify-center lg:px-20 px-6 max-sm:py-20 sm:py-20'>
           <h2 className='text-white text-[34px] leading-[34px] font-semibold max-w-[500px] mb-6'>
-            {consultationData[0].title}
+            {consultationData.title}
           </h2>
-          <p className='text-white text-[16px] max-w-[500px] sm:mb-8 mb-6'>{consultationData[0].afterTitle}</p>
+          <p className='text-white text-[16px] max-w-[500px] sm:mb-8 mb-6'>{consultationData.afterTitle}</p>
 
           <Link
             href='/about#contact-us'

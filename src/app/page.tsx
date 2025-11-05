@@ -34,7 +34,7 @@ export default async function Home() {
       <WorldSection countries={countryData} />
       <PhotoSection consultationData={consultationData} />
       <ArticlesSection />
-      <FaqSection faqData={faqData[0].content} />
+      <FaqSection faqData={faqData.content} />
     </div>
   );
 }

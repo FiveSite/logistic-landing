@@ -14,7 +14,7 @@ import { ForgotPasswordSuccessDialog } from './dialog/ForgotPasswordSuccessDialo
 import { User } from '@/types';
 import { MainBackground } from './MainBackground';
 
-export const Main = ({ user, data }: { user: User; data: { title: string; afterTitle: string }[] }) => {
+export const Main = ({ user, data }: { user: User; data: { title: string; afterTitle: string } }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -40,9 +40,9 @@ export const Main = ({ user, data }: { user: User; data: { title: string; afterT
       <div className='xl:px-[300px] lg:pt-[360px] pt-[170px] max-sm:px-4 sm:px-8 relative'>
         <h1 className='sr-only'>African Alliance Logistics Network: Global Partner Platform</h1>
         <h2 className='text-[62px] max-md:text-[36px] font-bold text-[#1A1A1A] text-center leading-[62px] max-md:leading-[36px] mb-8 max-md:mb-6'>
-          {data[0].title}
+          {data.title}
         </h2>
-        <p className='text-[18px] max-md:text-[16px] text-[#1A1A1A] text-center mb-12'>{data[0].afterTitle}</p>
+        <p className='text-[18px] max-md:text-[16px] text-[#1A1A1A] text-center mb-12'>{data.afterTitle}</p>
 
         <div className='relative flex justify-center gap-6 md:px-4 w-full mb-[100px] max-md:mb-10'>
           <button
