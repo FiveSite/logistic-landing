@@ -98,9 +98,9 @@ export const ArticlesEventsSection = () => {
           breakpoints={{
             0: {
               slidesPerView: 1,
-              centeredSlides: false,
+              centeredSlides: true,
             },
-            768: {
+            640: {
               slidesPerView: 'auto',
               centeredSlides: false,
             },
@@ -111,12 +111,12 @@ export const ArticlesEventsSection = () => {
           }}
         >
           {data.map((item: Event, index: number) => (
-            <SwiperSlide key={index} className='max-w-[544px]'>
+            <SwiperSlide key={index} className='max-w-[608px]'>
               <div className='flex flex-col'>
                 <Image
                   src={item.photo?.url || ''}
                   alt='solution'
-                  width={544}
+                  width={608}
                   height={354}
                   quality={75}
                   loading='lazy'
