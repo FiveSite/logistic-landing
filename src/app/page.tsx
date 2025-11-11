@@ -11,6 +11,7 @@ import {
   fetchFaqSectionText,
   fetchMainSectionText,
   fetchMembersList2,
+  fetchPartners,
 } from '@/services/api';
 import { Main } from './components/Main';
 import { getUserFromToken } from '@/services/auth';
@@ -22,6 +23,7 @@ export default async function Home() {
   const user = await getUserFromToken(token ?? '');
 
   const { data } = await fetchMainSectionText();
+  const { data: partners } = await fetchPartners();
   const { data: benefits } = await fetchBenefits();
   const { data: faqData } = await fetchFaqSectionText();
   const { data: countryData } = await fetchMembersList2();
@@ -29,7 +31,7 @@ export default async function Home() {
 
   return (
     <div className='flex flex-col items-center '>
-      <Main user={user} data={data} />
+      <Main user={user} data={data} partners={partners} />
       <BenefitsSection benefits={benefits} />
       <WorldSection countries={countryData} />
       <PhotoSection consultationData={consultationData} />

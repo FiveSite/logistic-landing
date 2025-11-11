@@ -13,6 +13,10 @@ const DirectoryDetailsPage = async ({ params }: DirectoryDetailsPageProps) => {
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
 
+  if (!token) {
+    redirect('/');
+  }
+
   const data = await fetchMember(id, token ?? '');
 
   if (!data.data) {

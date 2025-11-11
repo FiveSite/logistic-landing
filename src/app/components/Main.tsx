@@ -11,10 +11,18 @@ import { MemberDialog } from './dialog/MemberDialog';
 import { CongratulationDialog } from './dialog/CongratulationDialog';
 import { ForgotPassword } from './form/ForgotPassword';
 import { ForgotPasswordSuccessDialog } from './dialog/ForgotPasswordSuccessDialog';
-import { User } from '@/types';
+import { Media, User } from '@/types';
 import { MainBackground } from './MainBackground';
 
-export const Main = ({ user, data }: { user: User; data: { title: string; afterTitle: string } }) => {
+export const Main = ({
+  user,
+  data,
+  partners,
+}: {
+  user: User;
+  data: { title: string; afterTitle: string };
+  partners: { id: number; image: Media }[];
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -24,6 +32,7 @@ export const Main = ({ user, data }: { user: User; data: { title: string; afterT
   const [isForgotPasswordSuccessOpen, setIsForgotPasswordSuccessOpen] = useState(false);
 
   const router = useRouter();
+  console.log('partners', partners);
 
   const searchParams = useSearchParams();
   const code = searchParams.get('code');
@@ -65,25 +74,27 @@ export const Main = ({ user, data }: { user: User; data: { title: string; afterT
         </div>
       </div>
 
-      <div className='w-full overflow-x-auto  max-md:px-4 px-10 '>
-        <div className='relative flex justify-center max-lg:justify-start  gap-4 max-w-[1106px] mx-auto'>
-          <div className='flex items-center justify-center px-8 max-lg:px-6 h-[74px] bg-white rounded-[20px] border border-[#F1F3F7] w-fit shrink-0'>
-            <Image src='/images/item1.png' alt='cards' width={82} height={22} />
-          </div>
-          <div className='flex items-center justify-center px-8 max-lg:px-6 h-[74px] bg-white rounded-[20px] border border-[#F1F3F7] w-fit shrink-0'>
-            <Image src='/images/item2.png' alt='cards' width={82} height={22} />
-          </div>
-          <div className='flex items-center justify-center px-8 max-lg:px-6 h-[74px] bg-white rounded-[20px] border border-[#F1F3F7] w-fit shrink-0'>
-            <Image src='/images/item3.png' alt='cards' width={82} height={22} />
-          </div>
-          <div className='flex items-center justify-center px-8 max-lg:px-6 h-[74px] bg-white rounded-[20px] border border-[#F1F3F7] w-fit shrink-0'>
-            <Image src='/images/item4.png' alt='cards' width={82} height={22} />
-          </div>
-          <div className='flex items-center justify-center px-8 max-lg:px-6 h-[74px] bg-white rounded-[20px] border border-[#F1F3F7] w-fit shrink-0'>
-            <Image src='/images/item5.png' alt='cards' width={82} height={22} />
-          </div>
+      <div className='w-full overflow-x-auto '>
+        <div className='relative flex lg:flex-wrap justify-center max-lg:justify-start gap-[14px] max-w-[1106px] mx-auto  max-md:px-4 px-10 '>
+          {partners?.length > 0
+            ? partners.map((partner) => (
+                <div
+                  key={partner.id}
+                  className='flex items-center justify-center px-8 max-lg:px-6 h-[74px] bg-white rounded-[8px] border border-[#F1F3F7] shadow-[0px_1px_4px_0px_rgba(25,33,61,0.08)] w-fit shrink-0'
+                >
+                  <Image
+                    src={partner.image?.url ?? ''}
+                    alt='cards'
+                    width={0}
+                    height={0}
+                    sizes='100vw'
+                    className='h-[34px] w-auto grayscale  object-contain'
+                  />
+                </div>
+              ))
+            : null}
 
-          <div className='absolute max-lg:hidden left-0 right-0 bottom-0 top-0 h-[74px] bg-gradient-to-r from-[#F6F6F6] via-[#F6F6F6]/0 to-[#F6F6F6]'></div>
+          <div className='absolute max-lg:hidden left-0 right-0 bottom-0 top-0  bg-gradient-to-r from-[#F6F6F6] via-[#F6F6F6]/0 to-[#F6F6F6]'></div>
         </div>
       </div>
 

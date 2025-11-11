@@ -5,6 +5,16 @@ import { AxiosError } from 'axios';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const countries = 'https://countriesnow.space/api/v0.1/countries';
 
+export async function fetchPartners() {
+  try {
+    const res = await axiosInstance.get('/api/partners?populate=*');
+
+    return res.data;
+  } catch (error) {
+    return [];
+  }
+}
+
 export async function fetchSocialMedia() {
   try {
     const res = await axiosInstance.get('/api/social-media?populate=*');
