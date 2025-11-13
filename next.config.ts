@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
+        protocol: 'https',
+        hostname: 'harmonious-passion-3f20099884.media.strapiapp.com',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
         port: '1337',

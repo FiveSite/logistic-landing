@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { AuthButtons } from './AuthButton';
 import { UserMenu } from './UserMenu';
-import { NewsButton } from './NewsButton';
 import { NavLink } from './NavLink';
 import { DirectoryLink } from './DirectoryLink';
 import { MobMenu } from './MobMenu';
@@ -16,6 +15,15 @@ import { ForgotPasswordSuccessDialog } from './dialog/ForgotPasswordSuccessDialo
 import { ModalComponent } from './Modal';
 import { ForgotPassword } from './form/ForgotPassword';
 import { LoginForm } from './form/LoginForm';
+import { Nunito_Sans } from 'next/font/google';
+import clsx from 'clsx';
+
+const nunitoSans = Nunito_Sans({
+  variable: '--font-nunito-sans',
+  subsets: ['latin'],
+  style: ['italic', 'normal'],
+  weight: ['400', '600', '700', '800'],
+});
 
 export const Header = ({ user }: { user: User }) => {
   const [isMobMenuOpen, setIsMobMenuOpen] = useState(false);
@@ -50,8 +58,9 @@ export const Header = ({ user }: { user: User }) => {
   return (
     <div>
       <div className='relative z-10 flex items-center justify-between px-6 py-3.5 rounded-[20px] max-lg:rounded-none bg-white  '>
-        <Link href='/'>
+        <Link href='/' className='flex flex-col  items-end'>
           <Image src='/images/logo-dark.svg' alt='Vercel Logo' width={117} height={40} />
+          <p className={clsx('font-extrabold text-[9px] uppercase italic ', nunitoSans.className)}>African Alliance</p>
         </Link>
 
         <Image
@@ -67,7 +76,8 @@ export const Header = ({ user }: { user: User }) => {
           <NavLink href='/' text='Home' />
           <NavLink href='/about' text='About us' />
           <DirectoryLink user={user} />
-          <NewsButton />
+          <NavLink href='/news' text='News' />
+          <NavLink href='/events' text='Events' />
         </nav>
 
         {user ? (

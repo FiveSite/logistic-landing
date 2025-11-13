@@ -4,6 +4,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { DirectoryLink } from './DirectoryLink';
 import { fetchSocialMedia } from '@/services/api';
+import { Nunito_Sans } from 'next/font/google';
+import clsx from 'clsx';
+
+const nunitoSans = Nunito_Sans({
+  variable: '--font-nunito-sans',
+  subsets: ['latin'],
+  style: ['italic', 'normal'],
+  weight: ['400', '600', '700', '800'],
+});
 
 export const Footer = async () => {
   const cookieStore = await cookies();
@@ -16,8 +25,11 @@ export const Footer = async () => {
   return (
     <div className='bg-[#1A1A1A] text-white px-20 py-12 max-lg:py-8 max-md:px-3 max-md:py-8'>
       <div className='flex items-center justify-between max-lg:flex-col h-10 max-lg:h-fit mb-12 max-lg:mb-8'>
-        <Link href='/'>
+        <Link href='/' className='flex flex-col  items-end'>
           <Image src='/images/logo-light.svg' alt='Vercel Logo' width={117} height={40} />
+          <p className={clsx('font-extrabold text-[9px] uppercase italic text-white', nunitoSans.className)}>
+            African Alliance
+          </p>
         </Link>
         <nav className='flex gap-4 h-10 max-md:h-fit max-md:flex-wrap max-md:justify-center max-md:mt-8'>
           <Link href='/' className='px-2 py-3 text-[16px] font-medium hover:text-orange-400'>
@@ -29,11 +41,11 @@ export const Footer = async () => {
 
           <DirectoryLink user={user} isFooter />
 
-          <Link href='/news?tab=news' className='px-2 py-3 text-[16px] font-medium hover:text-orange-400'>
+          <Link href='/news' className='px-2 py-3 text-[16px] font-medium hover:text-orange-400'>
             News
           </Link>
 
-          <Link href='/news?tab=events' className='px-2 py-3 text-[16px] font-medium hover:text-orange-400'>
+          <Link href='/events' className='px-2 py-3 text-[16px] font-medium hover:text-orange-400'>
             Events
           </Link>
         </nav>

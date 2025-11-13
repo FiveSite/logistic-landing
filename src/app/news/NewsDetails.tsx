@@ -27,16 +27,16 @@ export const NewsDetails = ({ news }: NewsProp) => {
         });
       },
       {
-        rootMargin: '0px 0px -60% 0px',
-        threshold: 0.3,
+        rootMargin: '0px 0px -50% 0px',
+        threshold: 0.1,
       }
     );
 
-    Object.values(sectionRefs.current).forEach((el) => {
-      if (el) observer.observe(el);
-    });
+    const sections = Object.values(sectionRefs.current);
+    sections.forEach((el) => el && observer.observe(el));
 
     return () => {
+      sections.forEach((el) => el && observer.unobserve(el));
       observer.disconnect();
     };
   }, [news.content]);

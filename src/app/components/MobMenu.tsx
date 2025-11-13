@@ -8,6 +8,14 @@ import { useRouter } from 'next/navigation';
 import { nextAxios } from '@/utils/axios-next';
 import ArrowIcon from '../../../public/icons/chevron-down.svg';
 import LogoutIcon from '../../../public/icons/logout-icon.svg';
+import { Nunito_Sans } from 'next/font/google';
+
+const nunitoSans = Nunito_Sans({
+  variable: '--font-nunito-sans',
+  subsets: ['latin'],
+  style: ['italic', 'normal'],
+  weight: ['400', '600', '700', '800'],
+});
 
 export const MobMenu = ({
   onClose,
@@ -50,8 +58,11 @@ export const MobMenu = ({
       >
         <div>
           <div className='flex items-center justify-between px-6 py-4.5'>
-            <Link href='/'>
+            <Link href='/' className='flex flex-col  items-end'>
               <Image src='/images/logo-dark.svg' alt='logo' width={114} height={38} />
+              <p className={clsx('font-extrabold text-[9px] uppercase italic', nunitoSans.className)}>
+                African Alliance
+              </p>
             </Link>
             <Image onClick={onClose} src='/icons/double-arrow.svg' alt='logo' width={24} height={24} />
           </div>
